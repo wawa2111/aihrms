@@ -26,5 +26,18 @@
     "*.{json,md,html,css}": [
       "prettier --write"
     ]
-  }
+  },
+  "keywords": [
+    "ai",
+    "hrms",
+    "human-resources",
+    "mern",
+    "react",
+    "nodejs",
+    "express",
+    "mongodb",
+    "eslint",
+    "prettier",
+    "automation"
+  ]
 }
