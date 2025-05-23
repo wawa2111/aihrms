@@ -1,6 +1,4 @@
-# aihrms
-
-## Ai-Powered Human Resources Management System
+# Ai-Powered Human Resources Management System (Ai-HRMS)
 
 ## Overview
 
