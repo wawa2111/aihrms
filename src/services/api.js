@@ -1,22 +1,26 @@
 import axios from 'axios';
+import config from '../utils/config';
 
-const API_URL = import.meta.env.VITE_API_URL || '/api';
-
-// Create axios instance
+// Create axios instance with default config
 const api = axios.create({
-  baseURL: API_URL,
+  baseURL: config.apiUrl,
   headers: {
-    'Content-Type': 'application/json'
-  }
+    'Content-Type': 'application/json',
+  },
+  timeout: 30000, // 30 seconds
 });
 
-// Request interceptor
+// Add request interceptor for authentication
 api.interceptors.request.use(
   (config) => {
-    const token = localStorage.getItem('token');
+    // Get token from localStorage
+    const token = localStorage.getItem(config.authTokenName);
+    
+    // If token exists, add to headers
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }
+    
     return config;
   },
   (error) => {
@@ -24,18 +28,19 @@ api.interceptors.request.use(
   }
 );
 
-// Response interceptor
+// Add response interceptor for error handling
 api.interceptors.response.use(
   (response) => {
     return response;
   },
   (error) => {
-    // Handle 401 Unauthorized
+    // Handle 401 Unauthorized errors (token expired)
     if (error.response && error.response.status === 401) {
-      localStorage.removeItem('token');
-      localStorage.removeItem('user');
+      // Clear token and redirect to login
+      localStorage.removeItem(config.authTokenName);
       window.location.href = '/login';
     }
+    
     return Promise.reject(error);
   }
 );

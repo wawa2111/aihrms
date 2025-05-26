@@ -7,6 +7,7 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
+# Dependencies
 node_modules
 dist
 dist-ssr
@@ -41,3 +42,7 @@ coverage
 
 # Server node_modules
 server/node_modules
+
+# Uploads
+uploads/
+server/uploads/

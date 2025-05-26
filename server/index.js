@@ -5,22 +5,20 @@ import compression from 'compression';
 import rateLimit from 'express-rate-limit';
 import { createServer } from 'http';
 import { Server } from 'socket.io';
-import dotenv from 'dotenv';
 import mongoose from 'mongoose';
 import winston from 'winston';
+import config from './config/index.js';
 import authRoutes from './routes/auth.routes.js';
 import employeeRoutes from './routes/employee.routes.js';
 import attendanceRoutes from './routes/attendance.routes.js';
 import leaveRoutes from './routes/leave.routes.js';
 import analyticsRoutes from './routes/analytics.routes.js';
 import aiRoutes from './routes/ai.routes.js';
-
-// Load environment variables
-dotenv.config();
+import { errorHandler } from './utils/errorHandler.js';
 
 // Initialize logger
 const logger = winston.createLogger({
-  level: 'info',
+  level: config.logging.level,
   format: winston.format.combine(
     winston.format.timestamp(),
     winston.format.json()
@@ -39,7 +37,7 @@ const logger = winston.createLogger({
 
 // Initialize Express app
 const app = express();
-const PORT = process.env.PORT || 5000;
+const PORT = config.port;
 
 // Create HTTP server
 const httpServer = createServer(app);
@@ -47,16 +45,16 @@ const httpServer = createServer(app);
 // Initialize Socket.IO
 const io = new Server(httpServer, {
   cors: {
-    origin: process.env.CLIENT_URL || 'http://localhost:3000',
+    origin: config.cors.origin,
     methods: ['GET', 'POST']
   }
 });
 
+// Make io accessible to routes
+app.set('io', io);
+
 // Apply middleware
-app.use(cors({
-  origin: process.env.CLIENT_URL || 'http://localhost:3000',
-  credentials: true
-}));
+app.use(cors(config.cors));
 app.use(helmet());
 app.use(compression());
 app.use(express.json());
@@ -64,15 +62,15 @@ app.use(express.urlencoded({ extended: true }));
 
 // Apply rate limiting
 const limiter = rateLimit({
-  windowMs: 15 * 60 * 1000, // 15 minutes
-  max: 100, // Limit each IP to 100 requests per windowMs
+  windowMs: config.security.rateLimit.windowMs,
+  max: config.security.rateLimit.max,
   standardHeaders: true,
   legacyHeaders: false
 });
 app.use(limiter);
 
 // Connect to MongoDB
-mongoose.connect(process.env.MONGODB_URI)
+mongoose.connect(config.mongodb.uri, config.mongodb.options)
   .then(() => {
     logger.info('Connected to MongoDB');
   })
@@ -125,21 +123,15 @@ app.get('/api/health', (req, res) => {
   res.status(200).json({
     status: 'ok',
     timestamp: new Date(),
-    uptime: process.uptime()
+    uptime: process.uptime(),
+    environment: config.env
   });
 });
 
 // Error handling middleware
-app.use((err, req, res, next) => {
-  logger.error(err.stack);
-  res.status(500).json({
-    success: false,
-    message: 'Internal server error',
-    error: process.env.NODE_ENV === 'development' ? err.message : undefined
-  });
-});
+app.use(errorHandler);
 
 // Start server
 httpServer.listen(PORT, () => {
-  logger.info(`Server running on port ${PORT}`);
+  logger.info(`Server running in ${config.env} mode on port ${PORT}`);
 });
