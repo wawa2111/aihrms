@@ -25,9 +25,6 @@ const Features = lazy(() => import("./pages/landing/Features.jsx"));
 
 // Feature components
 const AIAssistant = lazy(() => import("./features/ai/AIAssistant.jsx"));
-const QRAttendance = lazy(() => import("./features/attendance/QRAttendance.jsx"));
-const AILeaveManagement = lazy(() => import("./features/leave/AILeaveManagement.jsx"));
-const AnalyticsDashboard = lazy(() => import("./features/analytics/AnalyticsDashboard.jsx"));
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -101,24 +98,12 @@ function App() {
             element={isAuthenticated ? <Attendance /> : <Navigate to="/login" />} 
           />
           <Route 
-            path="/attendance/qr" 
-            element={isAuthenticated ? <QRAttendance /> : <Navigate to="/login" />} 
-          />
-          <Route 
             path="/leave" 
             element={isAuthenticated ? <Leave /> : <Navigate to="/login" />} 
           />
           <Route 
-            path="/leave/request" 
-            element={isAuthenticated ? <AILeaveManagement /> : <Navigate to="/login" />} 
-          />
-          <Route 
             path="/analytics" 
             element={isAuthenticated ? <Analytics /> : <Navigate to="/login" />} 
-          />
-          <Route 
-            path="/analytics/dashboard" 
-            element={isAuthenticated ? <AnalyticsDashboard /> : <Navigate to="/login" />} 
           />
           <Route 
             path="/ai-assistant" 
