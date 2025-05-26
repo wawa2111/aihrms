@@ -23,9 +23,12 @@ const Analytics = lazy(() => import("./pages/Analytics.jsx"));
 // Landing pages
 const Home = lazy(() => import("./pages/landing/Home.jsx"));
 const Features = lazy(() => import("./pages/landing/Features.jsx"));
+const CaseStudies = lazy(() => import("./pages/CaseStudies.jsx"));
+const Demo = lazy(() => import("./pages/Demo.jsx"));
 
 // Feature components
 const AIAssistant = lazy(() => import("./features/ai/AIAssistant.jsx"));
+const MalaysianHRAssistant = lazy(() => import("./features/ai/MalaysianHRAssistant.jsx"));
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -69,6 +72,8 @@ function App() {
         {/* Public routes */}
         <Route path="/" element={<Home />} />
         <Route path="/features" element={<Features />} />
+        <Route path="/case-studies" element={<CaseStudies />} />
+        <Route path="/demo" element={<Demo />} />
         
         {/* Auth routes */}
         <Route element={<AuthLayout />}>
@@ -110,6 +115,10 @@ function App() {
           <Route 
             path="/ai-assistant" 
             element={isAuthenticated ? <AIAssistant /> : <Navigate to="/login" />} 
+          />
+          <Route 
+            path="/malaysian-hr-assistant" 
+            element={isAuthenticated ? <MalaysianHRAssistant /> : <Navigate to="/login" />} 
           />
         </Route>
         
