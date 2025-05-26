@@ -13,7 +13,8 @@
     "husky": "^9.1.7",
     "lint-staged": "^16.0.0",
     "prettier": "^3.5.3",
-    "vite": "^5.0.10"
+    "vite": "^5.0.10",
+    "webpack-cli": "^6.0.1"
   },
   "scripts": {
     "dev": "vite --host",
