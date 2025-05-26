@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import LandingHeader from '../components/ui/LandingHeader';
+import PromoBanner from '../components/ui/PromoBanner';
 
 function Features() {
   const currentYear = 2025;
@@ -42,6 +43,24 @@ function Features() {
       image: '/hrpbloom.png'
     },
     {
+      id: 'payroll',
+      title: 'Automated Payroll',
+      description: 'Comprehensive payroll automation with Malaysian tax compliance and AI-powered optimization.',
+      icon: 'fas fa-money-bill-wave',
+      color: 'emerald',
+      details: [
+        'Automated salary calculations with variable components',
+        'Malaysian PCB, EPF, SOCSO, and EIS compliance',
+        'Multiple payment methods and bank integrations',
+        'Customizable payslip templates with digital delivery',
+        'Bonus and commission management',
+        'Retroactive pay adjustments',
+        'Year-end tax reporting (EA Form, CP22A, etc.)',
+        'Multi-currency support for international employees'
+      ],
+      image: '/hrpbloom.png'
+    },
+    {
       id: 'leave-management',
       title: 'Smart Leave Management',
       description: 'AI-powered leave planning and management with Malaysian holiday calendar integration.',
@@ -74,6 +93,24 @@ function Features() {
         'Multilingual support (English, Malay, Mandarin, Tamil)',
         'Continuous learning from organizational data',
         'Integration with knowledge management systems'
+      ],
+      image: '/hrpbloom.png'
+    },
+    {
+      id: 'payroll-assistant',
+      title: 'AI Payroll Assistant',
+      description: 'Intelligent payroll assistant that automates complex calculations and provides optimization insights.',
+      icon: 'fas fa-calculator',
+      color: 'cyan',
+      details: [
+        'Anomaly detection in payroll processing',
+        'Proactive compliance monitoring for tax regulations',
+        'Payroll optimization recommendations',
+        'Natural language queries for payroll data',
+        'Automated expense categorization and approval',
+        'Predictive cash flow analysis for payroll planning',
+        'Tax-saving opportunities identification',
+        'Customized payroll reports generation'
       ],
       image: '/hrpbloom.png'
     },
@@ -117,6 +154,7 @@ function Features() {
   
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
+      <PromoBanner />
       <LandingHeader />
       
       <main>

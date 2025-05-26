@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import LandingHeader from '../components/ui/LandingHeader';
+import PromoBanner from '../components/ui/PromoBanner';
 
 function Pricing() {
   const currentYear = 2025;
@@ -95,6 +96,7 @@ function Pricing() {
   
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
+      <PromoBanner />
       <LandingHeader />
       
       <main>

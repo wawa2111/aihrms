@@ -1,11 +1,14 @@
 import { Link } from 'react-router-dom';
 import LandingHeader from '../components/ui/LandingHeader';
+import PayrollFeature from '../components/ui/PayrollFeature';
+import PromoBanner from '../components/ui/PromoBanner';
 
 function Landing() {
   const currentYear = 2025;
   
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
+      <PromoBanner />
       <LandingHeader />
       
       <main>
@@ -15,7 +18,7 @@ function Landing() {
             <div className="flex flex-col md:flex-row items-center">
               <div className="md:w-1/2 md:pr-8 mb-8 md:mb-0">
                 <span className="inline-block px-3 py-1 bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200 rounded-full text-sm font-medium mb-4">
-                  New for {currentYear}: Generative AI HR Assistant
+                  New for {currentYear}: AI Payroll Assistant
                 </span>
                 <h1 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-4">
                   AI-Powered HR Management for Malaysian Businesses
@@ -72,6 +75,9 @@ function Landing() {
             </div>
           </div>
         </section>
+        
+        {/* Payroll Feature Section */}
+        <PayrollFeature />
         
         {/* Features Section */}
         <section className="py-12 md:py-20 bg-gray-50 dark:bg-gray-900">
