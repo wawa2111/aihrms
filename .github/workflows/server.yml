@@ -36,12 +36,12 @@ jobs:
 
     - name: Install dependencies
       run: |
-        if [ -f "server/package.json" ]; then
-          cd server && npm ci
+        cd server
+        if [ ! -f package-lock.json ]; then
+          echo "No package-lock.json found, running npm install to generate it."
+          npm install
         else
-          echo "::warning::server/package.json not found, skipping npm ci"
-          mkdir -p server
-          cd server && echo '{"scripts":{"test":"echo \"No tests specified\""}}' > package.json
+          npm ci
         fi
 
     - name: Create .env file
