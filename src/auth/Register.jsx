@@ -1,6 +1,9 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-hot-toast';
+import { loginWithGoogle, loginWithMicrosoft, loginWithFacebook } from '../reducers/authentication.reducer';
+import ButtonLoader from '../components/shared/loaders/ButtonLoader';
 
 const Register = () => {
   const [formData, setFormData] = useState({
@@ -14,6 +17,67 @@ const Register = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const { loading } = useSelector((state) => state.authentication);
+
+  // Initialize OAuth SDKs
+  useEffect(() => {
+    // Load Google SDK
+    const loadGoogleScript = () => {
+      const script = document.createElement('script');
+      script.src = 'https://accounts.google.com/gsi/client';
+      script.async = true;
+      script.defer = true;
+      document.body.appendChild(script);
+      return () => {
+        document.body.removeChild(script);
+      };
+    };
+
+    // Load Facebook SDK
+    const loadFacebookScript = () => {
+      const script = document.createElement('script');
+      script.src = 'https://connect.facebook.net/en_US/sdk.js';
+      script.async = true;
+      script.defer = true;
+      document.body.appendChild(script);
+      
+      script.onload = () => {
+        window.FB.init({
+          appId: import.meta.env.VITE_FACEBOOK_APP_ID,
+          cookie: true,
+          xfbml: true,
+          version: 'v18.0'
+        });
+      };
+      
+      return () => {
+        document.body.removeChild(script);
+      };
+    };
+
+    // Load Microsoft SDK
+    const loadMicrosoftScript = () => {
+      const script = document.createElement('script');
+      script.src = 'https://alcdn.msauth.net/browser/2.30.0/js/msal-browser.min.js';
+      script.async = true;
+      script.defer = true;
+      document.body.appendChild(script);
+      return () => {
+        document.body.removeChild(script);
+      };
+    };
+
+    const googleCleanup = loadGoogleScript();
+    const facebookCleanup = loadFacebookScript();
+    const microsoftCleanup = loadMicrosoftScript();
+
+    return () => {
+      googleCleanup();
+      facebookCleanup();
+      microsoftCleanup();
+    };
+  }, []);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -50,6 +114,97 @@ const Register = () => {
       setIsSubmitting(false);
       navigate('/login');
     }, 1500);
+  };
+
+  const handleGoogleSignup = async () => {
+    try {
+      if (!window.google) {
+        toast.error("Google SDK not loaded. Please try again later.");
+        return;
+      }
+
+      window.google.accounts.id.initialize({
+        client_id: import.meta.env.VITE_GOOGLE_CLIENT_ID,
+        callback: async (response) => {
+          if (response.credential) {
+            try {
+              await dispatch(loginWithGoogle(response.credential)).unwrap();
+              toast.success("Google signup successful");
+              navigate("/dashboard");
+            } catch (error) {
+              toast.error(error || "Google signup failed");
+            }
+          }
+        }
+      });
+      
+      window.google.accounts.id.prompt();
+    } catch (error) {
+      toast.error("Google signup failed. Please try again.");
+    }
+  };
+
+  const handleMicrosoftSignup = async () => {
+    try {
+      if (!window.msal) {
+        toast.error("Microsoft SDK not loaded. Please try again later.");
+        return;
+      }
+
+      const msalConfig = {
+        auth: {
+          clientId: import.meta.env.VITE_MICROSOFT_CLIENT_ID,
+          redirectUri: import.meta.env.VITE_OAUTH_CALLBACK_URL
+        }
+      };
+      
+      const msalInstance = new window.msal.PublicClientApplication(msalConfig);
+      
+      const loginRequest = {
+        scopes: ["user.read"]
+      };
+      
+      msalInstance.loginPopup(loginRequest)
+        .then(async (response) => {
+          try {
+            await dispatch(loginWithMicrosoft(response.accessToken)).unwrap();
+            toast.success("Microsoft signup successful");
+            navigate("/dashboard");
+          } catch (error) {
+            toast.error(error || "Microsoft signup failed");
+          }
+        })
+        .catch(error => {
+          toast.error("Microsoft signup failed. Please try again.");
+        });
+    } catch (error) {
+      toast.error("Microsoft signup failed. Please try again.");
+    }
+  };
+
+  const handleFacebookSignup = async () => {
+    try {
+      if (!window.FB) {
+        toast.error("Facebook SDK not loaded. Please try again later.");
+        return;
+      }
+
+      window.FB.login(async (response) => {
+        if (response.authResponse) {
+          try {
+            await dispatch(loginWithFacebook(response.authResponse.accessToken)).unwrap();
+            toast.success("Facebook signup successful");
+            navigate("/dashboard");
+          } catch (error) {
+            toast.error(error || "Facebook signup failed");
+          }
+        } else {
+          toast.error("Facebook signup cancelled");
+        }
+      }, { scope: 'email,public_profile' });
+    } catch (error) {
+      toast.error("Facebook signup failed. Please try again.");
+    }
   };
 
   return (
@@ -197,7 +352,7 @@ const Register = () => {
             disabled={isSubmitting}
             className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-primary-600 hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 disabled:opacity-50"
           >
-            {isSubmitting ? 'Creating account...' : 'Create account'}
+            {isSubmitting ? <ButtonLoader /> : 'Create account'}
           </button>
         </div>
       </form>
@@ -214,20 +369,27 @@ const Register = () => {
           </div>
         </div>
         
-        <div className="mt-6 grid grid-cols-2 gap-3">
+        <div className="mt-6 grid grid-cols-3 gap-3">
           <button
             type="button"
+            onClick={handleGoogleSignup}
             className="w-full inline-flex justify-center py-2 px-4 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm bg-white dark:bg-gray-700 text-sm font-medium text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-600"
           >
-            <i className="fab fa-google text-red-500 mr-2"></i>
-            Google
+            <i className="fab fa-google text-red-500"></i>
           </button>
           <button
             type="button"
+            onClick={handleMicrosoftSignup}
             className="w-full inline-flex justify-center py-2 px-4 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm bg-white dark:bg-gray-700 text-sm font-medium text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-600"
           >
-            <i className="fab fa-microsoft text-blue-500 mr-2"></i>
-            Microsoft
+            <i className="fab fa-microsoft text-blue-500"></i>
+          </button>
+          <button
+            type="button"
+            onClick={handleFacebookSignup}
+            className="w-full inline-flex justify-center py-2 px-4 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm bg-white dark:bg-gray-700 text-sm font-medium text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-600"
+          >
+            <i className="fab fa-facebook text-blue-600"></i>
           </button>
         </div>
       </div>

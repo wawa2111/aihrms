@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { loginUser, logoutUser, getCurrentUser } from "../services/authentication.service";
+import { googleLogin, microsoftLogin, facebookLogin } from "../services/oauth.service";
 
 // Login user
 export const login = createAsyncThunk(
@@ -11,6 +12,51 @@ export const login = createAsyncThunk(
     } catch (error) {
       return rejectWithValue(
         error.response?.data?.message || "Failed to login"
+      );
+    }
+  }
+);
+
+// Google login
+export const loginWithGoogle = createAsyncThunk(
+  "authentication/loginWithGoogle",
+  async (tokenId, { rejectWithValue }) => {
+    try {
+      const response = await googleLogin(tokenId);
+      return response;
+    } catch (error) {
+      return rejectWithValue(
+        error.response?.data?.message || "Failed to login with Google"
+      );
+    }
+  }
+);
+
+// Microsoft login
+export const loginWithMicrosoft = createAsyncThunk(
+  "authentication/loginWithMicrosoft",
+  async (accessToken, { rejectWithValue }) => {
+    try {
+      const response = await microsoftLogin(accessToken);
+      return response;
+    } catch (error) {
+      return rejectWithValue(
+        error.response?.data?.message || "Failed to login with Microsoft"
+      );
+    }
+  }
+);
+
+// Facebook login
+export const loginWithFacebook = createAsyncThunk(
+  "authentication/loginWithFacebook",
+  async (accessToken, { rejectWithValue }) => {
+    try {
+      const response = await facebookLogin(accessToken);
+      return response;
+    } catch (error) {
+      return rejectWithValue(
+        error.response?.data?.message || "Failed to login with Facebook"
       );
     }
   }
@@ -86,6 +132,58 @@ const authenticationSlice = createSlice({
         state.loading = false;
         state.error = action.payload;
       })
+      
+      // Google login
+      .addCase(loginWithGoogle.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(loginWithGoogle.fulfilled, (state, action) => {
+        state.loading = false;
+        state.user = action.payload.user;
+        state.isAuthenticated = true;
+        localStorage.setItem("token", action.payload.token);
+        localStorage.setItem("user", JSON.stringify(action.payload.user));
+      })
+      .addCase(loginWithGoogle.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      })
+      
+      // Microsoft login
+      .addCase(loginWithMicrosoft.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(loginWithMicrosoft.fulfilled, (state, action) => {
+        state.loading = false;
+        state.user = action.payload.user;
+        state.isAuthenticated = true;
+        localStorage.setItem("token", action.payload.token);
+        localStorage.setItem("user", JSON.stringify(action.payload.user));
+      })
+      .addCase(loginWithMicrosoft.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      })
+      
+      // Facebook login
+      .addCase(loginWithFacebook.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(loginWithFacebook.fulfilled, (state, action) => {
+        state.loading = false;
+        state.user = action.payload.user;
+        state.isAuthenticated = true;
+        localStorage.setItem("token", action.payload.token);
+        localStorage.setItem("user", JSON.stringify(action.payload.user));
+      })
+      .addCase(loginWithFacebook.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      })
+      
       // Logout
       .addCase(logout.pending, (state) => {
         state.loading = true;
@@ -107,6 +205,7 @@ const authenticationSlice = createSlice({
         localStorage.removeItem("token");
         localStorage.removeItem("user");
       })
+      
       // Fetch current user
       .addCase(fetchCurrentUser.pending, (state) => {
         state.loading = true;
