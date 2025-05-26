@@ -1,77 +1,90 @@
-# HRPBloom HRMS
+# HRPBloom - AI-Powered HR Management System
 
-AI-Driven Human Resource Management System for modern businesses.
+HRPBloom is a comprehensive HR management system with AI-driven features, designed specifically for Malaysian businesses to streamline HR operations and ensure compliance with local regulations.
 
-![HRPBloom Logo](ai-hrms/client/public/hrpbloom.png)
+## Features
 
-## Key Features
+- **Employee Management**: Complete employee lifecycle management
+- **Attendance Tracking**: QR code-based check-in/check-out system
+- **Leave Management**: AI-powered leave request and approval system
+- **Malaysian HR Assistant**: AI assistant specialized in Malaysian employment laws
+- **Analytics Dashboard**: Comprehensive HR analytics and reporting
 
-### Core Functionality
-- **Robust Authentication** - Secure login with role-based access control
-- **Employee Management** - Comprehensive employee profiles and records
-- **Attendance & Time Tracking** - QR Code-based check-in/check-out system
-- **Leave Management** - AI-powered substitute assignments
-- **Payroll Management** - Automated salary calculations and payslips
-- **Recruitment Management** - Applicant tracking and hiring workflow
+## Tech Stack
 
-### Advanced Features
-- **Performance Management** - Goal setting, reviews, and evaluations
-- **Complaint Management** - Track and resolve employee grievances
-- **Communication Management** - Internal messaging and announcements
-- **Feedback Management** - AI Sentiment Analysis for employee feedback
-- **Reports & Analytics** - Comprehensive dashboards for attendance, leave, and complaints
+- **Frontend**: React, Redux, Tailwind CSS, Chart.js
+- **Backend**: Node.js, Express, MongoDB
+- **AI Features**: Custom NLP models for HR assistance
+- **Authentication**: JWT, OAuth (Google, Microsoft, Facebook)
+- **Deployment**: Docker, GitHub Actions, Vercel
 
-### Premium Features
-- **AI HR Assistant** - 24/7 virtual HR assistant for common queries
-- **Consultant Booking** - Access to HR professionals for specialized advice
-- **Advanced Analytics** - Predictive insights and trend analysis
-
-## Quick Start
+## Getting Started
 
 ### Prerequisites
 
-- Node.js (v16+)
-- MongoDB
-- Cloudinary account
-- Gmail account (for email notifications)
-- Gemini API key (for AI features)
+- Node.js 18.x or later
+- MongoDB 6.0 or later
+- npm or yarn
 
-### Setup
+### Installation
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/yourusername/aihrms.git
+   git clone https://github.com/wawa2111/aihrms.git
    cd aihrms
    ```
 
-2. Run the setup script:
+2. Install dependencies:
    ```bash
-   ./setup.sh
+   # Install frontend dependencies
+   npm install
+   
+   # Install backend dependencies
+   cd server
+   npm install
+   cd ..
    ```
 
-3. Configure environment variables:
-   - Update `ai-hrms/server/.env` with your MongoDB URI, Cloudinary credentials, etc.
-   - Update `ai-hrms/client/.env` with your API URL
-
-4. Start the application:
+3. Set up environment variables:
    ```bash
-   npm start
+   cp .env.example .env
+   # Edit .env with your configuration
    ```
 
-5. Access the application:
-   - Client: http://localhost:5173
-   - Server: http://localhost:5000
+4. Start the development servers:
+   ```bash
+   # Start frontend
+   npm run dev
+   
+   # Start backend (in another terminal)
+   npm run server
+   ```
 
-### Initial Login
+### Docker Deployment
 
-- Admin: Use the master password defined in your environment variables
-  - Username: admin
-  - Password: [ADMIN_MASTER_PASSWORD from .env]
+1. Build and run with Docker Compose:
+   ```bash
+   docker-compose up -d
+   ```
 
-## Deployment
+2. Access the application:
+   - Frontend: http://localhost:80
+   - Backend API: http://localhost:5000
 
-Visit [hrpbloom.com](https://hrpbloom.com) to see the live application.
+## Contributing
+
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add some amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
 
 ## License
 
-MIT
+This project is licensed under the MIT License - see the LICENSE file for details.
+
+## Acknowledgments
+
+- Malaysian employment law resources
+- React and Node.js communities
+- All contributors to this project
