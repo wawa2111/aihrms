@@ -1,9 +1,8 @@
 import axios from 'axios';
-import config from '../utils/config';
 
 // Create axios instance with default config
 const api = axios.create({
-  baseURL: config.apiUrl,
+  baseURL: import.meta.env.VITE_API_URL || 'http://localhost:5000/api',
   headers: {
     'Content-Type': 'application/json',
   },
@@ -14,7 +13,7 @@ const api = axios.create({
 api.interceptors.request.use(
   (config) => {
     // Get token from localStorage
-    const token = localStorage.getItem(config.authTokenName);
+    const token = localStorage.getItem('hrpbloom_auth_token');
     
     // If token exists, add to headers
     if (token) {
@@ -37,7 +36,7 @@ api.interceptors.response.use(
     // Handle 401 Unauthorized errors (token expired)
     if (error.response && error.response.status === 401) {
       // Clear token and redirect to login
-      localStorage.removeItem(config.authTokenName);
+      localStorage.removeItem('hrpbloom_auth_token');
       window.location.href = '/login';
     }
     

@@ -1,13 +1,14 @@
 import { Routes, Route, Navigate } from 'react-router-dom';
 import { Toaster } from 'react-hot-toast';
 import { useSelector } from 'react-redux';
-import MainLayout from '@/layouts/MainLayout';
-import AuthLayout from '@/layouts/AuthLayout';
-import ProtectedRoute from '@/components/shared/ProtectedRoute';
-import Dashboard from '@/pages/Dashboard';
-import Login from '@/pages/Login';
-import Register from '@/pages/Register';
-import NotFound from '@/pages/NotFound';
+import MainLayout from './layouts/MainLayout';
+import AuthLayout from './layouts/AuthLayout';
+import ProtectedRoute from './components/shared/ProtectedRoute';
+import Dashboard from './pages/Dashboard';
+import Login from './pages/Login';
+import Register from './pages/Register';
+import NotFound from './pages/NotFound';
+import Landing from './pages/Landing';
 
 function App() {
   const { isAuthenticated } = useSelector((state) => state.auth);
@@ -16,9 +17,11 @@ function App() {
     <>
       <Toaster position="top-right" />
       <Routes>
+        {/* Public Routes */}
+        <Route path="/" element={<Landing />} />
+        
         {/* Auth Routes */}
         <Route path="/" element={<AuthLayout />}>
-          <Route index element={isAuthenticated ? <Navigate to="/dashboard" /> : <Login />} />
           <Route path="login" element={isAuthenticated ? <Navigate to="/dashboard" /> : <Login />} />
           <Route path="register" element={isAuthenticated ? <Navigate to="/dashboard" /> : <Register />} />
         </Route>

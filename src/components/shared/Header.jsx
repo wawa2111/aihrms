@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
-import useAuth from '@/hooks/useAuth';
+import useAuth from '../../hooks/useAuth';
 
 function Header({ sidebarOpen, setSidebarOpen }) {
   const { user } = useSelector((state) => state.auth);

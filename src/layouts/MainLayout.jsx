@@ -1,7 +1,7 @@
 import { Outlet } from 'react-router-dom';
 import { useState } from 'react';
-import Sidebar from '@/components/shared/Sidebar';
-import Header from '@/components/shared/Header';
+import Sidebar from '../components/shared/Sidebar';
+import Header from '../components/shared/Header';
 
 function MainLayout() {
   const [sidebarOpen, setSidebarOpen] = useState(false);

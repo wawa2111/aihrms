@@ -1,7 +1,7 @@
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { login, logout, register } from '@/features/auth/authSlice';
-import api from '@/services/api';
+import { login, logout, register } from '../features/auth/authSlice';
+import api from '../services/api';
 import { useState } from 'react';
 
 /**
