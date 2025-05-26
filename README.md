@@ -1,93 +1,89 @@
-# Ai-Powered Human Resources Management System (Ai-HRMS)
+# HRPBloom HRMS
 
-## Overview
-
-**aihrms** is a comprehensive, AI-driven Human Resource Management System designed to streamline HR operations and provide intelligent insights. Built with the MERN stack, it features robust modules for employee management, attendance tracking, payroll, recruitment, and more. AI integrations power sentiment analysis, automated shift assignments, and a Gemini-powered chatbot for enhanced HR efficiency.
+AI-Driven Human Resource Management System for modern businesses.
 
 ## Features
 
-- Robust Authentication
 - Employee Management
-- Attendance & Time Tracking (QR Code-based)
-- Leave Management (AI Shift Assignments)
-- Payroll Management
-- Recruitment Management
+- Attendance Tracking with QR Code
+- Leave Management with AI-powered substitute assignment
 - Performance Management
-- Complaint Management
-- Communication Management
-- Feedback Management (AI Sentiment Analysis)
-- Reports & Analytics (Attendance, Leave, Complaints)
+- Feedback and Complaint Management
+- AI-Based Sentiment Analysis
+- Recruitment Management
+- Analytics and Reporting
+- Consultant Booking
+- AI HR Assistant
 
-## Tech Stack
+## Quick Start
 
-- MERN Stack (MongoDB, Express.js, React.js, Node.js)
-- Redux for State Management
-- AI Integration with Gemini
+### Prerequisites
 
-## Project Structure
+- Node.js (v16+)
+- MongoDB
+- Cloudinary account
+- Gmail account (for email notifications)
+- Gemini API key (for AI features)
+
+### Setup
+
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/yourusername/aihrms.git
+   cd aihrms
+   ```
+
+2. Run the setup script:
+   ```bash
+   ./setup.sh
+   ```
+
+3. Configure environment variables:
+   - Update `ai-hrms/server/.env` with your MongoDB URI, Cloudinary credentials, etc.
+   - Update `ai-hrms/client/.env` with your API URL
+
+4. Start the application:
+   ```bash
+   npm start
+   ```
+
+5. Access the application:
+   - Client: http://localhost:5173
+   - Server: http://localhost:5000
+
+### Initial Login
+
+- Admin: Use the master password defined in your environment variables
+  - Username: admin
+  - Password: [ADMIN_MASTER_PASSWORD from .env]
+
+## Deployment
+
+### Vercel Deployment
+
+1. Connect your GitHub repository to Vercel
+2. Configure environment variables in Vercel dashboard
+3. Set up the custom domain (hrpbloom.com)
+
+### Environment Variables
+
+Required environment variables for production:
+
 ```
-aihrms/
-│ ├── .env.local 
-  ├── .eslintignore 
-  ├── .prettierignore 
-  ├── .prettierrc 
-  ├── eslint.config.mjs 
-  ├── package.json 
-  ├── README.md 
-  ├── .husky/ 
-  │ 
-  └── ... (Git hooks) 
-  └── AI-HRMS/ 
-  ├── .gitignore 
-  ├── .nvmrc 
-  ├── INSTALLATION_GUIDE.md 
-  ├── LICENSE 
-  ├── package.json 
-  ├── README.md 
-  ├── SECURITY.md 
-  ├── public/ 
-  ├── .vercel/ 
-  ├── client/ 
-  └── server/
+MONGODB_URI=mongodb+srv://username:password@cluster0.mongodb.net/hrpbloom
+JWTSECRET=your_jwt_secret_key
+CLOUDINARY_CLOUD_NAME=your_cloud_name
+CLOUDINARY_API_KEY=your_api_key
+CLOUDINARY_API_SECRET=your_api_secret
+GEMINI_API_KEY=your_gemini_api_key
+EMAIL_SERVICE=gmail
+EMAIL_USER=your_email@gmail.com
+EMAIL_PASS=your_app_password
+EMAIL_FROM=your_email@gmail.com
+CLIENT_URL=https://www.hrpbloom.com
+ADMIN_MASTER_PASSWORD=your_admin_password
 ```
 
+## License
 
-- **client/**: Frontend React application
-- **server/**: Backend Node.js/Express API
-- **__public__/**: Static assets
-- **.husky/**: Git hooks for code quality
-
-## Getting Started
-
-1. **Clone the repository**
-   ```sh
-   git clone <repo-url>
-   cd aihrms/AI-HRMS
-
-2. **Install dependencies**
-   ```
-   npm install
-   ```
-3. **Set up environment variables**
-
-    - Copy .env.local.example to .env.local and update as needed.
-4. **Run the development servers**
-    - For client:
-    ```
-    cd client
-    npm start
-    ```
-
-    - For Server
-   ```
-    cd server
-    npm start
-   ```
-
-  **License**
-  
-See LICENSE for license details.
-
-  **Security**
-  
-  For security guidelines, see SECURITY.md.
+MIT

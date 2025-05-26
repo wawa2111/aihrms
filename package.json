@@ -13,8 +13,7 @@
     "husky": "^9.1.7",
     "lint-staged": "^16.0.0",
     "prettier": "^3.5.3",
-    "vite": "^5.0.10",
-    "webpack-cli": "^6.0.1"
+    "vite": "^5.0.10"
   },
   "scripts": {
     "dev": "vite --host",
@@ -23,7 +22,8 @@
     "preview": "vite preview",
     "client": "cd ai-hrms/client && npm run dev",
     "server": "cd ai-hrms/server && npm run dev",
-    "start": "concurrently \"npm run client\" \"npm run server\""
+    "start": "concurrently \"npm run client\" \"npm run server\"",
+    "setup": "cd ai-hrms/client && npm install && cd ../server && npm install"
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx}": [
