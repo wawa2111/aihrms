@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getEmployeeAttendance } from "../../services/attendance.service.js.jsx";
-import { formatDate } from "../../utils.js.jsx";
-import Loader from "../../components/shared/loaders/Loader.js.jsx";
+import { getEmployeeAttendance } from "../../services/attendance.service.js";
+import { formatDate } from "../../utils.js";
+import Loader from "../../components/shared/loaders/Loader.js";
 
 const Attendance = () => {
   const dispatch = useDispatch();

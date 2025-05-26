@@ -1,13 +1,13 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
-import { useForm, Controller } from "react-hook-form";
-import { convertDate } from "../../utils.js.jsx";
-import { editEmployee, getEmployeeById } from "../../services/employee.service.js.jsx";
-import Error from "../../components/shared/error/Error.js.jsx";
-import ComponentLoader from "../../components/shared/loaders/ComponentLoader.js.jsx";
-import { updateEmployeeSchema } from "../../validations.js.jsx";
-import { zodResolver } from "@hookform/resolvers/zod.js.jsx";
+import { useForm, Controller } from "react-hook-form.js";
+import { convertDate } from "../../utils.js";
+import { editEmployee, getEmployeeById } from "../../services/employee.service.js";
+import Error from "../../components/shared/error/Error.js";
+import ComponentLoader from "../../components/shared/loaders/ComponentLoader.js";
+import { updateEmployeeSchema } from "../../validations.js";
+import { zodResolver } from "@hookform/resolvers/zod.js";
 
 const EditEmployee = () => {
   const { id } = useParams();

@@ -1,14 +1,14 @@
-import { navbarLinks, sidebarLinks } from "../../data.js.jsx";
-import { logout } from "../../services/authentication.service.js.jsx";
+import { navbarLinks, sidebarLinks } from "../../data.js";
+import { logout } from "../../services/authentication.service.js";
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import Modal from "../shared/modals/Modal.js.jsx";
-import { useTheme } from "../../context.js.jsx";
-import Loader from "../shared/loaders/Loader.js.jsx";
-import SettingModal from "../shared/modals/SettingModal.js.jsx";
-import ProfileModal from "../shared/modals/ProfileModal.js.jsx";
-import { updateProfile } from "../../services/employee.service.js.jsx";
+import Modal from "../shared/modals/Modal.js";
+import { useTheme } from "../../context.js";
+import Loader from "../shared/loaders/Loader.js";
+import SettingModal from "../shared/modals/SettingModal.js";
+import ProfileModal from "../shared/modals/ProfileModal.js";
+import { updateProfile } from "../../services/employee.service.js";
 
 const EmployeeSidebar = () => {
   const dispatch = useDispatch();

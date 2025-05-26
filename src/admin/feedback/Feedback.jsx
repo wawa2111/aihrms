@@ -1,14 +1,14 @@
 import { useEffect, useState } from "react";
-import { formatDate } from "../../utils.js.jsx";
-import { FaStar } from "react-icons/fa.js.jsx";
-import { getFeedbacks } from "../../services/feedback.service.js.jsx";
+import { formatDate } from "../../utils.js";
+import { FaStar } from "react-icons/fa.js";
+import { getFeedbacks } from "../../services/feedback.service.js";
 import { useDispatch, useSelector } from "react-redux";
-import Loader from "../../components/shared/loaders/Loader.js.jsx";
-import Pagination from "../../components/shared/others/Pagination.js.jsx";
-import NoDataMessage from "../../components/shared/error/NoDataMessage.js.jsx";
-import FilterButton from "../../components/shared/buttons/FilterButton.js.jsx";
-import { feedbackButtons } from "../../data.js.jsx";
-import FetchError from "../../components/shared/error/FetchError.js.jsx";
+import Loader from "../../components/shared/loaders/Loader.js";
+import Pagination from "../../components/shared/others/Pagination.js";
+import NoDataMessage from "../../components/shared/error/NoDataMessage.js";
+import FilterButton from "../../components/shared/buttons/FilterButton.js";
+import { feedbackButtons } from "../../data.js";
+import FetchError from "../../components/shared/error/FetchError.js";
 
 function Feedback() {
   const dispatch = useDispatch();

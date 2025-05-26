@@ -1,8 +1,8 @@
 import { lazy, Suspense } from "react";
-import Loader from "../components/shared/loaders/Loader.js.jsx";
+import Loader from "../components/shared/loaders/Loader.js";
 import { Route, Routes } from "react-router-dom";
-import NotFound from "../components/shared/error/NotFound.js.jsx";
-import EmployeeSidebar from "../components/ui/EmployeeSidebar.js.jsx";
+import NotFound from "../components/shared/error/NotFound.js";
+import EmployeeSidebar from "../components/ui/EmployeeSidebar.js";
 
 const Home = lazy(() => import("../pages/home/Home"));
 const Complaint = lazy(() => import("../pages/complaint/Complaint"));

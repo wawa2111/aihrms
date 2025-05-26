@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit.js.jsx";
+import { createSlice } from "@reduxjs/toolkit";
 import {
   markAttendance,
   getAttendanceList,
@@ -6,7 +6,7 @@ import {
   markAttendanceUsingQrCode,
   generateQRCodeForAttendance,
   getEmployeeAttendanceByDepartment,
-} from "../services/attendance.service.js.js.jsx";
+} from "../services/attendance.service.js";
 
 const initialState = {
   attendanceList: [],

@@ -1,4 +1,4 @@
-import axiosInstance from "../axios/axiosInstance.js.jsx";
+import axiosInstance from "../axios/axiosInstance.js";
 
 // Fetch Roles
 export const chatWithGemini = async (prompt, setLoading) => {

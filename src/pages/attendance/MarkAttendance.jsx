@@ -1,10 +1,10 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { formatDate } from "../../utils.js.jsx";
+import { formatDate } from "../../utils.js";
 import {
   generateQRCodeForAttendance,
   markAttendanceUsingQrCode,
-} from "../../services/attendance.service.js.jsx";
+} from "../../services/attendance.service.js";
 import toast from "react-hot-toast";
 
 const MarkAttendance = () => {

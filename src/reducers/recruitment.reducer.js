@@ -1,5 +1,5 @@
-import { createSlice } from "@reduxjs/toolkit.js.jsx";
-import { createJob, getJobOpenings } from "../services/recruitment.service.js.jsx";
+import { createSlice } from "@reduxjs/toolkit";
+import { createJob, getJobOpenings } from "../services/recruitment.service.js";
 
 const initialState = {
   jobs: [],

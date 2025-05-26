@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
-import { useTheme } from "../../../context.js.jsx";
+import { useTheme } from "../../../context.js";
 
 const FilterBar = ({ isOpen, hideFilterBar, handleApplyFilters }) => {
   const { theme } = useTheme();

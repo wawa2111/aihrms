@@ -1,6 +1,11 @@
-const path = require('path');
+// webpack.config.js
+import path from 'path';
+import { fileURLToPath } from 'url';
 
-module.exports = {
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+export default {
   mode: 'development',
   entry: './src/main.jsx',
   output: {
@@ -35,9 +40,8 @@ module.exports = {
   },
   resolve: {
     extensions: ['.js', '.jsx', '.json'],
-    modules: [path.resolve(__dirname, 'src'), 'node_modules'],
     alias: {
       '@': path.resolve(__dirname, 'src'),
     }
   }
-};
+}

@@ -1,117 +1,87 @@
-import { createSlice } from "@reduxjs/toolkit.js.jsx";
-import {
-  forgetPassword,
-  login,
-  logout,
-  resetPassword,
-  updatePassword,
-} from "../services/authentication.service.js.jsx";
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { loginUser, logoutUser } from "../services/authentication.service.js";
 
-function remember() {
-  return localStorage.getItem("remember") === "true";
-}
+// Login user
+export const login = createAsyncThunk(
+  "authentication/login",
+  async (userData, { rejectWithValue }) => {
+    try {
+      const response = await loginUser(userData);
+      return response;
+    } catch (error) {
+      return rejectWithValue(
+        error.response?.data?.message || "Failed to login"
+      );
+    }
+  }
+);
 
-const initialState = {
-  user: remember()
-    ? JSON.parse(localStorage.getItem("loggedInUser"))
-    : JSON.parse(sessionStorage.getItem("loggedInUser")) || null,
-  loading: false,
-  loginError: null,
-  forgetPasswordError: null,
-  updatePasswordError: null,
-  resetPasswordError: null,
-};
+// Logout user
+export const logout = createAsyncThunk(
+  "authentication/logout",
+  async (_, { rejectWithValue }) => {
+    try {
+      const response = await logoutUser();
+      return response;
+    } catch (error) {
+      return rejectWithValue(
+        error.response?.data?.message || "Failed to logout"
+      );
+    }
+  }
+);
 
-const authSlice = createSlice({
-  name: "auth",
-  initialState,
+const authenticationSlice = createSlice({
+  name: "authentication",
+  initialState: {
+    loading: false,
+    error: null,
+    user: null,
+    isAuthenticated: false,
+  },
   reducers: {
     clearState: (state) => {
       state.loading = false;
+      state.error = null;
       state.user = null;
-
-      if (remember()) {
-        localStorage.removeItem("session");
-        localStorage.removeItem("loggedInUser");
-        localStorage.removeItem("remember");
-      } else {
-        sessionStorage.removeItem("session");
-        sessionStorage.removeItem("loggedInUser");
-      }
+      state.isAuthenticated = false;
+      localStorage.removeItem("token");
+      localStorage.removeItem("user");
+    },
+    setUser: (state, action) => {
+      state.user = action.payload;
+      state.isAuthenticated = true;
     },
   },
   extraReducers: (builder) => {
     builder
-      // Handling login
+      // Login
       .addCase(login.pending, (state) => {
         state.loading = true;
+        state.error = null;
       })
       .addCase(login.fulfilled, (state, action) => {
         state.loading = false;
-        state.user = action.payload;
-        state.loginError = null;
+        state.user = action.payload.user;
+        state.isAuthenticated = true;
+        localStorage.setItem("token", action.payload.token);
+        localStorage.setItem("user", JSON.stringify(action.payload.user));
       })
       .addCase(login.rejected, (state, action) => {
         state.loading = false;
-        state.user = null;
-        state.loginError = action.payload;
+        state.error = action.payload;
       })
-
-      // Handling Forget Password
-      .addCase(forgetPassword.pending, (state) => {
-        state.loading = true;
-      })
-      .addCase(forgetPassword.fulfilled, (state, action) => {
-        state.loading = false;
-        state.forgetPasswordError = null;
-      })
-      .addCase(forgetPassword.rejected, (state, action) => {
-        state.loading = false;
-        state.forgetPasswordError = action.payload;
-      })
-
-      // Handling updatePassword
-      .addCase(updatePassword.pending, (state) => {
-        state.loading = true;
-      })
-      .addCase(updatePassword.fulfilled, (state) => {
-        state.loading = false;
-        state.updatePasswordError = null;
-      })
-      .addCase(updatePassword.rejected, (state, action) => {
-        state.loading = false;
-        state.updatePasswordError = action.payload;
-      })
-
-      // Handling resetPassword
-      .addCase(resetPassword.pending, (state) => {
-        state.loading = true;
-      })
-      .addCase(resetPassword.fulfilled, (state) => {
-        state.loading = false;
-        state.resetPasswordError = null;
-      })
-      .addCase(resetPassword.rejected, (state, action) => {
-        state.loading = false;
-        state.resetPasswordError = action.payload;
-      })
-
-      // Handling logout
+      // Logout
       .addCase(logout.pending, (state) => {
         state.loading = true;
+        state.error = null;
       })
       .addCase(logout.fulfilled, (state) => {
         state.loading = false;
         state.user = null;
-
-        if (remember()) {
-          localStorage.removeItem("session");
-          localStorage.removeItem("loggedInUser");
-          localStorage.removeItem("remember");
-        } else {
-          sessionStorage.removeItem("session");
-          sessionStorage.removeItem("loggedInUser");
-        }
+        state.isAuthenticated = false;
+        localStorage.removeItem("token");
+        localStorage.removeItem("user");
       })
       .addCase(logout.rejected, (state, action) => {
         state.loading = false;
@@ -120,5 +90,6 @@ const authSlice = createSlice({
   },
 });
 
-export default authSlice.reducer;
-export const { clearState } = authSlice.actions;
+export const { clearState, setUser } = authenticationSlice.actions;
+
+export default authenticationSlice.reducer;

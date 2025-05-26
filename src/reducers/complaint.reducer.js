@@ -1,9 +1,9 @@
-import { createSlice } from "@reduxjs/toolkit.js.jsx";
+import { createSlice } from "@reduxjs/toolkit";
 import {
   createComplaint,
   getComplaints,
   respondToComplaintRequest,
-} from "../services/complaint.service.js.jsx";
+} from "../services/complaint.service.js";
 
 const initialState = {
   complaints: [],

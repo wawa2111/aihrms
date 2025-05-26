@@ -1,8 +1,8 @@
-import Message from "./Message.js.jsx";
-import { IoMdSend } from "react-icons/io.js.jsx";
+import Message from "./Message.js";
+import { IoMdSend } from "react-icons/io.js";
 import { useRef, useEffect, useState } from "react";
-import { BsEmojiSmile, BsPaperclip } from "react-icons/bs.js.jsx";
-import { FaPaperPlane, FaArrowLeft, FaEllipsisV } from "react-icons/fa.js.jsx";
+import { BsEmojiSmile, BsPaperclip } from "react-icons/bs.js";
+import { FaPaperPlane, FaArrowLeft, FaEllipsisV } from "react-icons/fa.js";
 
 const ChatPanel = ({ selectedEmployee, message, setMessage, onBack }) => {
   const [messages, setMessages] = useState([]);

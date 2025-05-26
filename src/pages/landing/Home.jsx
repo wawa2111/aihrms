@@ -1,13 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import LandingHeader from '../../components/ui/LandingHeader';
-import FeaturesList from '../../components/shared/FeaturesList';
 
 const Home = () => {
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
-      <LandingHeader />
-      
       {/* Hero Section */}
       <section className="py-16 md:py-24 bg-gradient-to-r from-blue-600 to-indigo-700 text-white">
         <div className="container mx-auto px-4">
@@ -21,16 +17,16 @@ const Home = () => {
               </p>
               <div className="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
                 <Link 
-                  to="/signup" 
+                  to="/login" 
                   className="px-8 py-3 bg-white text-blue-600 font-medium rounded-md hover:bg-blue-50 text-center"
                 >
                   Get Started
                 </Link>
                 <Link 
-                  to="/demo" 
+                  to="/features" 
                   className="px-8 py-3 border border-white text-white font-medium rounded-md hover:bg-blue-700 text-center"
                 >
-                  Request Demo
+                  View Features
                 </Link>
               </div>
             </div>
@@ -57,16 +53,16 @@ const Home = () => {
             </p>
           </div>
           
-          <FeaturesList compact={true} />
-          
-          <div className="mt-12 text-center">
-            <Link 
-              to="/features" 
-              className="inline-flex items-center text-blue-600 dark:text-blue-400 font-medium"
-            >
-              View All Features
-              <i className="fas fa-arrow-right ml-2"></i>
-            </Link>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {features.map((feature, index) => (
+              <div key={index} className="p-6 bg-gray-50 dark:bg-gray-700 rounded-lg shadow-md">
+                <div className="text-blue-500 mb-4">
+                  <i className={`fas ${feature.icon} text-3xl`}></i>
+                </div>
+                <h3 className="text-xl font-semibold mb-2 text-gray-800 dark:text-white">{feature.title}</h3>
+                <p className="text-gray-600 dark:text-gray-300">{feature.description}</p>
+              </div>
+            ))}
           </div>
         </div>
       </section>
@@ -81,10 +77,10 @@ const Home = () => {
             Join thousands of companies that have streamlined their HR processes with HRPBloom HRMS.
           </p>
           <Link 
-            to="/signup" 
+            to="/login" 
             className="px-8 py-3 bg-blue-600 text-white font-medium rounded-md hover:bg-blue-700"
           >
-            Start Your Free Trial
+            Get Started Today
           </Link>
         </div>
       </section>
@@ -109,7 +105,6 @@ const Home = () => {
                 <ul className="space-y-2">
                   <li><Link to="/features" className="hover:text-white">Features</Link></li>
                   <li><Link to="/pricing" className="hover:text-white">Pricing</Link></li>
-                  <li><Link to="/demo" className="hover:text-white">Request Demo</Link></li>
                 </ul>
               </div>
               <div>
@@ -117,7 +112,6 @@ const Home = () => {
                 <ul className="space-y-2">
                   <li><Link to="/about" className="hover:text-white">About Us</Link></li>
                   <li><Link to="/contact" className="hover:text-white">Contact</Link></li>
-                  <li><Link to="/careers" className="hover:text-white">Careers</Link></li>
                 </ul>
               </div>
               <div>
@@ -131,17 +125,45 @@ const Home = () => {
           </div>
           <div className="border-t border-gray-700 mt-12 pt-8 flex flex-col md:flex-row justify-between items-center">
             <p>&copy; {new Date().getFullYear()} HRPBloom. All rights reserved.</p>
-            <div className="flex space-x-4 mt-4 md:mt-0">
-              <a href="#" className="hover:text-white"><i className="fab fa-twitter"></i></a>
-              <a href="#" className="hover:text-white"><i className="fab fa-facebook"></i></a>
-              <a href="#" className="hover:text-white"><i className="fab fa-linkedin"></i></a>
-              <a href="#" className="hover:text-white"><i className="fab fa-instagram"></i></a>
-            </div>
           </div>
         </div>
       </footer>
     </div>
   );
 };
+
+// Feature data
+const features = [
+  {
+    title: "Employee Management",
+    description: "Comprehensive employee profiles and records management",
+    icon: "fa-user-tie"
+  },
+  {
+    title: "Attendance Tracking",
+    description: "QR Code-based check-in/check-out system",
+    icon: "fa-qrcode"
+  },
+  {
+    title: "Leave Management",
+    description: "AI-powered substitute assignments and tracking",
+    icon: "fa-calendar-alt"
+  },
+  {
+    title: "Payroll Management",
+    description: "Automated salary calculations and payslips",
+    icon: "fa-money-bill-wave"
+  },
+  {
+    title: "Performance Management",
+    description: "Goal setting, reviews, and evaluations",
+    icon: "fa-chart-line"
+  },
+  {
+    title: "Analytics & Reports",
+    description: "Comprehensive dashboards and insights",
+    icon: "fa-chart-bar"
+  }
+];
 
 export default Home;

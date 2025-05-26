@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import Loader from "../../components/shared/loaders/Loader.js.jsx";
-import NoDataMessage from "../../components/shared/error/NoDataMessage.js.jsx";
-import FilterButton from "../../components/shared/buttons/FilterButton.js.jsx";
-import { recruitmentButtons } from "../../data.js.jsx";
-import FetchError from "../../components/shared/error/FetchError.js.jsx";
-import { getJobOpenings } from "../../services/recruitment.service.js.jsx";
-import { formatDate } from "../../utils.js.jsx";
+import Loader from "../../components/shared/loaders/Loader.js";
+import NoDataMessage from "../../components/shared/error/NoDataMessage.js";
+import FilterButton from "../../components/shared/buttons/FilterButton.js";
+import { recruitmentButtons } from "../../data.js";
+import FetchError from "../../components/shared/error/FetchError.js";
+import { getJobOpenings } from "../../services/recruitment.service.js";
+import { formatDate } from "../../utils.js";
 
 function JobOpenings() {
   const dispatch = useDispatch();

@@ -1,13 +1,9 @@
+import React from 'react';
+
 const Loader = () => {
   return (
-    <div
-      className="fixed bg-gray-800 bg-opacity-15 inset-0 z-50 flex justify-center items-center"
-    >
-      <div className="loading-container">
-        <div className="loading-circle"></div>
-        <div className="loading-circle"></div>
-        <div className="loading-circle"></div>
-      </div>
+    <div className="flex justify-center items-center h-screen">
+      <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
     </div>
   );
 };

@@ -1,268 +1,172 @@
-import React, { useState, useEffect } from "react";
+import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { login } from "../services/authentication.service.js.jsx";
+import { login } from "../reducers/authentication.reducer.js";
 import { toast } from "react-hot-toast";
-import ButtonLoader from "../components/shared/loaders/ButtonLoader.js.jsx";
-import AdminSetupModal from "../components/shared/AdminSetupModal.js.jsx";
-import axios from "axios";
+import ButtonLoader from "../components/shared/loaders/ButtonLoader.jsx";
 
 const Login = () => {
-  const navigate = useNavigate();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
   const dispatch = useDispatch();
-  const { loading } = useSelector((state) => state.authentication);
-
-  const [showSetupModal, setShowSetupModal] = useState(false);
-  const [systemStatus, setSystemStatus] = useState({ isChecking: true, isSetup: true });
-  const [credentials, setCredentials] = useState({
-    employeeId: "",
-    password: "",
-    authority: "employee",
-    remember: false,
-  });
-
-  useEffect(() => {
-    // Check if system is set up
-    const checkSystemStatus = async () => {
-      try {
-        const response = await axios.get(`${import.meta.env.VITE_API_URL}/api/system/status`);
-        setSystemStatus({ 
-          isChecking: false, 
-          isSetup: response.data.data.isSetup 
-        });
-        
-        if (!response.data.data.isSetup) {
-          setShowSetupModal(true);
-        }
-      } catch (error) {
-        console.error("Failed to check system status:", error);
-        setSystemStatus({ isChecking: false, isSetup: true });
-      }
-    };
-    
-    checkSystemStatus();
-  }, []);
-
-  const handleChange = (e) => {
-    const { name, value, type, checked } = e.target;
-    setCredentials((prev) => ({
-      ...prev,
-      [name]: type === "checkbox" ? checked : value,
-    }));
-  };
+  const navigate = useNavigate();
+  const { loading, error } = useSelector((state) => state.authentication);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+    if (!email || !password) {
+      toast.error("Please fill all fields");
+      return;
+    }
     try {
-      await dispatch(login(credentials)).unwrap();
-      
-      if (credentials.authority === "admin") {
-        navigate("/admin");
-      } else {
-        navigate("/employee");
-      }
-      
-      toast.success("Logged in successfully");
+      await dispatch(login({ email, password })).unwrap();
+      toast.success("Login successful");
     } catch (error) {
-      toast.error(error.message || "Login failed");
+      toast.error(error || "Login failed");
     }
   };
-
-  const handleSystemSetup = async (setupData) => {
-    try {
-      await axios.post(`${import.meta.env.VITE_API_URL}/api/system/setup`, setupData);
-      setSystemStatus({ isChecking: false, isSetup: true });
-      setShowSetupModal(false);
-      toast.success("System setup completed successfully. You can now log in as admin.");
-    } catch (error) {
-      toast.error(error.response?.data?.message || "System setup failed");
-      throw error;
-    }
-  };
-
-  if (systemStatus.isChecking) {
-    return (
-      <div className="flex items-center justify-center min-h-screen">
-        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
-      </div>
-    );
-  }
 
   return (
-    <>
-      <div className="flex flex-col md:flex-row h-screen">
-        <div className="w-full md:w-1/2 flex flex-col justify-center items-center p-6 md:p-10">
-          <div className="w-full max-w-md">
-            <div className="text-center mb-10">
-              <img
-                src="/hrms.png"
-                alt="HRPBloom Logo"
-                className="mx-auto h-16 mb-4"
+    <div className="min-h-screen flex items-center justify-center bg-gray-100 dark:bg-gray-900 py-12 px-4 sm:px-6 lg:px-8">
+      <div className="max-w-md w-full space-y-8 bg-white dark:bg-gray-800 p-8 rounded-lg shadow-md">
+        <div className="text-center">
+          <img
+            className="mx-auto h-12 w-auto"
+            src="/hrpbloom.png"
+            alt="HRPBloom Logo"
+          />
+          <h2 className="mt-6 text-3xl font-extrabold text-gray-900 dark:text-white">
+            Sign in to your account
+          </h2>
+        </div>
+        <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
+          <div className="rounded-md shadow-sm -space-y-px">
+            <div>
+              <label htmlFor="email-address" className="sr-only">
+                Email address
+              </label>
+              <input
+                id="email-address"
+                name="email"
+                type="email"
+                autoComplete="email"
+                required
+                className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 dark:border-gray-700 placeholder-gray-500 dark:placeholder-gray-400 text-gray-900 dark:text-white dark:bg-gray-700 rounded-t-md focus:outline-none focus:ring-blue-500 focus:border-blue-500 focus:z-10 sm:text-sm"
+                placeholder="Email address"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
               />
-              <h2 className="text-3xl font-bold text-gray-800 dark:text-white">
-                Welcome Back
-              </h2>
-              <p className="text-gray-600 dark:text-gray-300 mt-2">
-                Sign in to access your account
-              </p>
+            </div>
+            <div className="relative">
+              <label htmlFor="password" className="sr-only">
+                Password
+              </label>
+              <input
+                id="password"
+                name="password"
+                type={showPassword ? "text" : "password"}
+                autoComplete="current-password"
+                required
+                className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 dark:border-gray-700 placeholder-gray-500 dark:placeholder-gray-400 text-gray-900 dark:text-white dark:bg-gray-700 rounded-b-md focus:outline-none focus:ring-blue-500 focus:border-blue-500 focus:z-10 sm:text-sm"
+                placeholder="Password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+              />
+              <button
+                type="button"
+                className="absolute inset-y-0 right-0 pr-3 flex items-center"
+                onClick={() => setShowPassword(!showPassword)}
+              >
+                <i
+                  className={`fas ${
+                    showPassword ? "fa-eye-slash" : "fa-eye"
+                  } text-gray-400`}
+                ></i>
+              </button>
+            </div>
+          </div>
+
+          <div className="flex items-center justify-between">
+            <div className="flex items-center">
+              <input
+                id="remember-me"
+                name="remember-me"
+                type="checkbox"
+                className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+              />
+              <label
+                htmlFor="remember-me"
+                className="ml-2 block text-sm text-gray-900 dark:text-gray-300"
+              >
+                Remember me
+              </label>
             </div>
 
-            <form onSubmit={handleSubmit} className="space-y-6">
-              <div>
-                <label
-                  htmlFor="employeeId"
-                  className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
-                >
-                  Employee ID
-                </label>
-                <input
-                  id="employeeId"
-                  name="employeeId"
-                  type="text"
-                  required
-                  value={credentials.employeeId}
-                  onChange={handleChange}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
-                  placeholder="Enter your employee ID"
-                />
-              </div>
-
-              <div>
-                <label
-                  htmlFor="password"
-                  className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
-                >
-                  Password
-                </label>
-                <input
-                  id="password"
-                  name="password"
-                  type="password"
-                  required
-                  value={credentials.password}
-                  onChange={handleChange}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
-                  placeholder="Enter your password"
-                />
-              </div>
-
-              <div>
-                <label
-                  htmlFor="authority"
-                  className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
-                >
-                  Login As
-                </label>
-                <select
-                  id="authority"
-                  name="authority"
-                  value={credentials.authority}
-                  onChange={handleChange}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
-                >
-                  <option value="employee">Employee</option>
-                  <option value="admin">Admin</option>
-                </select>
-              </div>
-
-              <div className="flex items-center justify-between">
-                <div className="flex items-center">
-                  <input
-                    id="remember"
-                    name="remember"
-                    type="checkbox"
-                    checked={credentials.remember}
-                    onChange={handleChange}
-                    className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
-                  />
-                  <label
-                    htmlFor="remember"
-                    className="ml-2 block text-sm text-gray-700 dark:text-gray-300"
-                  >
-                    Remember me
-                  </label>
-                </div>
-                <Link
-                  to="/forget/password"
-                  className="text-sm font-medium text-blue-600 hover:text-blue-500 dark:text-blue-400"
-                >
-                  Forgot password?
-                </Link>
-              </div>
-
-              <div>
-                <button
-                  type="submit"
-                  disabled={loading}
-                  className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50"
-                >
-                  {loading ? <ButtonLoader /> : "Sign In"}
-                </button>
-              </div>
-            </form>
-
-            <div className="mt-6 text-center">
-              <p className="text-sm text-gray-600 dark:text-gray-400">
-                Don't have an account?{" "}
-                <Link
-                  to="/careers"
-                  className="font-medium text-blue-600 hover:text-blue-500 dark:text-blue-400"
-                >
-                  Apply for a job
-                </Link>
-              </p>
+            <div className="text-sm">
+              <Link
+                to="/forget/password"
+                className="font-medium text-blue-600 hover:text-blue-500 dark:text-blue-400 dark:hover:text-blue-300"
+              >
+                Forgot your password?
+              </Link>
             </div>
+          </div>
+
+          <div>
+            <button
+              type="submit"
+              disabled={loading}
+              className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50"
+            >
+              {loading ? <ButtonLoader /> : "Sign in"}
+            </button>
+          </div>
+        </form>
+
+        <div className="mt-6">
+          <div className="relative">
+            <div className="absolute inset-0 flex items-center">
+              <div className="w-full border-t border-gray-300 dark:border-gray-700"></div>
+            </div>
+            <div className="relative flex justify-center text-sm">
+              <span className="px-2 bg-white dark:bg-gray-800 text-gray-500 dark:text-gray-400">
+                Or continue with
+              </span>
+            </div>
+          </div>
+
+          <div className="mt-6 grid grid-cols-2 gap-3">
+            <button
+              type="button"
+              className="w-full inline-flex justify-center py-2 px-4 border border-gray-300 dark:border-gray-700 rounded-md shadow-sm bg-white dark:bg-gray-800 text-sm font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700"
+            >
+              <i className="fab fa-google text-red-500 mr-2"></i>
+              Google
+            </button>
+            <button
+              type="button"
+              className="w-full inline-flex justify-center py-2 px-4 border border-gray-300 dark:border-gray-700 rounded-md shadow-sm bg-white dark:bg-gray-800 text-sm font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700"
+            >
+              <i className="fab fa-microsoft text-blue-500 mr-2"></i>
+              Microsoft
+            </button>
           </div>
         </div>
 
-        <div className="hidden md:block md:w-1/2 bg-gradient-to-r from-blue-600 to-indigo-700">
-          <div className="h-full flex flex-col justify-center items-center p-10 text-white">
-            <h1 className="text-4xl font-bold mb-6">HRPBloom HRMS</h1>
-            <p className="text-xl mb-8 text-center max-w-md">
-              AI-powered Human Resource Management System for modern businesses
-            </p>
-            <div className="grid grid-cols-2 gap-6 max-w-md">
-              <div className="bg-white bg-opacity-20 p-4 rounded-lg">
-                <i className="fas fa-user-tie text-2xl mb-2"></i>
-                <h3 className="font-semibold mb-1">Employee Management</h3>
-                <p className="text-sm opacity-80">
-                  Streamline employee data and records
-                </p>
-              </div>
-              <div className="bg-white bg-opacity-20 p-4 rounded-lg">
-                <i className="fas fa-clock text-2xl mb-2"></i>
-                <h3 className="font-semibold mb-1">Attendance Tracking</h3>
-                <p className="text-sm opacity-80">
-                  QR-based attendance system
-                </p>
-              </div>
-              <div className="bg-white bg-opacity-20 p-4 rounded-lg">
-                <i className="fas fa-chart-line text-2xl mb-2"></i>
-                <h3 className="font-semibold mb-1">Performance Analytics</h3>
-                <p className="text-sm opacity-80">
-                  Track and improve employee performance
-                </p>
-              </div>
-              <div className="bg-white bg-opacity-20 p-4 rounded-lg">
-                <i className="fas fa-robot text-2xl mb-2"></i>
-                <h3 className="font-semibold mb-1">AI Integration</h3>
-                <p className="text-sm opacity-80">
-                  Smart insights and automation
-                </p>
-              </div>
-            </div>
-          </div>
+        <div className="text-center mt-4">
+          <p className="text-sm text-gray-600 dark:text-gray-400">
+            Don't have an account?{" "}
+            <Link
+              to="/signup"
+              className="font-medium text-blue-600 hover:text-blue-500 dark:text-blue-400 dark:hover:text-blue-300"
+            >
+              Sign up
+            </Link>
+          </p>
         </div>
       </div>
-
-      {showSetupModal && (
-        <AdminSetupModal 
-          onClose={() => setShowSetupModal(false)} 
-          onSetup={handleSystemSetup}
-        />
-      )}
-    </>
+    </div>
   );
 };
 

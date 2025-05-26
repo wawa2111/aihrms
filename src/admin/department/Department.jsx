@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-import { FaUsers, FaUserTie } from "react-icons/fa.js.jsx";
+import { FaUsers, FaUserTie } from "react-icons/fa.js";
 import { useSelector } from "react-redux";
-import Loader from "../../components/shared/loaders/Loader.js.jsx";
-import DepartmentModal from "../../components/shared/modals/DepartmentModal.js.jsx";
-import RoleModal from "../../components/shared/modals/RoleModal.js.jsx";
-import FetchError from "../../components/shared/error/FetchError.js.jsx";
+import Loader from "../../components/shared/loaders/Loader.js";
+import DepartmentModal from "../../components/shared/modals/DepartmentModal.js";
+import RoleModal from "../../components/shared/modals/RoleModal.js";
+import FetchError from "../../components/shared/error/FetchError.js";
 
 const colors = [
   { bg: "bg-blue-500", darkBg: "dark:bg-blue-600" },

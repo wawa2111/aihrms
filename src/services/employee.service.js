@@ -1,7 +1,7 @@
-import axiosInstance from "../axios/axiosInstance.js.jsx";
-import { createAsyncThunk } from "@reduxjs/toolkit.js.jsx";
+import axiosInstance from "../axios/axiosInstance.js";
+import { createAsyncThunk } from "@reduxjs/toolkit";
 import toast from "react-hot-toast";
-import useGetToken from "../hooks.js.jsx";
+import useGetToken from "../hooks.js";
 import axios from "axios";
 
 // Fetch all employees

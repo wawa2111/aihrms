@@ -1,18 +1,18 @@
 import { useEffect, useState } from "react";
-import { formatDate } from "../../utils.js.jsx";
+import { formatDate } from "../../utils.js";
 import { useSelector, useDispatch } from "react-redux";
-import Loader from "../../components/shared/loaders/Loader.js.jsx";
-import { FaCheckCircle, FaTimesCircle } from "react-icons/fa.js.jsx";
+import Loader from "../../components/shared/loaders/Loader.js";
+import { FaCheckCircle, FaTimesCircle } from "react-icons/fa.js";
 import {
   getLeavesByStatus,
   respondToLeaveRequest,
-} from "../../services/leave.service.js.jsx";
-import RemarksModal from "../../components/shared/modals/RemarksModal.js.jsx";
-import Modal from "../../components/shared/modals/Modal.js.jsx";
-import NoDataMessage from "../../components/shared/error/NoDataMessage.js.jsx";
-import FilterButton from "../../components/shared/buttons/FilterButton.js.jsx";
-import { leaveRequestButtons } from "../../data.js.jsx";
-import FetchError from "../../components/shared/error/FetchError.js.jsx";
+} from "../../services/leave.service.js";
+import RemarksModal from "../../components/shared/modals/RemarksModal.js";
+import Modal from "../../components/shared/modals/Modal.js";
+import NoDataMessage from "../../components/shared/error/NoDataMessage.js";
+import FilterButton from "../../components/shared/buttons/FilterButton.js";
+import { leaveRequestButtons } from "../../data.js";
+import FetchError from "../../components/shared/error/FetchError.js";
 
 function LeaveRequest() {
   const dispatch = useDispatch();

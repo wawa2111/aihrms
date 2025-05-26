@@ -1,9 +1,9 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod.js.jsx";
-import { createComplaint } from "../../services/complaint.service.js.jsx";
-import { complaintSchema } from "../../validations.js.jsx";
+import { useForm } from "react-hook-form.js";
+import { zodResolver } from "@hookform/resolvers/zod.js";
+import { createComplaint } from "../../services/complaint.service.js";
+import { complaintSchema } from "../../validations.js";
 
 const Complaint = () => {
   const dispatch = useDispatch();

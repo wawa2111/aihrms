@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit.js.jsx";
+import { createSlice } from "@reduxjs/toolkit";
 import {
   getAllEmployees,
   getEmployeeById,
@@ -6,7 +6,7 @@ import {
   editEmployee,
   deleteEmployee,
   bulkUploadEmployees,
-} from "../services/employee.service.js.jsx";
+} from "../services/employee.service.js";
 
 const initialState = {
   employees: [],

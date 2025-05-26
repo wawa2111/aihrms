@@ -1,130 +1,49 @@
-import { createAsyncThunk } from "@reduxjs/toolkit.js.jsx";
-import toast from "react-hot-toast";
-import axiosInstance from "../axios/axiosInstance.js.jsx";
+import axios from "axios";
 
-//  Login
-export const login = createAsyncThunk(
-  "auth/loginAdmin",
-  async (credentials, { rejectWithValue }) => {
-    try {
-      const { data } = await axiosInstance.post("/auth/login", credentials);
-      if (data.user.remember) {
-        localStorage.setItem("session", data.token);
-        localStorage.setItem("loggedInUser", JSON.stringify(data.user));
-      } else {
-        sessionStorage.setItem("session", data.token);
-        sessionStorage.setItem("loggedInUser", JSON.stringify(data.user));
+const API_URL = import.meta.env.VITE_API_URL || "/api";
+
+// Login user
+export const loginUser = async (userData) => {
+  try {
+    const response = await axios.post(`${API_URL}/auth/login`, userData);
+    return response.data.data;
+  } catch (error) {
+    throw error;
+  }
+};
+
+// Logout user
+export const logoutUser = async () => {
+  try {
+    const response = await axios.post(
+      `${API_URL}/auth/logout`,
+      {},
+      {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
       }
-      localStorage.setItem("remember", data.remember);
-      toast.success(data.message);
-      return data.user;
-    } catch (error) {
-      return rejectWithValue(error.response?.data.message || error.message);
-    }
-  }
-);
-
-// Forget Password
-export const forgetPassword = createAsyncThunk(
-  "auth/forgetPassword",
-  async (email, { rejectWithValue }) => {
-    try {
-      const { data } = await axiosInstance.post("/auth/forget/password", email);
-      return data.success;
-    } catch (error) {
-      return rejectWithValue(error.response?.data.message);
-    }
-  }
-);
-
-//  Update Password
-export const updatePassword = createAsyncThunk(
-  "auth/updatePassword",
-  async (credentials, { rejectWithValue }) => {
-    try {
-      const { data } = await axiosInstance.patch("/auth/password/update", {
-        credentials,
-      });
-      toast.success(data.message);
-      return data.success;
-    } catch (error) {
-      return rejectWithValue(error.response?.data.message);
-    }
-  }
-);
-
-// Set New Password
-export const resetPassword = createAsyncThunk(
-  "auth/resetPassword",
-  async (credentials, { rejectWithValue }) => {
-    try {
-      const { data } = await axiosInstance.patch(
-        "/auth/reset/password",
-        credentials
-      );
-      toast.success(data.message);
-      return data.success;
-    } catch (error) {
-      return rejectWithValue(error.response?.data.message);
-    }
-  }
-);
-
-// Check Reset Password
-export const checkResetPasswordValidity = async (
-  setLoading,
-  { employeeId, forgetPasswordToken }
-) => {
-  const queryParams = new URLSearchParams({
-    employeeId: employeeId || "",
-    forgetPasswordToken: forgetPasswordToken || "",
-  }).toString();
-
-  setLoading(true);
-
-  try {
-    const { data } = await axiosInstance.get(
-      `/auth/reset/password/validate?${queryParams}`
     );
-
-    return data.success;
+    return response.data.data;
   } catch (error) {
-    return false;
-  } finally {
-    setLoading(false);
+    throw error;
   }
 };
 
-// Check Reset Password
-export const checkAuthorityValidity = async (
-  employeeId,
-  authority,
-  session
-) => {
+// Check authority validity
+export const checkAuthorityValidity = async (id, authority, token) => {
   try {
-    const { data } = await axiosInstance.post("/auth/authority/check", {
-      employeeId,
-      authority,
-      session,
-    });
-
-    return data.success;
+    const response = await axios.post(
+      `${API_URL}/auth/check-authority`,
+      { id, authority },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    return response.data.success;
   } catch (error) {
     return false;
   }
 };
-
-// Logout
-export const logout = createAsyncThunk(
-  "auth/logout",
-  async (_, { rejectWithValue }) => {
-    try {
-      const { data } = await axiosInstance.get("/auth/logout");
-      toast.success(data.message);
-      return data.success;
-    } catch (error) {
-      toast.error(error.response?.data.message || error.message);
-      return rejectWithValue(error.response?.data.message || error.message);
-    }
-  }
-);

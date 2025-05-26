@@ -1,9 +1,9 @@
 import { useSelector } from "react-redux";
-import ReactMarkdown from "react-markdown";
-import { useTheme } from "../../../context.js.jsx";
-import ChatbotLoader from "../loaders/ChatbotLoader.js.jsx";
+import ReactMarkdown from "react-markdown.js";
+import { useTheme } from "../../../context.js";
+import ChatbotLoader from "../loaders/ChatbotLoader.js";
 import React, { useEffect, useRef, useState } from "react";
-import { chatWithGemini } from "../../../services/chat.service.js.jsx";
+import { chatWithGemini } from "../../../services/chat.service.js";
 
 const ChatPanel = () => {
   const { theme } = useTheme();

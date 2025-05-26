@@ -1,5 +1,5 @@
-import { createAsyncThunk } from "@reduxjs/toolkit.js.jsx";
-import axiosInstance from "../axios/axiosInstance.js.jsx";
+import { createAsyncThunk } from "@reduxjs/toolkit";
+import axiosInstance from "../axios/axiosInstance.js";
 import toast from "react-hot-toast";
 
 // Fetch Roles

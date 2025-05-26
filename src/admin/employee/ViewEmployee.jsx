@@ -1,10 +1,10 @@
 import  { useEffect } from "react";
 import { useParams } from "react-router-dom";
-import Error from "../../components/shared/error/Error.js.jsx";
+import Error from "../../components/shared/error/Error.js";
 import { useDispatch, useSelector } from "react-redux";
-import { getEmployeeById } from "../../services/employee.service.js.jsx";
-import { formatDate } from "../../utils.js.jsx";
-import ComponentLoader from "../../components/shared/loaders/ComponentLoader.js.jsx";
+import { getEmployeeById } from "../../services/employee.service.js";
+import { formatDate } from "../../utils.js";
+import ComponentLoader from "../../components/shared/loaders/ComponentLoader.js";
 
 const ViewEmployee = () => {
   const { id } = useParams();

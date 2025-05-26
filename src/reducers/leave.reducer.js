@@ -1,10 +1,10 @@
-import { createSlice } from "@reduxjs/toolkit.js.jsx";
+import { createSlice } from "@reduxjs/toolkit";
 import {
   getLeavesByStatus,
   getEmployeesOnLeave,
   respondToLeaveRequest,
   createLeave,
-} from "../services/leave.service.js.jsx";
+} from "../services/leave.service.js";
 
 const initialState = {
   leaves: [],

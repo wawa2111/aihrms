@@ -1,12 +1,12 @@
 import { useSelector } from "react-redux";
-import InfoCard from "../../components/shared/cards/InfoCard.js.jsx";
-import LineChart from "../../components/shared/charts/LineChart.js.jsx";
-import PieChart from "../../components/shared/charts/Pie.js.jsx";
-import BarGraph from "../../components/shared/charts/BarGraph.js.jsx";
-import ComponentLoader from "../../components/shared/loaders/ComponentLoader.js.jsx";
-import ChatPanel from "../../components/shared/others/ChatPanel.js.jsx";
-import FetchError from "../../components/shared/error/FetchError.js.jsx";
-import Error from "../../components/shared/error/Error.js.jsx";
+import InfoCard from "../../components/shared/cards/InfoCard.js";
+import LineChart from "../../components/shared/charts/LineChart.js";
+import PieChart from "../../components/shared/charts/Pie.js";
+import BarGraph from "../../components/shared/charts/BarGraph.js";
+import ComponentLoader from "../../components/shared/loaders/ComponentLoader.js";
+import ChatPanel from "../../components/shared/others/ChatPanel.js";
+import FetchError from "../../components/shared/error/FetchError.js";
+import Error from "../../components/shared/error/Error.js";
 
 const Dashboard = () => {
   const { insights, loading, error } = useSelector((state) => state.insight);

@@ -1,10 +1,10 @@
-import { createSlice } from "@reduxjs/toolkit.js.jsx";
+import { createSlice } from "@reduxjs/toolkit";
 import {
   createDepartment,
   getAllEmployeesForHead,
   getDepartments,
   updateDepartment,
-} from "../services/department.service.js.jsx";
+} from "../services/department.service.js";
 
 const initialState = {
   departments: [],

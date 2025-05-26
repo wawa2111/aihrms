@@ -1,7 +1,7 @@
 import React from "react";
-import { employeeInsights } from "../../data.js.jsx";
-import PieChart from "../../components/shared/charts/Pie.js.jsx";
-import LineChart from "../../components/shared/charts/LineChart.js.jsx";
+import { employeeInsights } from "../../data.js";
+import PieChart from "../../components/shared/charts/Pie.js";
+import LineChart from "../../components/shared/charts/LineChart.js";
 
 const Home = () => {
   return (

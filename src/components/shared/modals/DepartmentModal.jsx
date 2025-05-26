@@ -4,7 +4,7 @@ import {
   createDepartment,
   getAllEmployeesForHead,
   updateDepartment,
-} from "../../../services/department.service.js.jsx";
+} from "../../../services/department.service.js";
 
 const DepartmentModal = ({ action, onClose, department }) => {
   const dispatch = useDispatch();

@@ -1,9 +1,9 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod.js.jsx";
-import { createLeave } from "../../services/leave.service.js.jsx";
-import { leaveSchema } from "../../validations.js.jsx";
+import { useForm } from "react-hook-form.js";
+import { zodResolver } from "@hookform/resolvers/zod.js";
+import { createLeave } from "../../services/leave.service.js";
+import { leaveSchema } from "../../validations.js";
 
 const Leave = () => {
   const dispatch = useDispatch();

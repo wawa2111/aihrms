@@ -1,8 +1,8 @@
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod.js.jsx";
+import { useForm } from "react-hook-form.js";
+import { zodResolver } from "@hookform/resolvers/zod.js";
 import { useDispatch, useSelector } from "react-redux";
-import { forgetPassword, login } from "../services/authentication.service.js.jsx";
-import { forgetPasswordSchema } from "../validations.js.jsx";
+import { forgetPassword, login } from "../services/authentication.service.js";
+import { forgetPasswordSchema } from "../validations.js";
 import { Link, useNavigate } from "react-router-dom";
 
 const ForgetPassword = () => {

@@ -1,11 +1,11 @@
-import { set, useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod.js.jsx";
+import { set, useForm } from "react-hook-form.js";
+import { zodResolver } from "@hookform/resolvers/zod.js";
 import { useDispatch, useSelector } from "react-redux";
 import {
   checkResetPasswordValidity,
   resetPassword,
-} from "../services/authentication.service.js.jsx";
-import { resetPasswordSchema } from "../validations.js.jsx";
+} from "../services/authentication.service.js";
+import { resetPasswordSchema } from "../validations.js";
 import { Link, Navigate, useLocation, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 

@@ -1,4 +1,4 @@
-import { z } from "zod";
+import { z } from "zod.js";
 
 const authenticationSchema = z.object({
   authority: z.string().nonempty("* Authority is required"),

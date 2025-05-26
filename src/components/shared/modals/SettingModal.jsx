@@ -1,12 +1,12 @@
 import React, { useState } from "react";
-import { useTheme } from "../../../context.js.jsx";
-import { useForm } from "react-hook-form";
-import { sections, employeeSections } from "../../../data.js.jsx";
-import { updatePassword } from "../../../services/authentication.service.js.jsx";
-import { GiEarthAmerica } from "react-icons/gi.js.jsx";
-import { HiLockClosed } from "react-icons/hi.js.jsx";
-import { updatePasswordSchema } from "../../../validations.js.jsx";
-import { zodResolver } from "@hookform/resolvers/zod.js.jsx";
+import { useTheme } from "../../../context.js";
+import { useForm } from "react-hook-form.js";
+import { sections, employeeSections } from "../../../data.js";
+import { updatePassword } from "../../../services/authentication.service.js";
+import { GiEarthAmerica } from "react-icons/gi.js";
+import { HiLockClosed } from "react-icons/hi.js";
+import { updatePasswordSchema } from "../../../validations.js";
+import { zodResolver } from "@hookform/resolvers/zod.js";
 import { useDispatch, useSelector } from "react-redux";
 import toast from "react-hot-toast";
 

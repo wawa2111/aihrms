@@ -1,7 +1,7 @@
-import { useForm } from "react-hook-form";
-import ButtonLoader from "../../components/shared/loaders/ButtonLoader.js.jsx";
+import { useForm } from "react-hook-form.js";
+import ButtonLoader from "../../components/shared/loaders/ButtonLoader.js";
 import { useDispatch, useSelector } from "react-redux";
-import { createJob } from "../../services/recruitment.service.js.jsx";
+import { createJob } from "../../services/recruitment.service.js";
 
 const PostJob = () => {
   const {

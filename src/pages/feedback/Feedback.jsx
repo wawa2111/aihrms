@@ -1,9 +1,9 @@
 import { useState } from "react";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod.js.jsx";
+import { useForm } from "react-hook-form.js";
+import { zodResolver } from "@hookform/resolvers/zod.js";
 import { useDispatch, useSelector } from "react-redux";
-import { createFeedback } from "../../services/feedback.service.js.jsx";
-import { feedbackSchema } from "../../validations.js.jsx";
+import { createFeedback } from "../../services/feedback.service.js";
+import { feedbackSchema } from "../../validations.js";
 
 const Feedback = () => {
   const dispatch = useDispatch();

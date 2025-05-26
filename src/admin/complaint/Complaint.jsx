@@ -1,19 +1,19 @@
 import { useEffect, useState } from "react";
-import { FaCheckCircle, FaTimesCircle } from "react-icons/fa.js.jsx";
+import { FaCheckCircle, FaTimesCircle } from "react-icons/fa.js";
 import { useSelector, useDispatch } from "react-redux";
-import Pagination from "../../components/shared/others/Pagination.js.jsx";
+import Pagination from "../../components/shared/others/Pagination.js";
 import {
   getComplaints,
   respondToComplaintRequest,
-} from "../../services/complaint.service.js.jsx";
-import Loader from "../../components/shared/loaders/Loader.js.jsx";
-import { formatDate } from "../../utils.js.jsx";
-import Modal from "../../components/shared/modals/Modal.js.jsx";
-import RemarksModal from "../../components/shared/modals/RemarksModal.js.jsx";
-import NoDataMessage from "../../components/shared/error/NoDataMessage.js.jsx";
-import FilterButton from "../../components/shared/buttons/FilterButton.js.jsx";
-import { complaintButtons } from "../../data.js.jsx";
-import FetchError from "../../components/shared/error/FetchError.js.jsx";
+} from "../../services/complaint.service.js";
+import Loader from "../../components/shared/loaders/Loader.js";
+import { formatDate } from "../../utils.js";
+import Modal from "../../components/shared/modals/Modal.js";
+import RemarksModal from "../../components/shared/modals/RemarksModal.js";
+import NoDataMessage from "../../components/shared/error/NoDataMessage.js";
+import FilterButton from "../../components/shared/buttons/FilterButton.js";
+import { complaintButtons } from "../../data.js";
+import FetchError from "../../components/shared/error/FetchError.js";
 
 function Complaint() {
   const dispatch = useDispatch();

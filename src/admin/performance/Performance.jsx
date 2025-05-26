@@ -1,14 +1,14 @@
 import { useEffect, useState } from "react";
-import PerfromanceModal from "../../components/shared/modals/PerformanceModal.js.jsx";
+import PerfromanceModal from "../../components/shared/modals/PerformanceModal.js";
 import { useSelector, useDispatch } from "react-redux";
-import Pagination from "../../components/shared/others/Pagination.js.jsx";
-import Loader from "../../components/shared/loaders/Loader.js.jsx";
-import NoDataMessage from "../../components/shared/error/NoDataMessage.js.jsx";
-import FilterButton from "../../components/shared/buttons/FilterButton.js.jsx";
-import { performanceButtons } from "../../data.js.jsx";
-import { getPerformances } from "../../services/performance.service.js.jsx";
-import { formatDate } from "../../utils.js.jsx";
-import FetchError from "../../components/shared/error/FetchError.js.jsx";
+import Pagination from "../../components/shared/others/Pagination.js";
+import Loader from "../../components/shared/loaders/Loader.js";
+import NoDataMessage from "../../components/shared/error/NoDataMessage.js";
+import FilterButton from "../../components/shared/buttons/FilterButton.js";
+import { performanceButtons } from "../../data.js";
+import { getPerformances } from "../../services/performance.service.js";
+import { formatDate } from "../../utils.js";
+import FetchError from "../../components/shared/error/FetchError.js";
 
 function Perfromance() {
   const dispatch = useDispatch();

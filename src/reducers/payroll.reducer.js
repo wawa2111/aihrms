@@ -1,5 +1,5 @@
-import { createSlice } from "@reduxjs/toolkit.js.jsx";
-import { getAllPayrolls } from "../services/payroll.service.js.jsx";
+import { createSlice } from "@reduxjs/toolkit";
+import { getAllPayrolls } from "../services/payroll.service.js";
 
 const initialState = {
   payrolls: [],

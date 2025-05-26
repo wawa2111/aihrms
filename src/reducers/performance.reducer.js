@@ -1,8 +1,8 @@
-import { createSlice } from "@reduxjs/toolkit.js.jsx";
+import { createSlice } from "@reduxjs/toolkit";
 import {
   getPerformances,
   updatePerformance,
-} from "../services/performance.service.js.jsx";
+} from "../services/performance.service.js";
 
 const initialState = {
   performances: [],

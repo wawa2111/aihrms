@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { createRole, updateRole } from "../../../services/role.service.js.jsx";
+import { createRole, updateRole } from "../../../services/role.service.js";
 
 const RoleModal = ({ action, onClose, role }) => {
   const dispatch = useDispatch();

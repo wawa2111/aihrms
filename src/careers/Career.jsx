@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getJobOpenings } from "../services/recruitment.service.js.jsx";
-import { formatDate } from "../utils.js.jsx";
+import { getJobOpenings } from "../services/recruitment.service.js";
+import { formatDate } from "../utils.js";
 
 const Career = () => {
   const dispatch = useDispatch();

@@ -1,19 +1,19 @@
 import { Link } from "react-router-dom";
-import { downloadXls } from "../../utils.js.jsx";
+import { downloadXls } from "../../utils.js";
 import { useEffect, useState, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import Error from "../../components/shared/error/Error.js.jsx";
-import Modal from "../../components/shared/modals/Modal.js.jsx";
-import Loader from "../../components/shared/loaders/Loader.js.jsx";
-import FilterBar from "../../components/shared/others/FilterBar.js.jsx";
-import Pagination from "../../components/shared/others/Pagination.js.jsx";
+import Error from "../../components/shared/error/Error.js";
+import Modal from "../../components/shared/modals/Modal.js";
+import Loader from "../../components/shared/loaders/Loader.js";
+import FilterBar from "../../components/shared/others/FilterBar.js";
+import Pagination from "../../components/shared/others/Pagination.js";
 import {
   deleteEmployee,
   getAllEmployees,
-} from "../../services/employee.service.js.jsx";
-import NoDataMessage from "../../components/shared/error/NoDataMessage.js.jsx";
-import ImportExcelModal from "../../components/shared/modals/ImportExcelModal.js.jsx";
-import FetchError from "../../components/shared/error/FetchError.js.jsx";
+} from "../../services/employee.service.js";
+import NoDataMessage from "../../components/shared/error/NoDataMessage.js";
+import ImportExcelModal from "../../components/shared/modals/ImportExcelModal.js";
+import FetchError from "../../components/shared/error/FetchError.js";
 
 function Employee() {
   const dispatch = useDispatch();

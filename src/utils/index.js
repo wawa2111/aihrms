@@ -1,4 +1,4 @@
-import * as XLSX from "xlsx";
+import * as XLSX from "xlsx.js";
 
 const formatDate = (date) => {
   if (!date) return "";

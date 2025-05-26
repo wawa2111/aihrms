@@ -1,5 +1,5 @@
-import { createAsyncThunk } from "@reduxjs/toolkit.js.jsx";
-import axiosInstance from "../axios/axiosInstance.js.jsx";
+import { createAsyncThunk } from "@reduxjs/toolkit";
+import axiosInstance from "../axios/axiosInstance.js";
 
 // Fetch Performance
 export const getPerformances = createAsyncThunk(

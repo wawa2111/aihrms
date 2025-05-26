@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
-import { getEmployeesOnLeave } from "../../services/leave.service.js.jsx";
+import { getEmployeesOnLeave } from "../../services/leave.service.js";
 import { useSelector, useDispatch } from "react-redux";
-import { formatDate } from "../../utils.js.jsx";
-import Loader from "../../components/shared/loaders/Loader.js.jsx";
-import NoDataMessage from "../../components/shared/error/NoDataMessage.js.jsx";
-import FilterButton from "../../components/shared/buttons/FilterButton.js.jsx";
-import { employeesOnLeaveButtons } from "../../data.js.jsx";
-import FetchError from "../../components/shared/error/FetchError.js.jsx";
+import { formatDate } from "../../utils.js";
+import Loader from "../../components/shared/loaders/Loader.js";
+import NoDataMessage from "../../components/shared/error/NoDataMessage.js";
+import FilterButton from "../../components/shared/buttons/FilterButton.js";
+import { employeesOnLeaveButtons } from "../../data.js";
+import FetchError from "../../components/shared/error/FetchError.js";
 
 function EmployeeOnLeave() {
   const dispatch = useDispatch();

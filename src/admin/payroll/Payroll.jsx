@@ -1,13 +1,13 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import Loader from "../../components/shared/loaders/Loader.js.jsx";
-import Pagination from "../../components/shared/others/Pagination.js.jsx";
-import NoDataMessage from "../../components/shared/error/NoDataMessage.js.jsx";
-import FilterButton from "../../components/shared/buttons/FilterButton.js.jsx";
-import { payrollButtons } from "../../data.js.jsx";
-import { getAllPayrolls } from "../../services/payroll.service.js.jsx";
-import { formatDate, getMonthAbbreviation } from "../../utils.js.jsx";
-import FetchError from "../../components/shared/error/FetchError.js.jsx";
+import Loader from "../../components/shared/loaders/Loader.js";
+import Pagination from "../../components/shared/others/Pagination.js";
+import NoDataMessage from "../../components/shared/error/NoDataMessage.js";
+import FilterButton from "../../components/shared/buttons/FilterButton.js";
+import { payrollButtons } from "../../data.js";
+import { getAllPayrolls } from "../../services/payroll.service.js";
+import { formatDate, getMonthAbbreviation } from "../../utils.js";
+import FetchError from "../../components/shared/error/FetchError.js";
 
 function Payroll() {
   const dispatch = useDispatch();

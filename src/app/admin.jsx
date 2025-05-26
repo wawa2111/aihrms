@@ -1,12 +1,12 @@
 import { lazy, Suspense, useEffect } from "react";
-import Sidebar from "../components/ui/Sidebar.js.jsx";
-import Loader from "../components/shared/loaders/Loader.js.jsx";
+import Sidebar from "../components/ui/Sidebar.js";
+import Loader from "../components/shared/loaders/Loader.js";
 import { Route, Routes } from "react-router-dom";
-import NotFound from "../components/shared/error/NotFound.js.jsx";
-import { getRoles } from "../services/role.service.js.jsx";
+import NotFound from "../components/shared/error/NotFound.js";
+import { getRoles } from "../services/role.service.js";
 import { useDispatch } from "react-redux";
-import { getInsights } from "../services/insights.service.js.jsx";
-import { getDepartments } from "../services/department.service.js.jsx";
+import { getInsights } from "../services/insights.service.js";
+import { getDepartments } from "../services/department.service.js";
 
 const Dashboard = lazy(() => import("../admin/dashboard/Dashboard"));
 const Employee = lazy(() => import("../admin/employee/Employee"));

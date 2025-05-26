@@ -1,5 +1,5 @@
-import { createSlice } from "@reduxjs/toolkit.js.jsx";
-import { createRole, getRoles, updateRole } from "../services/role.service.js.jsx";
+import { createSlice } from "@reduxjs/toolkit";
+import { createRole, getRoles, updateRole } from "../services/role.service.js";
 
 const initialState = {
   roles: [],

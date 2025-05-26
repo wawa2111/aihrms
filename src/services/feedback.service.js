@@ -1,6 +1,6 @@
-import { createAsyncThunk } from "@reduxjs/toolkit.js.jsx";
+import { createAsyncThunk } from "@reduxjs/toolkit";
 import toast from "react-hot-toast";
-import axiosInstance from "../axios/axiosInstance.js.jsx";
+import axiosInstance from "../axios/axiosInstance.js";
 
 // Fetch Feedbacks
 export const getFeedbacks = createAsyncThunk(

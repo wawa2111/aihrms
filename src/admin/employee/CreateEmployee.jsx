@@ -1,9 +1,9 @@
 import { useDispatch, useSelector } from "react-redux";
-import { addEmployee } from "../../services/employee.service.js.jsx";
-import { useForm, Controller } from "react-hook-form";
-import Loader from "../../components/shared/loaders/Loader.js.jsx";
-import { zodResolver } from "@hookform/resolvers/zod.js.jsx";
-import { createEmployeeSchema } from "../../validations.js.jsx";
+import { addEmployee } from "../../services/employee.service.js";
+import { useForm, Controller } from "react-hook-form.js";
+import Loader from "../../components/shared/loaders/Loader.js";
+import { zodResolver } from "@hookform/resolvers/zod.js";
+import { createEmployeeSchema } from "../../validations.js";
 
 const AddEmployee = () => {
   const dispatch = useDispatch();

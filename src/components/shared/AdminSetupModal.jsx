@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { toast } from "react-hot-toast";
-import ButtonLoader from "./loaders/ButtonLoader.js.jsx";
+import ButtonLoader from "./loaders/ButtonLoader.js";
 
 const AdminSetupModal = ({ onClose, onSetup }) => {
   const [loading, setLoading] = useState(false);
