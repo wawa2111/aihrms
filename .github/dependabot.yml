@@ -1,24 +1,51 @@
-# To get started with Dependabot version updates, you'll need to specify which
-# package ecosystems to update and where the package manifests are located.
-# Please see the documentation for all configuration options:
-# https://docs.github.com/code-security/dependabot/dependabot-version-updates/configuration-options-for-the-dependabot.yml-file
-
 version: 2
 updates:
+  # Enable version updates for npm
   - package-ecosystem: "npm"
+    # Look for `package.json` and `lock` files in the `root` directory
+    directory: "/"
+    # Check for updates once a week
+    schedule:
+      interval: "weekly"
+    # Limit the number of open pull requests for npm dependencies
+    open-pull-requests-limit: 10
+    # Specify labels for npm pull requests
+    labels:
+      - "dependencies"
+      - "npm"
+    # Allow up to 5 dependencies to be updated in each pull request
+    groups:
+      dependencies:
+        patterns:
+          - "*"
+        update-types:
+          - "minor"
+          - "patch"
+
+  # Enable version updates for server npm packages
+  - package-ecosystem: "npm"
+    directory: "/server"
+    schedule:
+      interval: "weekly"
+    open-pull-requests-limit: 10
+    labels:
+      - "dependencies"
+      - "npm"
+      - "server"
+    groups:
+      dependencies:
+        patterns:
+          - "*"
+        update-types:
+          - "minor"
+          - "patch"
+
+  # Enable version updates for GitHub Actions
+  - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
       interval: "weekly"
     open-pull-requests-limit: 10
-    commit-message:
-      prefix: "deps"
-      include: "scope"
-    rebase-strategy: "auto"
-    ignore:
-      - dependency-name: "react"
-        versions: ["17.x", "18.x"] # Example: ignore specific versions if needed
-  # Add more ecosystems below as needed
-  # - package-ecosystem: "github-actions"
-  #   directory: "/"
-  #   schedule:
-  #     interval: "weekly"
+    labels:
+      - "dependencies"
+      - "github-actions"

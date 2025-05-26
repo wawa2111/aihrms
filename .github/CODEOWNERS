@@ -1,0 +1,11 @@
+# These owners will be the default owners for everything in the repo
+* @wawa2111
+
+# Server code owners
+/server/ @wawa2111
+
+# Frontend code owners
+/src/ @wawa2111
+
+# GitHub Actions workflow owners
+/.github/workflows/ @wawa2111
