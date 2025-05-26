@@ -1,19 +1,22 @@
 #!/bin/bash
 
-echo "Building HRPBloom HRMS for deployment..."
+# Exit on error
+set -e
 
-# Install dependencies
-npm install
+echo "Starting deployment process for HRPBloom..."
 
-# Build the client
+# Build the project
+echo "Building project..."
 npm run build
 
-# Create deployment package
-mkdir -p deploy
-cp -r dist deploy/
-cp -r server deploy/
-cp package.json deploy/
-cp vercel.json deploy/
+# Deploy to Vercel
+echo "Deploying to Vercel..."
+npx vercel --prod
 
-echo "Deployment package created in the 'deploy' directory"
-echo "You can now deploy this package to Vercel or any other hosting service"
+# Deploy to custom domain
+echo "Configuring custom domain..."
+npx vercel domains add hrpbloom.com --yes
+
+echo "Deployment complete! The application is now live at:"
+echo "- https://aihrms.vercel.app"
+echo "- https://hrpbloom.com"
