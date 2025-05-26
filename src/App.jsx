@@ -13,6 +13,10 @@ import Features from './pages/Features';
 import Pricing from './pages/Pricing';
 import Demo from './pages/Demo';
 import Contact from './pages/Contact';
+import About from './pages/About';
+import Terms from './pages/Terms';
+import Privacy from './pages/Privacy';
+import ForgotPassword from './pages/ForgotPassword';
 
 function App() {
   const { isAuthenticated } = useSelector((state) => state.auth);
@@ -31,11 +35,12 @@ function App() {
         <Route path="/about" element={<Contact />} />
         <Route path="/contact-sales" element={<Contact />} />
         <Route path="/case-studies" element={<Features />} />
-        <Route path="/terms" element={<NotFound />} />
-        <Route path="/privacy" element={<NotFound />} />
-        <Route path="/security" element={<NotFound />} />
-        <Route path="/compliance" element={<NotFound />} />
-        <Route path="/forgot-password" element={<NotFound />} />
+        <Route path="/terms" element={<Terms />} />
+        <Route path="/privacy" element={<Privacy />} />
+        <Route path="/security" element={<Terms />} />
+        <Route path="/compliance" element={<Terms />} />
+        <Route path="/forgot-password" element={<ForgotPassword />} />
+        <Route path="/about" element={<About />} />
         
         {/* Auth Routes */}
         <Route path="/" element={<AuthLayout />}>

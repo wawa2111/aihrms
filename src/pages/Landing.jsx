@@ -1,7 +1,10 @@
 import { Link } from 'react-router-dom';
+import { motion } from 'framer-motion';
 import LandingHeader from '../components/ui/LandingHeader';
 import PayrollFeature from '../components/ui/PayrollFeature';
 import PromoBanner from '../components/ui/PromoBanner';
+import NewsletterSection from '../components/ui/NewsletterSection';
+import AnimatedFeatureCard from '../components/ui/AnimatedFeatureCard';
 
 function Landing() {
   const currentYear = 2025;
@@ -13,44 +16,85 @@ function Landing() {
       
       <main>
         {/* Hero Section */}
-        <section className="py-12 md:py-20 bg-white dark:bg-gray-800">
+        <motion.section 
+          className="py-12 md:py-20 bg-white dark:bg-gray-800"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.6 }}
+        >
           <div className="container mx-auto px-4 sm:px-6 lg:px-8">
             <div className="flex flex-col md:flex-row items-center">
-              <div className="md:w-1/2 md:pr-8 mb-8 md:mb-0">
-                <span className="inline-block px-3 py-1 bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200 rounded-full text-sm font-medium mb-4">
+              <motion.div 
+                className="md:w-1/2 md:pr-8 mb-8 md:mb-0"
+                initial={{ opacity: 0, x: -50 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 0.2, duration: 0.6 }}
+              >
+                <motion.span 
+                  className="inline-block px-3 py-1 bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200 rounded-full text-sm font-medium mb-4"
+                  initial={{ opacity: 0, y: -20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.4, duration: 0.5 }}
+                >
                   New for {currentYear}: AI Payroll Assistant
-                </span>
-                <h1 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-4">
+                </motion.span>
+                <motion.h1 
+                  className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-4"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ delay: 0.3, duration: 0.6 }}
+                >
                   AI-Powered HR Management for Malaysian Businesses
-                </h1>
-                <p className="text-lg text-gray-600 dark:text-gray-300 mb-8">
+                </motion.h1>
+                <motion.p 
+                  className="text-lg text-gray-600 dark:text-gray-300 mb-8"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ delay: 0.4, duration: 0.6 }}
+                >
                   Streamline your HR operations with HRPBloom, the comprehensive HR management system designed specifically for Malaysian businesses. Now with advanced AI capabilities for {currentYear}.
-                </p>
-                <div className="flex flex-col sm:flex-row gap-4">
-                  <Link
-                    to="/register"
-                    className="px-6 py-3 bg-blue-600 text-white font-medium rounded-md hover:bg-blue-700 text-center"
-                  >
-                    Start Free Trial
-                  </Link>
-                  <Link
-                    to="/demo"
-                    className="px-6 py-3 border border-blue-600 text-blue-600 dark:text-blue-400 font-medium rounded-md hover:bg-blue-50 dark:hover:bg-blue-900 text-center"
-                  >
-                    Schedule Demo
-                  </Link>
-                </div>
-              </div>
-              <div className="md:w-1/2">
-                <img
+                </motion.p>
+                <motion.div 
+                  className="flex flex-col sm:flex-row gap-4"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.5, duration: 0.6 }}
+                >
+                  <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+                    <Link
+                      to="/register"
+                      className="px-6 py-3 bg-blue-600 text-white font-medium rounded-md hover:bg-blue-700 text-center block"
+                    >
+                      Start Free Trial
+                    </Link>
+                  </motion.div>
+                  <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+                    <Link
+                      to="/demo"
+                      className="px-6 py-3 border border-blue-600 text-blue-600 dark:text-blue-400 font-medium rounded-md hover:bg-blue-50 dark:hover:bg-blue-900 text-center block"
+                    >
+                      Schedule Demo
+                    </Link>
+                  </motion.div>
+                </motion.div>
+              </motion.div>
+              <motion.div 
+                className="md:w-1/2"
+                initial={{ opacity: 0, x: 50 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 0.3, duration: 0.6 }}
+              >
+                <motion.img
                   src="/hrpbloom.png"
                   alt="HRPBloom Dashboard"
                   className="rounded-lg shadow-xl"
+                  whileHover={{ scale: 1.03 }}
+                  transition={{ type: "spring", stiffness: 300 }}
                 />
-              </div>
+              </motion.div>
             </div>
           </div>
-        </section>
+        </motion.section>
         
         {/* Stats Section */}
         <section className="py-8 bg-blue-600 text-white">
@@ -94,103 +138,60 @@ function Landing() {
               </p>
             </div>
             
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {/* Feature 1 */}
-              <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 transition-transform hover:scale-105">
-                <div className="w-12 h-12 bg-blue-100 dark:bg-blue-900 rounded-lg flex items-center justify-center mb-4">
-                  <i className="fas fa-users text-blue-600 dark:text-blue-400 text-xl"></i>
-                </div>
-                <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">
-                  Employee Management
-                </h3>
-                <p className="text-gray-600 dark:text-gray-300">
-                  Complete employee lifecycle management with predictive analytics for retention and performance.
-                </p>
-                <Link to="/features/employee-management" className="mt-4 inline-flex items-center text-blue-600 dark:text-blue-400 hover:underline">
-                  Learn more <i className="fas fa-arrow-right ml-2"></i>
-                </Link>
-              </div>
-              
-              {/* Feature 2 */}
-              <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 transition-transform hover:scale-105">
-                <div className="w-12 h-12 bg-green-100 dark:bg-green-900 rounded-lg flex items-center justify-center mb-4">
-                  <i className="fas fa-clipboard-check text-green-600 dark:text-green-400 text-xl"></i>
-                </div>
-                <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">
-                  Biometric Attendance
-                </h3>
-                <p className="text-gray-600 dark:text-gray-300">
-                  Advanced biometric and QR attendance with geofencing and remote work tracking.
-                </p>
-                <Link to="/features/attendance" className="mt-4 inline-flex items-center text-blue-600 dark:text-blue-400 hover:underline">
-                  Learn more <i className="fas fa-arrow-right ml-2"></i>
-                </Link>
-              </div>
-              
-              {/* Feature 3 */}
-              <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 transition-transform hover:scale-105">
-                <div className="w-12 h-12 bg-yellow-100 dark:bg-yellow-900 rounded-lg flex items-center justify-center mb-4">
-                  <i className="fas fa-calendar-alt text-yellow-600 dark:text-yellow-400 text-xl"></i>
-                </div>
-                <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">
-                  Smart Leave Management
-                </h3>
-                <p className="text-gray-600 dark:text-gray-300">
-                  AI-powered leave planning with workload balancing and automatic compliance checks.
-                </p>
-                <Link to="/features/leave-management" className="mt-4 inline-flex items-center text-blue-600 dark:text-blue-400 hover:underline">
-                  Learn more <i className="fas fa-arrow-right ml-2"></i>
-                </Link>
-              </div>
-              
-              {/* Feature 4 */}
-              <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 transition-transform hover:scale-105">
-                <div className="w-12 h-12 bg-purple-100 dark:bg-purple-900 rounded-lg flex items-center justify-center mb-4">
-                  <i className="fas fa-robot text-purple-600 dark:text-purple-400 text-xl"></i>
-                </div>
-                <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">
-                  Generative AI HR Assistant
-                </h3>
-                <p className="text-gray-600 dark:text-gray-300">
-                  Advanced AI assistant with natural language processing for Malaysian employment laws and HR policies.
-                </p>
-                <Link to="/features/ai-assistant" className="mt-4 inline-flex items-center text-blue-600 dark:text-blue-400 hover:underline">
-                  Learn more <i className="fas fa-arrow-right ml-2"></i>
-                </Link>
-              </div>
-              
-              {/* Feature 5 */}
-              <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 transition-transform hover:scale-105">
-                <div className="w-12 h-12 bg-red-100 dark:bg-red-900 rounded-lg flex items-center justify-center mb-4">
-                  <i className="fas fa-chart-bar text-red-600 dark:text-red-400 text-xl"></i>
-                </div>
-                <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">
-                  Predictive Analytics
-                </h3>
-                <p className="text-gray-600 dark:text-gray-300">
-                  Advanced HR analytics with predictive modeling for workforce planning and talent management.
-                </p>
-                <Link to="/features/analytics" className="mt-4 inline-flex items-center text-blue-600 dark:text-blue-400 hover:underline">
-                  Learn more <i className="fas fa-arrow-right ml-2"></i>
-                </Link>
-              </div>
-              
-              {/* Feature 6 */}
-              <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 transition-transform hover:scale-105">
-                <div className="w-12 h-12 bg-indigo-100 dark:bg-indigo-900 rounded-lg flex items-center justify-center mb-4">
-                  <i className="fas fa-shield-alt text-indigo-600 dark:text-indigo-400 text-xl"></i>
-                </div>
-                <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">
-                  Compliance Automation
-                </h3>
-                <p className="text-gray-600 dark:text-gray-300">
-                  Automated compliance with {currentYear} Malaysian labor laws and real-time regulatory updates.
-                </p>
-                <Link to="/features/compliance" className="mt-4 inline-flex items-center text-blue-600 dark:text-blue-400 hover:underline">
-                  Learn more <i className="fas fa-arrow-right ml-2"></i>
-                </Link>
-              </div>
-            </div>
+            <motion.div 
+              className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              viewport={{ once: true }}
+              transition={{ staggerChildren: 0.1 }}
+            >
+              {[
+                {
+                  id: 'employee-management',
+                  title: 'Employee Management',
+                  description: 'Complete employee lifecycle management with predictive analytics for retention and performance.',
+                  icon: 'fas fa-users',
+                  color: 'blue'
+                },
+                {
+                  id: 'attendance',
+                  title: 'Biometric Attendance',
+                  description: 'Advanced biometric and QR attendance with geofencing and remote work tracking.',
+                  icon: 'fas fa-clipboard-check',
+                  color: 'green'
+                },
+                {
+                  id: 'leave-management',
+                  title: 'Smart Leave Management',
+                  description: 'AI-powered leave planning with workload balancing and automatic compliance checks.',
+                  icon: 'fas fa-calendar-alt',
+                  color: 'yellow'
+                },
+                {
+                  id: 'ai-assistant',
+                  title: 'Generative AI HR Assistant',
+                  description: 'Advanced AI assistant with natural language processing for Malaysian employment laws and HR policies.',
+                  icon: 'fas fa-robot',
+                  color: 'purple'
+                },
+                {
+                  id: 'analytics',
+                  title: 'Predictive Analytics',
+                  description: 'Advanced HR analytics with predictive modeling for workforce planning and talent management.',
+                  icon: 'fas fa-chart-bar',
+                  color: 'red'
+                },
+                {
+                  id: 'compliance',
+                  title: 'Compliance Automation',
+                  description: `Automated compliance with ${currentYear} Malaysian labor laws and real-time regulatory updates.`,
+                  icon: 'fas fa-shield-alt',
+                  color: 'indigo'
+                }
+              ].map((feature, index) => (
+                <AnimatedFeatureCard key={feature.id} feature={feature} index={index} />
+              ))}
+            </motion.div>
           </div>
         </section>
         
@@ -426,31 +427,62 @@ function Landing() {
           </div>
         </section>
         
+        {/* Newsletter Section */}
+        <NewsletterSection />
+        
         {/* CTA Section */}
-        <section className="py-12 md:py-20 bg-blue-600">
+        <motion.section 
+          className="py-12 md:py-20 bg-blue-600"
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+        >
           <div className="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
+            <motion.h2 
+              className="text-3xl md:text-4xl font-bold text-white mb-4"
+              initial={{ opacity: 0, y: -20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.2 }}
+            >
               Ready to transform your HR operations?
-            </h2>
-            <p className="text-lg text-blue-100 mb-8 max-w-3xl mx-auto">
+            </motion.h2>
+            <motion.p 
+              className="text-lg text-blue-100 mb-8 max-w-3xl mx-auto"
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.3 }}
+            >
               Join thousands of Malaysian businesses that trust HRPBloom for their HR management needs.
-            </p>
-            <div className="flex flex-col sm:flex-row justify-center gap-4">
-              <Link
-                to="/register"
-                className="px-6 py-3 bg-white text-blue-600 font-medium rounded-md hover:bg-blue-50 text-center"
-              >
-                Start Free 14-Day Trial
-              </Link>
-              <Link
-                to="/demo"
-                className="px-6 py-3 border border-white text-white font-medium rounded-md hover:bg-blue-700 text-center"
-              >
-                Schedule Live Demo
-              </Link>
-            </div>
+            </motion.p>
+            <motion.div 
+              className="flex flex-col sm:flex-row justify-center gap-4"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.4 }}
+            >
+              <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+                <Link
+                  to="/register"
+                  className="px-6 py-3 bg-white text-blue-600 font-medium rounded-md hover:bg-blue-50 text-center block"
+                >
+                  Start Free 14-Day Trial
+                </Link>
+              </motion.div>
+              <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+                <Link
+                  to="/demo"
+                  className="px-6 py-3 border border-white text-white font-medium rounded-md hover:bg-blue-700 text-center block"
+                >
+                  Schedule Live Demo
+                </Link>
+              </motion.div>
+            </motion.div>
           </div>
-        </section>
+        </motion.section>
       </main>
       
       {/* Footer */}
