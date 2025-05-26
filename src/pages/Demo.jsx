@@ -1,380 +1,306 @@
-import { toast } from 'react-hot-toast';
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import MalaysianHRAssistant from '../features/ai/MalaysianHRAssistant';
+import { toast } from 'react-hot-toast';
+import LandingHeader from '../components/ui/LandingHeader';
 
-const Demo = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [activeTab, setActiveTab] = useState('dashboard');
-  const [isLoading, setIsLoading] = useState(false);
-
-  // Demo login credentials
-  const demoCredentials = {
-    email: 'demo@hrpbloom.com',
-    password: 'demo123'
+function Demo() {
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    company: '',
+    phone: '',
+    employees: '',
+    message: '',
+    preferredDate: '',
+    preferredTime: '',
+  });
+  
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({ ...prev, [name]: value }));
   };
-
-  const handleLogin = (e) => {
+  
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    setIsLoading(true);
+    setIsSubmitting(true);
     
-    // Simulate API call
-    setTimeout(() => {
-      if (email === demoCredentials.email && password === demoCredentials.password) {
-        setIsLoggedIn(true);
-        toast.success('Demo login successful!');
-      } else {
-        toast.error('Invalid credentials. Use demo@hrpbloom.com / demo123');
-      }
-      setIsLoading(false);
-    }, 1000);
+    try {
+      // Simulate API call
+      await new Promise(resolve => setTimeout(resolve, 1000));
+      
+      toast.success('Demo request submitted successfully! Our team will contact you shortly.');
+      setFormData({
+        name: '',
+        email: '',
+        company: '',
+        phone: '',
+        employees: '',
+        message: '',
+        preferredDate: '',
+        preferredTime: '',
+      });
+    } catch (error) {
+      toast.error('Failed to submit demo request. Please try again.');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
-
-  const handleLogout = () => {
-    setIsLoggedIn(false);
-    setEmail('');
-    setPassword('');
-    toast.success('Logged out of demo');
-  };
-
-  if (!isLoggedIn) {
-    return (
-      <div className="min-h-screen bg-gray-50 dark:bg-gray-900 py-12 px-4">
-        <div className="max-w-md mx-auto">
-          <div className="text-center mb-8">
-            <h1 className="text-3xl font-bold text-gray-900 dark:text-white">HRPBloom Demo</h1>
-            <p className="mt-2 text-gray-600 dark:text-gray-400">
-              Experience the future of HR management with our interactive demo
-            </p>
-          </div>
-          
-          <div className="bg-white dark:bg-gray-800 shadow-lg rounded-lg p-8">
-            <div className="mb-6">
-              <div className="flex items-center justify-center mb-4">
-                <div className="w-16 h-16 rounded-full bg-primary-100 dark:bg-primary-900 flex items-center justify-center">
-                  <i className="fas fa-user-tie text-3xl text-primary-600 dark:text-primary-400"></i>
-                </div>
-              </div>
-              <h2 className="text-xl font-bold text-center text-gray-900 dark:text-white mb-1">Demo Account</h2>
-              <p className="text-center text-gray-600 dark:text-gray-400 text-sm mb-4">
-                Use the credentials below to access the demo
-              </p>
-              <div className="bg-gray-50 dark:bg-gray-700 rounded-lg p-3 mb-6">
-                <div className="flex justify-between items-center mb-2">
-                  <span className="text-sm text-gray-500 dark:text-gray-400">Email:</span>
-                  <span className="text-sm font-mono bg-gray-100 dark:bg-gray-600 px-2 py-1 rounded">demo@hrpbloom.com</span>
-                </div>
-                <div className="flex justify-between items-center">
-                  <span className="text-sm text-gray-500 dark:text-gray-400">Password:</span>
-                  <span className="text-sm font-mono bg-gray-100 dark:bg-gray-600 px-2 py-1 rounded">demo123</span>
-                </div>
-              </div>
-            </div>
-            
-            <form onSubmit={handleLogin}>
-              <div className="mb-4">
-                <label htmlFor="email" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                  Email
-                </label>
-                <input
-                  id="email"
-                  type="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:text-white"
-                  placeholder="demo@hrpbloom.com"
-                  required
-                />
-              </div>
-              
-              <div className="mb-6">
-                <label htmlFor="password" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                  Password
-                </label>
-                <input
-                  id="password"
-                  type="password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:text-white"
-                  placeholder="demo123"
-                  required
-                />
-              </div>
-              
-              <button
-                type="submit"
-                disabled={isLoading}
-                className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-primary-600 hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 disabled:opacity-50"
-              >
-                {isLoading ? (
-                  <>
-                    <svg className="animate-spin -ml-1 mr-2 h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                    </svg>
-                    Logging in...
-                  </>
-                ) : (
-                  <>
-                    <i className="fas fa-sign-in-alt mr-2"></i>
-                    Access Demo
-                  </>
-                )}
-              </button>
-            </form>
-            
-            <div className="mt-6 text-center text-sm text-gray-500 dark:text-gray-400">
-              <p>Want to see the full features?</p>
-              <Link to="/contact" className="text-primary-600 dark:text-primary-400 font-medium hover:underline">
-                Request a personalized demo
-              </Link>
-            </div>
-          </div>
-        </div>
-      </div>
-    );
-  }
-
+  
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
-      {/* Header */}
-      <header className="bg-white dark:bg-gray-800 shadow-sm">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between h-16 items-center">
-            <div className="flex items-center">
-              <div className="flex-shrink-0">
-                <span className="text-xl font-bold text-primary-600 dark:text-primary-400">HRPBloom Demo</span>
-              </div>
+      <LandingHeader />
+      
+      <main className="py-12 md:py-20">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="max-w-4xl mx-auto">
+            <div className="text-center mb-12">
+              <h1 className="text-4xl font-bold text-gray-900 dark:text-white mb-4">
+                Schedule a Live Demo
+              </h1>
+              <p className="text-lg text-gray-600 dark:text-gray-300">
+                See how HRPBloom can transform your HR operations with our personalized demo.
+              </p>
             </div>
             
-            <div className="flex items-center">
-              <span className="text-sm text-gray-500 dark:text-gray-400 mr-4">demo@hrpbloom.com</span>
-              <button
-                onClick={handleLogout}
-                className="px-3 py-1 border border-gray-300 dark:border-gray-600 rounded-md text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700"
-              >
-                <i className="fas fa-sign-out-alt mr-1"></i>
-                Exit Demo
-              </button>
+            <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 md:p-8">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div>
+                  <h2 className="text-2xl font-semibold text-gray-900 dark:text-white mb-4">
+                    What to Expect
+                  </h2>
+                  <ul className="space-y-4">
+                    <li className="flex items-start">
+                      <div className="flex-shrink-0 h-6 w-6 rounded-full bg-blue-100 dark:bg-blue-900 flex items-center justify-center mt-1">
+                        <i className="fas fa-check text-blue-600 dark:text-blue-400 text-sm"></i>
+                      </div>
+                      <div className="ml-3">
+                        <p className="text-gray-600 dark:text-gray-300">
+                          <span className="font-medium text-gray-900 dark:text-white">Personalized walkthrough</span> of the platform tailored to your business needs
+                        </p>
+                      </div>
+                    </li>
+                    <li className="flex items-start">
+                      <div className="flex-shrink-0 h-6 w-6 rounded-full bg-blue-100 dark:bg-blue-900 flex items-center justify-center mt-1">
+                        <i className="fas fa-check text-blue-600 dark:text-blue-400 text-sm"></i>
+                      </div>
+                      <div className="ml-3">
+                        <p className="text-gray-600 dark:text-gray-300">
+                          <span className="font-medium text-gray-900 dark:text-white">Live demonstration</span> of our AI-powered features and Malaysian HR compliance tools
+                        </p>
+                      </div>
+                    </li>
+                    <li className="flex items-start">
+                      <div className="flex-shrink-0 h-6 w-6 rounded-full bg-blue-100 dark:bg-blue-900 flex items-center justify-center mt-1">
+                        <i className="fas fa-check text-blue-600 dark:text-blue-400 text-sm"></i>
+                      </div>
+                      <div className="ml-3">
+                        <p className="text-gray-600 dark:text-gray-300">
+                          <span className="font-medium text-gray-900 dark:text-white">Q&A session</span> with our product specialists to address your specific questions
+                        </p>
+                      </div>
+                    </li>
+                    <li className="flex items-start">
+                      <div className="flex-shrink-0 h-6 w-6 rounded-full bg-blue-100 dark:bg-blue-900 flex items-center justify-center mt-1">
+                        <i className="fas fa-check text-blue-600 dark:text-blue-400 text-sm"></i>
+                      </div>
+                      <div className="ml-3">
+                        <p className="text-gray-600 dark:text-gray-300">
+                          <span className="font-medium text-gray-900 dark:text-white">Custom pricing</span> proposal based on your organization's size and needs
+                        </p>
+                      </div>
+                    </li>
+                    <li className="flex items-start">
+                      <div className="flex-shrink-0 h-6 w-6 rounded-full bg-blue-100 dark:bg-blue-900 flex items-center justify-center mt-1">
+                        <i className="fas fa-check text-blue-600 dark:text-blue-400 text-sm"></i>
+                      </div>
+                      <div className="ml-3">
+                        <p className="text-gray-600 dark:text-gray-300">
+                          <span className="font-medium text-gray-900 dark:text-white">Implementation roadmap</span> to help you get started quickly
+                        </p>
+                      </div>
+                    </li>
+                  </ul>
+                  
+                  <div className="mt-8 p-4 bg-blue-50 dark:bg-blue-900/30 rounded-lg">
+                    <p className="text-sm text-blue-800 dark:text-blue-300">
+                      <i className="fas fa-info-circle mr-2"></i>
+                      Demos typically last 30-45 minutes and are conducted via video conference. Our team is available Monday to Friday, 9am to 6pm MYT.
+                    </p>
+                  </div>
+                </div>
+                
+                <div>
+                  <form onSubmit={handleSubmit} className="space-y-4">
+                    <div>
+                      <label htmlFor="name" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                        Full Name *
+                      </label>
+                      <input
+                        type="text"
+                        id="name"
+                        name="name"
+                        value={formData.name}
+                        onChange={handleChange}
+                        required
+                        className="form-input"
+                        placeholder="Your name"
+                      />
+                    </div>
+                    
+                    <div>
+                      <label htmlFor="email" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                        Work Email *
+                      </label>
+                      <input
+                        type="email"
+                        id="email"
+                        name="email"
+                        value={formData.email}
+                        onChange={handleChange}
+                        required
+                        className="form-input"
+                        placeholder="you@company.com"
+                      />
+                    </div>
+                    
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      <div>
+                        <label htmlFor="company" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                          Company Name *
+                        </label>
+                        <input
+                          type="text"
+                          id="company"
+                          name="company"
+                          value={formData.company}
+                          onChange={handleChange}
+                          required
+                          className="form-input"
+                          placeholder="Your company"
+                        />
+                      </div>
+                      
+                      <div>
+                        <label htmlFor="phone" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                          Phone Number *
+                        </label>
+                        <input
+                          type="tel"
+                          id="phone"
+                          name="phone"
+                          value={formData.phone}
+                          onChange={handleChange}
+                          required
+                          className="form-input"
+                          placeholder="+60 12 345 6789"
+                        />
+                      </div>
+                    </div>
+                    
+                    <div>
+                      <label htmlFor="employees" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                        Number of Employees *
+                      </label>
+                      <select
+                        id="employees"
+                        name="employees"
+                        value={formData.employees}
+                        onChange={handleChange}
+                        required
+                        className="form-input"
+                      >
+                        <option value="">Select an option</option>
+                        <option value="1-10">1-10</option>
+                        <option value="11-50">11-50</option>
+                        <option value="51-200">51-200</option>
+                        <option value="201-500">201-500</option>
+                        <option value="501-1000">501-1000</option>
+                        <option value="1000+">1000+</option>
+                      </select>
+                    </div>
+                    
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      <div>
+                        <label htmlFor="preferredDate" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                          Preferred Date
+                        </label>
+                        <input
+                          type="date"
+                          id="preferredDate"
+                          name="preferredDate"
+                          value={formData.preferredDate}
+                          onChange={handleChange}
+                          className="form-input"
+                          min={new Date().toISOString().split('T')[0]}
+                        />
+                      </div>
+                      
+                      <div>
+                        <label htmlFor="preferredTime" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                          Preferred Time
+                        </label>
+                        <select
+                          id="preferredTime"
+                          name="preferredTime"
+                          value={formData.preferredTime}
+                          onChange={handleChange}
+                          className="form-input"
+                        >
+                          <option value="">Select a time</option>
+                          <option value="9:00 AM">9:00 AM</option>
+                          <option value="10:00 AM">10:00 AM</option>
+                          <option value="11:00 AM">11:00 AM</option>
+                          <option value="1:00 PM">1:00 PM</option>
+                          <option value="2:00 PM">2:00 PM</option>
+                          <option value="3:00 PM">3:00 PM</option>
+                          <option value="4:00 PM">4:00 PM</option>
+                          <option value="5:00 PM">5:00 PM</option>
+                        </select>
+                      </div>
+                    </div>
+                    
+                    <div>
+                      <label htmlFor="message" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                        Additional Information
+                      </label>
+                      <textarea
+                        id="message"
+                        name="message"
+                        value={formData.message}
+                        onChange={handleChange}
+                        rows="3"
+                        className="form-input"
+                        placeholder="Tell us about your specific needs or questions"
+                      ></textarea>
+                    </div>
+                    
+                    <div className="pt-4">
+                      <button
+                        type="submit"
+                        disabled={isSubmitting}
+                        className="w-full py-3 px-4 text-center font-medium text-white bg-blue-600 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-75"
+                      >
+                        {isSubmitting ? 'Submitting...' : 'Schedule Demo'}
+                      </button>
+                    </div>
+                  </form>
+                </div>
+              </div>
             </div>
           </div>
         </div>
-      </header>
+      </main>
       
-      {/* Main content */}
-      <div className="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
-        {/* Tabs */}
-        <div className="mb-6 border-b border-gray-200 dark:border-gray-700">
-          <nav className="flex space-x-8">
-            <button
-              onClick={() => setActiveTab('dashboard')}
-              className={`py-4 px-1 border-b-2 font-medium text-sm ${
-                activeTab === 'dashboard'
-                  ? 'border-primary-500 text-primary-600 dark:text-primary-400'
-                  : 'border-transparent text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-300'
-              }`}
-            >
-              <i className="fas fa-tachometer-alt mr-2"></i>
-              Dashboard
-            </button>
-            
-            <button
-              onClick={() => setActiveTab('hr-assistant')}
-              className={`py-4 px-1 border-b-2 font-medium text-sm ${
-                activeTab === 'hr-assistant'
-                  ? 'border-primary-500 text-primary-600 dark:text-primary-400'
-                  : 'border-transparent text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-300'
-              }`}
-            >
-              <i className="fas fa-robot mr-2"></i>
-              Malaysian HR Assistant
-            </button>
-            
-            <button
-              onClick={() => setActiveTab('employees')}
-              className={`py-4 px-1 border-b-2 font-medium text-sm ${
-                activeTab === 'employees'
-                  ? 'border-primary-500 text-primary-600 dark:text-primary-400'
-                  : 'border-transparent text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-300'
-              }`}
-            >
-              <i className="fas fa-users mr-2"></i>
-              Employees
-            </button>
-          </nav>
+      {/* Footer */}
+      <footer className="bg-gray-800 text-gray-300 py-8">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <p>&copy; {new Date().getFullYear()} HRPBloom. All rights reserved.</p>
         </div>
-        
-        {/* Tab content */}
-        <div className="px-4 py-6">
-          {activeTab === 'dashboard' && (
-            <div className="animate-fade-in">
-              <h1 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">Demo Dashboard</h1>
-              
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-                <div className="bg-white dark:bg-gray-800 overflow-hidden shadow rounded-lg">
-                  <div className="p-5">
-                    <div className="flex items-center">
-                      <div className="flex-shrink-0 bg-primary-100 dark:bg-primary-900 rounded-md p-3">
-                        <i className="fas fa-users text-primary-600 dark:text-primary-400"></i>
-                      </div>
-                      <div className="ml-5 w-0 flex-1">
-                        <dl>
-                          <dt className="text-sm font-medium text-gray-500 dark:text-gray-400 truncate">Total Employees</dt>
-                          <dd>
-                            <div className="text-lg font-medium text-gray-900 dark:text-white">1,482</div>
-                          </dd>
-                        </dl>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="bg-gray-50 dark:bg-gray-700 px-5 py-3">
-                    <div className="text-sm">
-                      <a href="#" className="font-medium text-primary-600 dark:text-primary-400 hover:text-primary-500">
-                        View all
-                      </a>
-                    </div>
-                  </div>
-                </div>
-                
-                <div className="bg-white dark:bg-gray-800 overflow-hidden shadow rounded-lg">
-                  <div className="p-5">
-                    <div className="flex items-center">
-                      <div className="flex-shrink-0 bg-green-100 dark:bg-green-900 rounded-md p-3">
-                        <i className="fas fa-check-circle text-green-600 dark:text-green-400"></i>
-                      </div>
-                      <div className="ml-5 w-0 flex-1">
-                        <dl>
-                          <dt className="text-sm font-medium text-gray-500 dark:text-gray-400 truncate">Attendance Rate</dt>
-                          <dd>
-                            <div className="text-lg font-medium text-gray-900 dark:text-white">96.3%</div>
-                          </dd>
-                        </dl>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="bg-gray-50 dark:bg-gray-700 px-5 py-3">
-                    <div className="text-sm">
-                      <a href="#" className="font-medium text-primary-600 dark:text-primary-400 hover:text-primary-500">
-                        View details
-                      </a>
-                    </div>
-                  </div>
-                </div>
-                
-                <div className="bg-white dark:bg-gray-800 overflow-hidden shadow rounded-lg">
-                  <div className="p-5">
-                    <div className="flex items-center">
-                      <div className="flex-shrink-0 bg-yellow-100 dark:bg-yellow-900 rounded-md p-3">
-                        <i className="fas fa-calendar-alt text-yellow-600 dark:text-yellow-400"></i>
-                      </div>
-                      <div className="ml-5 w-0 flex-1">
-                        <dl>
-                          <dt className="text-sm font-medium text-gray-500 dark:text-gray-400 truncate">Pending Leave Requests</dt>
-                          <dd>
-                            <div className="text-lg font-medium text-gray-900 dark:text-white">24</div>
-                          </dd>
-                        </dl>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="bg-gray-50 dark:bg-gray-700 px-5 py-3">
-                    <div className="text-sm">
-                      <a href="#" className="font-medium text-primary-600 dark:text-primary-400 hover:text-primary-500">
-                        Review all
-                      </a>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              
-              <div className="bg-white dark:bg-gray-800 shadow rounded-lg p-6 mb-8">
-                <h2 className="text-lg font-medium text-gray-900 dark:text-white mb-4">Demo Features</h2>
-                <p className="text-gray-600 dark:text-gray-400 mb-4">
-                  This interactive demo showcases key features of HRPBloom's AI-powered HR management system. 
-                  Explore the Malaysian HR Assistant to get answers about Malaysian employment laws and regulations.
-                </p>
-                <div className="bg-yellow-50 dark:bg-yellow-900/30 border-l-4 border-yellow-400 dark:border-yellow-700 p-4">
-                  <div className="flex">
-                    <div className="flex-shrink-0">
-                      <i className="fas fa-exclamation-triangle text-yellow-400 dark:text-yellow-600"></i>
-                    </div>
-                    <div className="ml-3">
-                      <p className="text-sm text-yellow-700 dark:text-yellow-200">
-                        This is a limited demo. For a full-featured demonstration, please 
-                        <Link to="/contact" className="font-medium underline"> contact our sales team</Link>.
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          )}
-          
-          {activeTab === 'hr-assistant' && (
-            <div className="animate-fade-in">
-              <h1 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">Malaysian HR Assistant</h1>
-              <MalaysianHRAssistant />
-            </div>
-          )}
-          
-          {activeTab === 'employees' && (
-            <div className="animate-fade-in">
-              <h1 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">Employee Directory</h1>
-              
-              <div className="bg-white dark:bg-gray-800 shadow overflow-hidden sm:rounded-md">
-                <ul className="divide-y divide-gray-200 dark:divide-gray-700">
-                  {[
-                    { id: 1, name: 'Ahmad Bin Abdullah', position: 'Senior HR Manager', department: 'Human Resources', location: 'Kuala Lumpur' },
-                    { id: 2, name: 'Siti Binti Rahman', position: 'Finance Director', department: 'Finance', location: 'Kuala Lumpur' },
-                    { id: 3, name: 'Raj Kumar', position: 'Software Engineer', department: 'IT', location: 'Cyberjaya' },
-                    { id: 4, name: 'Tan Wei Ming', position: 'Marketing Specialist', department: 'Marketing', location: 'Penang' },
-                    { id: 5, name: 'Nurul Huda', position: 'Operations Manager', department: 'Operations', location: 'Johor Bahru' }
-                  ].map((person) => (
-                    <li key={person.id}>
-                      <a href="#" className="block hover:bg-gray-50 dark:hover:bg-gray-700">
-                        <div className="px-4 py-4 sm:px-6">
-                          <div className="flex items-center justify-between">
-                            <p className="text-sm font-medium text-primary-600 dark:text-primary-400 truncate">
-                              {person.name}
-                            </p>
-                            <div className="ml-2 flex-shrink-0 flex">
-                              <p className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200">
-                                Active
-                              </p>
-                            </div>
-                          </div>
-                          <div className="mt-2 sm:flex sm:justify-between">
-                            <div className="sm:flex">
-                              <p className="flex items-center text-sm text-gray-500 dark:text-gray-400">
-                                <i className="fas fa-briefcase flex-shrink-0 mr-1.5 text-gray-400 dark:text-gray-500"></i>
-                                {person.position}
-                              </p>
-                              <p className="mt-2 flex items-center text-sm text-gray-500 dark:text-gray-400 sm:mt-0 sm:ml-6">
-                                <i className="fas fa-building flex-shrink-0 mr-1.5 text-gray-400 dark:text-gray-500"></i>
-                                {person.department}
-                              </p>
-                            </div>
-                            <div className="mt-2 flex items-center text-sm text-gray-500 dark:text-gray-400 sm:mt-0">
-                              <i className="fas fa-map-marker-alt flex-shrink-0 mr-1.5 text-gray-400 dark:text-gray-500"></i>
-                              <p>
-                                {person.location}
-                              </p>
-                            </div>
-                          </div>
-                        </div>
-                      </a>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </div>
-          )}
-        </div>
-      </div>
+      </footer>
     </div>
   );
-};
+}
 
 export default Demo;

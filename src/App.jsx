@@ -9,6 +9,9 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 import NotFound from './pages/NotFound';
 import Landing from './pages/Landing';
+import Features from './pages/Features';
+import Pricing from './pages/Pricing';
+import Demo from './pages/Demo';
 
 function App() {
   const { isAuthenticated } = useSelector((state) => state.auth);
@@ -19,6 +22,9 @@ function App() {
       <Routes>
         {/* Public Routes */}
         <Route path="/" element={<Landing />} />
+        <Route path="/features" element={<Features />} />
+        <Route path="/pricing" element={<Pricing />} />
+        <Route path="/demo" element={<Demo />} />
         
         {/* Auth Routes */}
         <Route path="/" element={<AuthLayout />}>
