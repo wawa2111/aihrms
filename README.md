@@ -2,18 +2,29 @@
 
 AI-Driven Human Resource Management System for modern businesses.
 
-## Features
+![HRPBloom Logo](ai-hrms/client/public/hrpbloom.png)
 
-- Employee Management
-- Attendance Tracking with QR Code
-- Leave Management with AI-powered substitute assignment
-- Performance Management
-- Feedback and Complaint Management
-- AI-Based Sentiment Analysis
-- Recruitment Management
-- Analytics and Reporting
-- Consultant Booking
-- AI HR Assistant
+## Key Features
+
+### Core Functionality
+- **Robust Authentication** - Secure login with role-based access control
+- **Employee Management** - Comprehensive employee profiles and records
+- **Attendance & Time Tracking** - QR Code-based check-in/check-out system
+- **Leave Management** - AI-powered substitute assignments
+- **Payroll Management** - Automated salary calculations and payslips
+- **Recruitment Management** - Applicant tracking and hiring workflow
+
+### Advanced Features
+- **Performance Management** - Goal setting, reviews, and evaluations
+- **Complaint Management** - Track and resolve employee grievances
+- **Communication Management** - Internal messaging and announcements
+- **Feedback Management** - AI Sentiment Analysis for employee feedback
+- **Reports & Analytics** - Comprehensive dashboards for attendance, leave, and complaints
+
+### Premium Features
+- **AI HR Assistant** - 24/7 virtual HR assistant for common queries
+- **Consultant Booking** - Access to HR professionals for specialized advice
+- **Advanced Analytics** - Predictive insights and trend analysis
 
 ## Quick Start
 
@@ -59,30 +70,7 @@ AI-Driven Human Resource Management System for modern businesses.
 
 ## Deployment
 
-### Vercel Deployment
-
-1. Connect your GitHub repository to Vercel
-2. Configure environment variables in Vercel dashboard
-3. Set up the custom domain (hrpbloom.com)
-
-### Environment Variables
-
-Required environment variables for production:
-
-```
-MONGODB_URI=mongodb+srv://username:password@cluster0.mongodb.net/hrpbloom
-JWTSECRET=your_jwt_secret_key
-CLOUDINARY_CLOUD_NAME=your_cloud_name
-CLOUDINARY_API_KEY=your_api_key
-CLOUDINARY_API_SECRET=your_api_secret
-GEMINI_API_KEY=your_gemini_api_key
-EMAIL_SERVICE=gmail
-EMAIL_USER=your_email@gmail.com
-EMAIL_PASS=your_app_password
-EMAIL_FROM=your_email@gmail.com
-CLIENT_URL=https://www.hrpbloom.com
-ADMIN_MASTER_PASSWORD=your_admin_password
-```
+Visit [hrpbloom.com](https://hrpbloom.com) to see the live application.
 
 ## License
 
