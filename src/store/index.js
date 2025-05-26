@@ -17,7 +17,7 @@ const store = configureStore({
         ignoredPaths: ['items.dates'],
       },
     }),
-  devTools: process.env.NODE_ENV !== 'production',
+  devTools: import.meta.env.DEV,
 });
 
 export default store;

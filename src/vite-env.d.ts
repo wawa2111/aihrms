@@ -8,6 +8,10 @@ interface ImportMetaEnv {
   readonly VITE_FEATURE_ANALYTICS: string
   readonly VITE_MALAYSIAN_HR_ASSISTANT_ENABLED: string
   readonly VITE_DEBUG: string
+  readonly VITE_MAX_FILE_SIZE: string
+  readonly VITE_UPLOAD_DIR: string
+  readonly VITE_SERVER_PORT: string
+  readonly VITE_CLIENT_URL: string
 }
 
 interface ImportMeta {

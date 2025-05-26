@@ -67,24 +67,28 @@ HRPBloom is a comprehensive HR management system with AI-driven features, design
 
 The application uses different environment files for different environments:
 
+#### Frontend Environment Variables (with VITE_ prefix)
 - `.env`: Default environment variables
 - `.env.development`: Development-specific variables
 - `.env.production`: Production-specific variables
 - `.env.test`: Testing-specific variables
 - `.env.local`: Local overrides (not committed to Git)
 
-Key environment variables include:
+Key frontend environment variables include:
+- `VITE_API_URL`: Backend API URL
+- `VITE_FEATURE_*`: Feature flags for enabling/disabling features
 
-#### Server Variables
-- `NODE_ENV`: Environment mode (development, production, test)
+#### Backend Environment Variables
+- `.env`: Default environment variables
+- `.env.development`: Development-specific variables
+- `.env.production`: Production-specific variables
+- `.env.test`: Testing-specific variables
+
+Key backend environment variables include:
 - `PORT`: Server port
 - `MONGODB_URI`: MongoDB connection string
 - `JWTSECRET`: Secret key for JWT tokens
 - `CLIENT_URL`: Frontend URL for CORS
-
-#### Frontend Variables
-- `VITE_API_URL`: Backend API URL
-- `VITE_FEATURE_*`: Feature flags for enabling/disabling features
 
 ### Docker Deployment
 

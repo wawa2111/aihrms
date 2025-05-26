@@ -21,7 +21,7 @@ const config = {
   dateTimeFormat: 'YYYY-MM-DD HH:mm:ss',
   
   // File upload
-  maxFileSize: 5 * 1024 * 1024, // 5MB
+  maxFileSize: parseInt(import.meta.env.VITE_MAX_FILE_SIZE || 5242880), // 5MB
   allowedFileTypes: ['image/jpeg', 'image/png', 'application/pdf'],
   
   // Malaysian HR Assistant
@@ -33,7 +33,10 @@ const config = {
     qrAttendance: import.meta.env.VITE_FEATURE_QR_ATTENDANCE === 'true',
     aiLeaveManagement: import.meta.env.VITE_FEATURE_AI_LEAVE_MANAGEMENT === 'true',
     analytics: import.meta.env.VITE_FEATURE_ANALYTICS === 'true'
-  }
+  },
+  
+  // Debug
+  debug: import.meta.env.VITE_DEBUG === 'true'
 };
 
 export default config;
