@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import ThemeToggle from './ThemeToggle';
 
 const LandingHeader = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -50,6 +51,7 @@ const LandingHeader = () => {
           
           <div className="hidden md:block">
             <div className="flex items-center space-x-3">
+              <ThemeToggle />
               <Link 
                 to="/login" 
                 className="px-4 py-2 text-sm font-medium text-blue-600 dark:text-blue-400 border border-blue-600 dark:border-blue-400 rounded-md hover:bg-blue-50 dark:hover:bg-blue-900"
@@ -109,6 +111,9 @@ const LandingHeader = () => {
               Contact
             </Link>
             <div className="pt-4 flex flex-col space-y-2">
+              <div className="flex justify-center mb-2">
+                <ThemeToggle />
+              </div>
               <Link 
                 to="/login" 
                 className="px-4 py-2 text-center text-sm font-medium text-blue-600 dark:text-blue-400 border border-blue-600 dark:border-blue-400 rounded-md hover:bg-blue-50 dark:hover:bg-blue-900"

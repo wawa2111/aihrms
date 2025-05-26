@@ -1,4 +1,5 @@
 @import 'typeface-poppins';
+@import './styles/darkTheme.css';
 @tailwind base;
 @tailwind components;
 @tailwind utilities;

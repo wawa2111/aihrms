@@ -4,6 +4,7 @@ import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import App from './App.jsx';
 import store from './store';
+import DarkModeStyles from './components/ui/DarkModeStyles';
 import './index.css';
 import '@fortawesome/fontawesome-free/css/all.min.css';
 
@@ -11,6 +12,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <Provider store={store}>
       <BrowserRouter>
+        <DarkModeStyles />
         <App />
       </BrowserRouter>
     </Provider>
