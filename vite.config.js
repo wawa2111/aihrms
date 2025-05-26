@@ -3,11 +3,21 @@ import react from '@vitejs/plugin-react'
 import path from 'path'
 
 export default defineConfig({
-  plugins: [react()],
+  plugins: [
+    react({
+      jsxImportSource: '@emotion/react',
+      babel: {
+        plugins: ['@emotion/babel-plugin']
+      }
+    })
+  ],
   server: {
     port: 3000,
     hmr: {
       overlay: true
+    },
+    watch: {
+      usePolling: true
     }
   },
   resolve: {
@@ -18,7 +28,8 @@ export default defineConfig({
       '@services': path.resolve(__dirname, 'src/services'),
       '@hooks': path.resolve(__dirname, 'src/hooks'),
       '@utils': path.resolve(__dirname, 'src/utils'),
-      '@assets': path.resolve(__dirname, 'src/assets')
+      '@assets': path.resolve(__dirname, 'src/assets'),
+      '@features': path.resolve(__dirname, 'src/features')
     }
   },
   build: {
@@ -30,12 +41,18 @@ export default defineConfig({
         manualChunks: {
           react: ['react', 'react-dom'],
           redux: ['react-redux', '@reduxjs/toolkit'],
-          router: ['react-router-dom']
+          router: ['react-router-dom'],
+          ui: ['react-hot-toast', 'chart.js', 'react-chartjs-2']
         }
       }
-    }
+    },
+    target: 'esnext',
+    minify: 'esbuild'
   },
   optimizeDeps: {
     include: ['react', 'react-dom', 'react-router-dom']
+  },
+  esbuild: {
+    jsxInject: `import React from 'react'`
   }
 })
