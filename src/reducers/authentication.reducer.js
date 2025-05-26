@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { loginUser, logoutUser } from "../services/authentication.service.js";
+import { loginUser, logoutUser, getCurrentUser } from "../services/authentication.service";
 
 // Login user
 export const login = createAsyncThunk(
@@ -26,6 +26,21 @@ export const logout = createAsyncThunk(
     } catch (error) {
       return rejectWithValue(
         error.response?.data?.message || "Failed to logout"
+      );
+    }
+  }
+);
+
+// Get current user
+export const fetchCurrentUser = createAsyncThunk(
+  "authentication/fetchCurrentUser",
+  async (_, { rejectWithValue }) => {
+    try {
+      const response = await getCurrentUser();
+      return response;
+    } catch (error) {
+      return rejectWithValue(
+        error.response?.data?.message || "Failed to fetch user"
       );
     }
   }
@@ -86,6 +101,29 @@ const authenticationSlice = createSlice({
       .addCase(logout.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
+        // Even if logout fails, we clear the state
+        state.user = null;
+        state.isAuthenticated = false;
+        localStorage.removeItem("token");
+        localStorage.removeItem("user");
+      })
+      // Fetch current user
+      .addCase(fetchCurrentUser.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(fetchCurrentUser.fulfilled, (state, action) => {
+        state.loading = false;
+        state.user = action.payload;
+        state.isAuthenticated = true;
+      })
+      .addCase(fetchCurrentUser.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+        state.user = null;
+        state.isAuthenticated = false;
+        localStorage.removeItem("token");
+        localStorage.removeItem("user");
       });
   },
 });

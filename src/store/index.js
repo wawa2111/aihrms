@@ -1,5 +1,5 @@
 import { configureStore } from '@reduxjs/toolkit';
-import authReducer from '../reducers/authentication.reducer.js';
+import authReducer from '../reducers/authentication.reducer';
 
 export const store = configureStore({
   reducer: {
@@ -7,8 +7,16 @@ export const store = configureStore({
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
-      serializableCheck: false,
+      serializableCheck: {
+        // Ignore these action types
+        ignoredActions: ['authentication/login/fulfilled'],
+        // Ignore these field paths in all actions
+        ignoredActionPaths: ['meta.arg', 'payload.timestamp'],
+        // Ignore these paths in the state
+        ignoredPaths: ['authentication.user'],
+      },
     }),
+  devTools: import.meta.env.MODE !== 'production',
 });
 
 export default store;
