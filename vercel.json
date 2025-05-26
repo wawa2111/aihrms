@@ -1,13 +1,11 @@
 {
   "name": "hrpbloom",
   "version": 2,
+  "framework": "vite",
   "buildCommand": "npm run build",
   "outputDirectory": "dist",
   "rewrites": [
     { "source": "/api/(.*)", "destination": "/api/$1" },
     { "source": "/(.*)", "destination": "/index.html" }
-  ],
-  "env": {
-    "MONGODB_URI": "mongodb+srv://admin:<db_password>@cluster0.rflorco.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
-  }
+  ]
 }
