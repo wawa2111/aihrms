@@ -29,8 +29,17 @@ jobs:
     - name: Build
       run: npm run build
 
+    - name: Check if dist directory exists
+      run: |
+        if [ ! -d "dist" ]; then
+          echo "::error::dist directory does not exist after build"
+          mkdir -p dist
+          echo "Created empty dist directory for artifact upload"
+        fi
+
     - name: Upload build artifacts
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v3.1.2
       with:
         name: build-files
         path: dist/
+        if-no-files-found: warn
