@@ -34,7 +34,7 @@ function App() {
         <Route path="/contact" element={<Contact />} />
         <Route path="/about" element={<Contact />} />
         <Route path="/contact-sales" element={<Contact />} />
-        <Route path="/case-studies" element={<Features />} />
+        <Route path="/features/case-studies" element={<Features />} />
         <Route path="/terms" element={<Terms />} />
         <Route path="/privacy" element={<Privacy />} />
         <Route path="/security" element={<Terms />} />

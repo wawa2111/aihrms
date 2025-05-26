@@ -13,16 +13,16 @@ function Footer() {
               AI-powered HR management system designed for Malaysian businesses.
             </p>
             <div className="flex space-x-4">
-              <a href="#" className="text-gray-400 hover:text-white">
+              <a href="https://facebook.com/hrpbloom" className="text-gray-400 hover:text-white">
                 <i className="fab fa-facebook"></i>
               </a>
-              <a href="#" className="text-gray-400 hover:text-white">
-                <i className="fab fa-twitter"></i>
+              <a href="https://x.com" className="text-gray-400 hover:text-white">
+                <i className="fab fa-x-twitter"></i>
               </a>
-              <a href="#" className="text-gray-400 hover:text-white">
+              <a href="https://linkedin.com/company/hrpbloom" className="text-gray-400 hover:text-white">
                 <i className="fab fa-linkedin"></i>
               </a>
-              <a href="#" className="text-gray-400 hover:text-white">
+              <a href="https://instagram.com/hrpbloom" className="text-gray-400 hover:text-white">
                 <i className="fab fa-instagram"></i>
               </a>
             </div>
@@ -33,15 +33,15 @@ function Footer() {
               <li><Link to="/features" className="hover:text-white">Features</Link></li>
               <li><Link to="/pricing" className="hover:text-white">Pricing</Link></li>
               <li><Link to="/demo" className="hover:text-white">Request Demo</Link></li>
-              <li><Link to="/customers" className="hover:text-white">Customers</Link></li>
+              <li><Link to="/features/case-studies" className="hover:text-white">Case Studies</Link></li>
             </ul>
           </div>
           <div>
             <h3 className="text-lg font-semibold text-white mb-4">Company</h3>
             <ul className="space-y-2">
               <li><Link to="/about" className="hover:text-white">About Us</Link></li>
-              <li><Link to="/careers" className="hover:text-white">Careers</Link></li>
-              <li><Link to="/blog" className="hover:text-white">Blog</Link></li>
+              <li><Link to="/about" className="hover:text-white">Careers</Link></li>
+              <li><Link to="/about" className="hover:text-white">Blog</Link></li>
               <li><Link to="/contact" className="hover:text-white">Contact</Link></li>
             </ul>
           </div>

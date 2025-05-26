@@ -1,7 +1,9 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { motion } from 'framer-motion';
 import { toast } from 'react-hot-toast';
 import LandingHeader from '../components/ui/LandingHeader';
+import ContactInfo from '../components/ui/ContactInfo';
 
 function Contact() {
   const [formData, setFormData] = useState({
@@ -63,70 +65,20 @@ function Contact() {
             <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 md:p-8">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                 <div>
-                  <h2 className="text-2xl font-semibold text-gray-900 dark:text-white mb-4">
-                    Get in Touch
-                  </h2>
-                  <p className="text-gray-600 dark:text-gray-300 mb-6">
-                    Fill out the form and our team will get back to you within 24 hours.
-                  </p>
+                  <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.5 }}
+                  >
+                    <h2 className="text-2xl font-semibold text-gray-900 dark:text-white mb-4">
+                      Get in Touch
+                    </h2>
+                    <p className="text-gray-600 dark:text-gray-300 mb-6">
+                      Fill out the form and our team will get back to you within 24 hours.
+                    </p>
+                  </motion.div>
                   
-                  <div className="space-y-4">
-                    <div className="flex items-start">
-                      <div className="flex-shrink-0 h-10 w-10 rounded-full bg-blue-100 dark:bg-blue-900 flex items-center justify-center mt-1">
-                        <i className="fas fa-map-marker-alt text-blue-600 dark:text-blue-400"></i>
-                      </div>
-                      <div className="ml-3">
-                        <p className="font-medium text-gray-900 dark:text-white">Address</p>
-                        <p className="text-gray-600 dark:text-gray-300">
-                          A-5-15, Perdana View,<br />
-                          Jalan PJU 8/1,<br />
-                          Damansara Perdana,<br />
-                          47820 Petaling Jaya,<br />
-                          Selangor
-                        </p>
-                      </div>
-                    </div>
-                    
-                    <div className="flex items-start">
-                      <div className="flex-shrink-0 h-10 w-10 rounded-full bg-blue-100 dark:bg-blue-900 flex items-center justify-center mt-1">
-                        <i className="fas fa-phone text-blue-600 dark:text-blue-400"></i>
-                      </div>
-                      <div className="ml-3">
-                        <p className="font-medium text-gray-900 dark:text-white">Phone</p>
-                        <p className="text-gray-600 dark:text-gray-300">+60-123143082</p>
-                      </div>
-                    </div>
-                    
-                    <div className="flex items-start">
-                      <div className="flex-shrink-0 h-10 w-10 rounded-full bg-blue-100 dark:bg-blue-900 flex items-center justify-center mt-1">
-                        <i className="fas fa-envelope text-blue-600 dark:text-blue-400"></i>
-                      </div>
-                      <div className="ml-3">
-                        <p className="font-medium text-gray-900 dark:text-white">Email</p>
-                        <p className="text-gray-600 dark:text-gray-300">info@hrpbloom.com</p>
-                      </div>
-                    </div>
-                  </div>
-                  
-                  <div className="mt-8">
-                    <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
-                      Follow Us
-                    </h3>
-                    <div className="flex space-x-4">
-                      <a href="#" className="h-10 w-10 rounded-full bg-blue-100 dark:bg-blue-900 flex items-center justify-center text-blue-600 dark:text-blue-400 hover:bg-blue-200 dark:hover:bg-blue-800">
-                        <i className="fab fa-facebook-f"></i>
-                      </a>
-                      <a href="#" className="h-10 w-10 rounded-full bg-blue-100 dark:bg-blue-900 flex items-center justify-center text-blue-600 dark:text-blue-400 hover:bg-blue-200 dark:hover:bg-blue-800">
-                        <i className="fab fa-twitter"></i>
-                      </a>
-                      <a href="#" className="h-10 w-10 rounded-full bg-blue-100 dark:bg-blue-900 flex items-center justify-center text-blue-600 dark:text-blue-400 hover:bg-blue-200 dark:hover:bg-blue-800">
-                        <i className="fab fa-linkedin-in"></i>
-                      </a>
-                      <a href="#" className="h-10 w-10 rounded-full bg-blue-100 dark:bg-blue-900 flex items-center justify-center text-blue-600 dark:text-blue-400 hover:bg-blue-200 dark:hover:bg-blue-800">
-                        <i className="fab fa-instagram"></i>
-                      </a>
-                    </div>
-                  </div>
+                  <ContactInfo />
                 </div>
                 
                 <div>
@@ -228,13 +180,15 @@ function Contact() {
                     </div>
                     
                     <div className="pt-4">
-                      <button
+                      <motion.button
                         type="submit"
                         disabled={isSubmitting}
                         className="w-full py-3 px-4 text-center font-medium text-white bg-blue-600 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-75"
+                        whileHover={{ scale: 1.02 }}
+                        whileTap={{ scale: 0.98 }}
                       >
                         {isSubmitting ? 'Sending...' : 'Send Message'}
-                      </button>
+                      </motion.button>
                     </div>
                   </form>
                 </div>
