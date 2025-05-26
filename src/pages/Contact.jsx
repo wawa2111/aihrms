@@ -78,9 +78,11 @@ function Contact() {
                       <div className="ml-3">
                         <p className="font-medium text-gray-900 dark:text-white">Address</p>
                         <p className="text-gray-600 dark:text-gray-300">
-                          Level 25, Menara CIMB<br />
-                          Jalan Stesen Sentral 2<br />
-                          50470 Kuala Lumpur, Malaysia
+                          A-5-15, Perdana View,<br />
+                          Jalan PJU 8/1,<br />
+                          Damansara Perdana,<br />
+                          47820 Petaling Jaya,<br />
+                          Selangor
                         </p>
                       </div>
                     </div>
@@ -91,7 +93,7 @@ function Contact() {
                       </div>
                       <div className="ml-3">
                         <p className="font-medium text-gray-900 dark:text-white">Phone</p>
-                        <p className="text-gray-600 dark:text-gray-300">+60 3 2117 0000</p>
+                        <p className="text-gray-600 dark:text-gray-300">+60-123143082</p>
                       </div>
                     </div>
                     
@@ -245,7 +247,7 @@ function Contact() {
       {/* Footer */}
       <footer className="bg-gray-800 text-gray-300 py-8">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <p>&copy; {new Date().getFullYear()} HRPBloom. All rights reserved.</p>
+          <p>&copy; {new Date().getFullYear()} HRPBloom. All rights reserved. Company Registration No: JM1014230-X</p>
         </div>
       </footer>
     </div>

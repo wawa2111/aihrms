@@ -500,7 +500,7 @@ function Landing() {
             </div>
           </div>
           <div className="border-t border-gray-700 mt-8 pt-8 text-center">
-            <p>&copy; {currentYear} HRPBloom. All rights reserved.</p>
+            <p>&copy; {currentYear} HRPBloom. All rights reserved. Company Registration No: JM1014230-X</p>
           </div>
         </div>
       </footer>

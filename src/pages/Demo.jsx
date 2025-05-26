@@ -296,7 +296,7 @@ function Demo() {
       {/* Footer */}
       <footer className="bg-gray-800 text-gray-300 py-8">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <p>&copy; {new Date().getFullYear()} HRPBloom. All rights reserved.</p>
+          <p>&copy; {new Date().getFullYear()} HRPBloom. All rights reserved. Company Registration No: JM1014230-X</p>
         </div>
       </footer>
     </div>
