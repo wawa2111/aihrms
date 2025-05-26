@@ -1,47 +1,17 @@
 {
   "name": "hrpbloom",
   "version": 2,
-  "builds": [
-    {
-      "src": "ai-hrms/client/package.json",
-      "use": "@vercel/static-build",
-      "config": { 
-        "distDir": "dist",
-        "buildCommand": "npm run build"
-      }
-    },
-    {
-      "src": "ai-hrms/server/src/index.js",
-      "use": "@vercel/node"
-    }
-  ],
-  "routes": [
-    {
-      "src": "/api/(.*)",
-      "dest": "ai-hrms/server/src/index.js"
-    },
-    {
-      "src": "/(.*)",
-      "dest": "ai-hrms/client/dist/$1"
-    }
+  "buildCommand": "npm run build",
+  "outputDirectory": "dist",
+  "framework": "vite",
+  "rewrites": [
+    { "source": "/api/(.*)", "destination": "/api/$1" },
+    { "source": "/(.*)", "destination": "/index.html" }
   ],
   "env": {
-    "NODE_ENV": "production",
     "MONGODB_URI": "mongodb+srv://admin:<db_password>@cluster0.rflorco.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0",
-    "JWTSECRET": "@jwt_secret",
-    "CLOUDINARY_CLOUD_NAME": "@cloudinary_cloud_name",
-    "CLOUDINARY_API_KEY": "@cloudinary_api_key",
-    "CLOUDINARY_API_SECRET": "@cloudinary_api_secret",
-    "GEMINI_API_KEY": "@gemini_api_key",
-    "EMAIL_SERVICE": "@email_service",
-    "EMAIL_USER": "@email_user",
-    "EMAIL_PASS": "@email_pass",
-    "EMAIL_FROM": "@email_from",
+    "JWTSECRET": "your_jwt_secret_key_here_make_it_long_and_secure",
     "CLIENT_URL": "https://hrpbloom.com",
-    "ADMIN_MASTER_PASSWORD": "@admin_master_password"
-  },
-  "github": {
-    "enabled": true,
-    "silent": true
+    "ADMIN_MASTER_PASSWORD": "Admin@HRPBloom2024!"
   }
 }
