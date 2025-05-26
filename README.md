@@ -47,8 +47,11 @@ HRPBloom is a comprehensive HR management system with AI-driven features, design
 
 3. Set up environment variables:
    ```bash
+   # Copy example environment files
    cp .env.example .env
-   # Edit .env with your configuration
+   cp server/.env.example server/.env
+   
+   # Edit .env files with your configuration
    ```
 
 4. Start the development servers:
@@ -59,6 +62,29 @@ HRPBloom is a comprehensive HR management system with AI-driven features, design
    # Start backend (in another terminal)
    npm run server
    ```
+
+### Environment Variables
+
+The application uses different environment files for different environments:
+
+- `.env`: Default environment variables
+- `.env.development`: Development-specific variables
+- `.env.production`: Production-specific variables
+- `.env.test`: Testing-specific variables
+- `.env.local`: Local overrides (not committed to Git)
+
+Key environment variables include:
+
+#### Server Variables
+- `NODE_ENV`: Environment mode (development, production, test)
+- `PORT`: Server port
+- `MONGODB_URI`: MongoDB connection string
+- `JWTSECRET`: Secret key for JWT tokens
+- `CLIENT_URL`: Frontend URL for CORS
+
+#### Frontend Variables
+- `VITE_API_URL`: Backend API URL
+- `VITE_FEATURE_*`: Feature flags for enabling/disabling features
 
 ### Docker Deployment
 
