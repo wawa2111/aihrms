@@ -1,4 +1,3 @@
-import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getEmployeeAttendance } from "../../services/attendance.service.js";
 import { formatDate } from "../../utils.js";

@@ -1,4 +1,3 @@
-import { useState, useEffect } from 'react';
 import { toast } from 'react-hot-toast';
 
 const FingerprintAuth = ({ onVerified }) => {

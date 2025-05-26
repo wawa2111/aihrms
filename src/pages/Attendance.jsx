@@ -1,4 +1,3 @@
-import React from 'react';
 import QRAttendance from '../features/attendance/QRAttendance';
 
 const Attendance = () => {

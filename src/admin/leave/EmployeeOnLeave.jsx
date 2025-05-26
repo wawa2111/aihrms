@@ -1,4 +1,3 @@
-import { useEffect, useState } from "react";
 import { getEmployeesOnLeave } from "../../services/leave.service.js";
 import { useSelector, useDispatch } from "react-redux";
 import { formatDate } from "../../utils.js";

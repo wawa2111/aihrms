@@ -1,4 +1,3 @@
-import { lazy, Suspense, useEffect } from "react";
 import Sidebar from "../components/ui/Sidebar.js";
 import Loader from "../components/shared/loaders/Loader.js";
 import { Route, Routes } from "react-router-dom";

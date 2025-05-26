@@ -1,4 +1,3 @@
-import { useEffect, useState } from "react";
 import { formatDate } from "../../utils.js";
 import { FaStar } from "react-icons/fa.js";
 import { getFeedbacks } from "../../services/feedback.service.js";

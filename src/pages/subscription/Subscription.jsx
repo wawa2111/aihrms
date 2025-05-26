@@ -1,4 +1,3 @@
-import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-hot-toast';
 import { getSubscriptionStatus, subscribeToPlan } from '../../reducers/subscription.reducer';

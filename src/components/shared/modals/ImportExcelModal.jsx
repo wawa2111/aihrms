@@ -1,4 +1,3 @@
-import * as XLSX from "xlsx.js";
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { bulkUploadEmployees } from "../../../services/employee.service.js";

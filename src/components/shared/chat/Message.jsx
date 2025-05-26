@@ -1,5 +1,4 @@
 
-
 const Message = ({ isSender, text, time }) => (
   <div
     className={`flex ${isSender ? "justify-end" : "justify-start"} mb-3 px-2`}

@@ -1,4 +1,3 @@
-import Message from "./Message.js";
 import { IoMdSend } from "react-icons/io.js";
 import { useRef, useEffect, useState } from "react";
 import { BsEmojiSmile, BsPaperclip } from "react-icons/bs.js";

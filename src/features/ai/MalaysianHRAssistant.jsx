@@ -1,4 +1,3 @@
-import { useState, useEffect } from 'react';
 import { toast } from 'react-hot-toast';
 
 const MalaysianHRAssistant = () => {
@@ -25,7 +24,7 @@ const MalaysianHRAssistant = () => {
     
     'socso_epf': 'SOCSO (Social Security Organization) provides social security protection for employees. Contribution rates: Employees contribute 0.5% of wages, employers contribute 1.75%. EPF (Employees Provident Fund) is a retirement savings scheme. For employees aged below 60: employees contribute 11% of wages, employers contribute 13% for wages ≤RM5,000 and 12% for wages >RM5,000.',
     
-    'termination': 'Termination procedures in Malaysia require proper notice as specified in the employment contract or statutory minimum (4-8 weeks based on years of service). Termination benefits include: termination indemnity (10-20 days' wages per year of service for employees with <5 years service), retirement benefits (similar scale for employees ≥5 years service), and payment in lieu of notice if applicable.',
+    'termination': 'Termination procedures in Malaysia require proper notice as specified in the employment contract or statutory minimum (4-8 weeks based on years of service). Termination benefits include: termination indemnity (10-20 days wages per year of service for employees with <5 years service), retirement benefits (similar scale for employees ≥5 years service), and payment in lieu of notice if applicable.',
     
     'industrial_relations': 'The Industrial Relations Act 1967 governs employer-employee relations, trade unions, and dispute resolution. Unfair dismissal claims can be filed with the Industrial Relations Department within 60 days of dismissal. The Industrial Court has jurisdiction over trade disputes and unfair dismissal cases.',
     

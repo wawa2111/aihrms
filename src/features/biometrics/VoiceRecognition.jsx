@@ -1,4 +1,3 @@
-import { useState, useRef, useEffect } from 'react';
 import { toast } from 'react-hot-toast';
 
 const VoiceRecognition = ({ onVerified, phrase = "My voice is my passport, verify me" }) => {

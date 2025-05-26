@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { Chart as ChartJS, ArcElement, Tooltip, Legend, CategoryScale, LinearScale, PointElement, LineElement, BarElement, Title } from 'chart.js';
 import { Pie, Line, Bar } from 'react-chartjs-2';
 

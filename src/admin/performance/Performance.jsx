@@ -1,4 +1,3 @@
-import { useEffect, useState } from "react";
 import PerfromanceModal from "../../components/shared/modals/PerformanceModal.js";
 import { useSelector, useDispatch } from "react-redux";
 import Pagination from "../../components/shared/others/Pagination.js";

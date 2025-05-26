@@ -3,14 +3,7 @@ import react from '@vitejs/plugin-react'
 import path from 'path'
 
 export default defineConfig({
-  plugins: [
-    react({
-      jsxImportSource: '@emotion/react',
-      babel: {
-        plugins: ['@emotion/babel-plugin']
-      }
-    })
-  ],
+  plugins: [react()],
   server: {
     port: 3000,
     hmr: {
@@ -41,18 +34,12 @@ export default defineConfig({
         manualChunks: {
           react: ['react', 'react-dom'],
           redux: ['react-redux', '@reduxjs/toolkit'],
-          router: ['react-router-dom'],
-          ui: ['react-hot-toast', 'chart.js', 'react-chartjs-2']
+          router: ['react-router-dom']
         }
       }
-    },
-    target: 'esnext',
-    minify: 'esbuild'
+    }
   },
   optimizeDeps: {
     include: ['react', 'react-dom', 'react-router-dom']
-  },
-  esbuild: {
-    jsxInject: `import React from 'react'`
   }
 })

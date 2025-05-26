@@ -1,4 +1,3 @@
-import BarGraph from "../../components/shared/charts/BarGraph.js";
 import PieChart from "../../components/shared/charts/Pie.js";
 import LineChart from "../../components/shared/charts/LineChart.js";
 import { useSelector } from "react-redux";

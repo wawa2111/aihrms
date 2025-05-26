@@ -1,4 +1,3 @@
-import React, { useState } from "react";
 import { FaUsers, FaUserTie } from "react-icons/fa.js";
 import { useSelector } from "react-redux";
 import Loader from "../../components/shared/loaders/Loader.js";

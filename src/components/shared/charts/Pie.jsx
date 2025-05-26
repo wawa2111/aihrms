@@ -1,4 +1,3 @@
-import { Pie } from "react-chartjs-2.js";
 import {
   Chart as ChartJS,
   CategoryScale,

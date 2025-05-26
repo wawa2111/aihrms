@@ -1,4 +1,3 @@
-import { lazy, Suspense } from "react";
 import Loader from "../components/shared/loaders/Loader.js";
 import { Route, Routes } from "react-router-dom";
 import NotFound from "../components/shared/error/NotFound.js";

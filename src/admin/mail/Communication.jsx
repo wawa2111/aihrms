@@ -1,4 +1,3 @@
-import React, { useState } from "react";
 import { FaSearch } from "react-icons/fa.js";
 import ChatPanel from "../../components/shared/chat/ChatPanel.js";
 import ContactItem from "../../components/shared/chat/ContactItem.js";

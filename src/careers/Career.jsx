@@ -1,4 +1,3 @@
-import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getJobOpenings } from "../services/recruitment.service.js";
 import { formatDate } from "../utils.js";

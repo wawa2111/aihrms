@@ -1,4 +1,3 @@
-import React from 'react';
 
 const FeaturesList = ({ compact = false }) => {
   const features = [

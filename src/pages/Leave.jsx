@@ -1,4 +1,3 @@
-import React from 'react';
 import AILeaveManagement from '../features/leave/AILeaveManagement';
 
 const Leave = () => {

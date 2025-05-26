@@ -1,4 +1,3 @@
-import { useEffect, useState } from "react";
 import { formatDate } from "../../utils.js";
 import { useSelector, useDispatch } from "react-redux";
 import Loader from "../../components/shared/loaders/Loader.js";

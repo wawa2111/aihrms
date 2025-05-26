@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { toast } from 'react-hot-toast';
 import { Link } from 'react-router-dom';
 import MalaysianHRAssistant from '../features/ai/MalaysianHRAssistant';

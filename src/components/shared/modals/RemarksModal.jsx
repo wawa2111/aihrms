@@ -1,4 +1,3 @@
-import React, { useState } from "react";
 
 const RemarksModal = ({ onClose, isConfirm }) => {
   const [remarks, setRemarks] = useState("");

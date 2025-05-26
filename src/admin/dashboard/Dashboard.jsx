@@ -1,4 +1,3 @@
-import { useSelector } from "react-redux";
 import InfoCard from "../../components/shared/cards/InfoCard.js";
 import LineChart from "../../components/shared/charts/LineChart.js";
 import PieChart from "../../components/shared/charts/Pie.js";

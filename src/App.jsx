@@ -1,4 +1,3 @@
-import React, { lazy, Suspense, useState, useEffect } from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
 import { Toaster } from "react-hot-toast";
 import Loader from "./components/shared/loaders/Loader.jsx";

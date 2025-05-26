@@ -1,4 +1,3 @@
-import React from 'react';
 import AnalyticsDashboard from '../features/analytics/AnalyticsDashboard';
 
 const Dashboard = () => {

@@ -1,4 +1,3 @@
-import  { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import Error from "../../components/shared/error/Error.js";
 import { useDispatch, useSelector } from "react-redux";

@@ -1,4 +1,3 @@
-import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getUpdates } from "../../services/insights.service.js";
 import Loader from "../../components/shared/loaders/Loader.js";

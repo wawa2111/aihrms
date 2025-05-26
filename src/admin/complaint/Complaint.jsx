@@ -1,4 +1,3 @@
-import { useEffect, useState } from "react";
 import { FaCheckCircle, FaTimesCircle } from "react-icons/fa.js";
 import { useSelector, useDispatch } from "react-redux";
 import Pagination from "../../components/shared/others/Pagination.js";

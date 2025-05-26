@@ -1,4 +1,3 @@
-import React, { useState } from "react";
 import { useTheme } from "../../../context.js";
 import { useForm } from "react-hook-form.js";
 import { sections, employeeSections } from "../../../data.js";

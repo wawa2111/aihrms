@@ -1,4 +1,3 @@
-import { useSelector } from "react-redux";
 import ReactMarkdown from "react-markdown.js";
 import { useTheme } from "../../../context.js";
 import ChatbotLoader from "../loaders/ChatbotLoader.js";

@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { toast } from 'react-hot-toast';
 import FacialRecognition from './FacialRecognition';
 import FingerprintAuth from './FingerprintAuth';
