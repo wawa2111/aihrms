@@ -1,130 +1,38 @@
-import { Routes, Route, Navigate } from "react-router-dom";
-import { Toaster } from "react-hot-toast";
-import Loader from "./components/shared/loaders/Loader.jsx";
-
-// Layout components
-const MainLayout = lazy(() => import("./layouts/MainLayout.jsx"));
-const AuthLayout = lazy(() => import("./layouts/AuthLayout.jsx"));
-
-// Auth pages
-const Login = lazy(() => import("./auth/Login.jsx"));
-const Register = lazy(() => import("./auth/Register.jsx"));
-const ForgotPassword = lazy(() => import("./auth/ForgotPassword.jsx"));
-const BiometricAuthPage = lazy(() => import("./pages/BiometricAuthPage.jsx"));
-
-// Main pages
-const Dashboard = lazy(() => import("./pages/Dashboard.jsx"));
-const Employees = lazy(() => import("./pages/Employees.jsx"));
-const Attendance = lazy(() => import("./pages/Attendance.jsx"));
-const Leave = lazy(() => import("./pages/Leave.jsx"));
-const Analytics = lazy(() => import("./pages/Analytics.jsx"));
-
-// Landing pages
-const Home = lazy(() => import("./pages/landing/Home.jsx"));
-const Features = lazy(() => import("./pages/landing/Features.jsx"));
-const CaseStudies = lazy(() => import("./pages/CaseStudies.jsx"));
-const Demo = lazy(() => import("./pages/Demo.jsx"));
-
-// Feature components
-const AIAssistant = lazy(() => import("./features/ai/AIAssistant.jsx"));
-const MalaysianHRAssistant = lazy(() => import("./features/ai/MalaysianHRAssistant.jsx"));
+import { Routes, Route, Navigate } from 'react-router-dom';
+import { Toaster } from 'react-hot-toast';
+import { useSelector } from 'react-redux';
+import MainLayout from '@/layouts/MainLayout';
+import AuthLayout from '@/layouts/AuthLayout';
+import ProtectedRoute from '@/components/shared/ProtectedRoute';
+import Dashboard from '@/pages/Dashboard';
+import Login from '@/pages/Login';
+import Register from '@/pages/Register';
+import NotFound from '@/pages/NotFound';
 
 function App() {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [isLoading, setIsLoading] = useState(true);
-  const [darkMode, setDarkMode] = useState(false);
-
-  useEffect(() => {
-    // Check if user is authenticated
-    const token = localStorage.getItem('token');
-    setIsAuthenticated(!!token);
-    setIsLoading(false);
-    
-    // Check user's theme preference
-    const isDark = localStorage.getItem('darkMode') === 'true';
-    setDarkMode(isDark);
-    if (isDark) {
-      document.documentElement.classList.add('dark');
-    }
-  }, []);
-
-  const toggleDarkMode = () => {
-    const newDarkMode = !darkMode;
-    setDarkMode(newDarkMode);
-    localStorage.setItem('darkMode', newDarkMode);
-    
-    if (newDarkMode) {
-      document.documentElement.classList.add('dark');
-    } else {
-      document.documentElement.classList.remove('dark');
-    }
-  };
-
-  if (isLoading) {
-    return <Loader />;
-  }
+  const { isAuthenticated } = useSelector((state) => state.auth);
 
   return (
-    <Suspense fallback={<Loader />}>
+    <>
       <Toaster position="top-right" />
       <Routes>
-        {/* Public routes */}
-        <Route path="/" element={<Home />} />
-        <Route path="/features" element={<Features />} />
-        <Route path="/case-studies" element={<CaseStudies />} />
-        <Route path="/demo" element={<Demo />} />
-        
-        {/* Auth routes */}
-        <Route element={<AuthLayout />}>
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
-          <Route path="/forgot-password" element={<ForgotPassword />} />
-          <Route path="/biometric-auth" element={<BiometricAuthPage />} />
+        {/* Auth Routes */}
+        <Route path="/" element={<AuthLayout />}>
+          <Route index element={isAuthenticated ? <Navigate to="/dashboard" /> : <Login />} />
+          <Route path="login" element={isAuthenticated ? <Navigate to="/dashboard" /> : <Login />} />
+          <Route path="register" element={isAuthenticated ? <Navigate to="/dashboard" /> : <Register />} />
         </Route>
         
-        {/* Protected routes */}
-        <Route 
-          element={
-            <MainLayout 
-              darkMode={darkMode} 
-              toggleDarkMode={toggleDarkMode} 
-            />
-          }
-        >
-          <Route 
-            path="/dashboard" 
-            element={isAuthenticated ? <Dashboard /> : <Navigate to="/login" />} 
-          />
-          <Route 
-            path="/employees" 
-            element={isAuthenticated ? <Employees /> : <Navigate to="/login" />} 
-          />
-          <Route 
-            path="/attendance" 
-            element={isAuthenticated ? <Attendance /> : <Navigate to="/login" />} 
-          />
-          <Route 
-            path="/leave" 
-            element={isAuthenticated ? <Leave /> : <Navigate to="/login" />} 
-          />
-          <Route 
-            path="/analytics" 
-            element={isAuthenticated ? <Analytics /> : <Navigate to="/login" />} 
-          />
-          <Route 
-            path="/ai-assistant" 
-            element={isAuthenticated ? <AIAssistant /> : <Navigate to="/login" />} 
-          />
-          <Route 
-            path="/malaysian-hr-assistant" 
-            element={isAuthenticated ? <MalaysianHRAssistant /> : <Navigate to="/login" />} 
-          />
+        {/* Protected Routes */}
+        <Route path="/" element={<ProtectedRoute><MainLayout /></ProtectedRoute>}>
+          <Route path="dashboard" element={<Dashboard />} />
+          {/* Add more routes here */}
         </Route>
         
-        {/* Fallback route */}
-        <Route path="*" element={<Navigate to="/" />} />
+        {/* 404 Route */}
+        <Route path="*" element={<NotFound />} />
       </Routes>
-    </Suspense>
+    </>
   );
 }
 
