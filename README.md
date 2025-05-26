@@ -2,11 +2,19 @@
 
 HRPBloom is a comprehensive HR management system with AI-driven features, designed specifically for Malaysian businesses to streamline HR operations and ensure compliance with local regulations.
 
+## Live Demo
+
+Visit our live application:
+- [https://hrpbloom.com](https://hrpbloom.com)
+- [https://aihrms.vercel.app](https://aihrms.vercel.app)
+
 ## Features
 
 - **Employee Management**: Complete employee lifecycle management
 - **Attendance Tracking**: QR code-based check-in/check-out system
 - **Leave Management**: AI-powered leave request and approval system
+- **AI Payroll Assistant**: Intelligent payroll processing with compliance automation
+- **Automated Payroll**: Comprehensive payroll system with Malaysian tax compliance
 - **Malaysian HR Assistant**: AI assistant specialized in Malaysian employment laws
 - **Analytics Dashboard**: Comprehensive HR analytics and reporting
 
@@ -16,7 +24,7 @@ HRPBloom is a comprehensive HR management system with AI-driven features, design
 - **Backend**: Node.js, Express, MongoDB
 - **AI Features**: Custom NLP models for HR assistance
 - **Authentication**: JWT, OAuth (Google, Microsoft, Facebook)
-- **Deployment**: Docker, GitHub Actions, Vercel
+- **Deployment**: Vercel, GitHub Actions
 
 ## Getting Started
 
@@ -63,43 +71,24 @@ HRPBloom is a comprehensive HR management system with AI-driven features, design
    npm run server
    ```
 
-### Environment Variables
+### Deployment
 
-The application uses different environment files for different environments:
+To deploy the application:
 
-#### Frontend Environment Variables (with VITE_ prefix)
-- `.env`: Default environment variables
-- `.env.development`: Development-specific variables
-- `.env.production`: Production-specific variables
-- `.env.test`: Testing-specific variables
-- `.env.local`: Local overrides (not committed to Git)
+```bash
+# Run the deployment script
+./deploy.sh
+```
 
-Key frontend environment variables include:
-- `VITE_API_URL`: Backend API URL
-- `VITE_FEATURE_*`: Feature flags for enabling/disabling features
+Or manually:
 
-#### Backend Environment Variables
-- `.env`: Default environment variables
-- `.env.development`: Development-specific variables
-- `.env.production`: Production-specific variables
-- `.env.test`: Testing-specific variables
+```bash
+# Build the project
+npm run build
 
-Key backend environment variables include:
-- `PORT`: Server port
-- `MONGODB_URI`: MongoDB connection string
-- `JWTSECRET`: Secret key for JWT tokens
-- `CLIENT_URL`: Frontend URL for CORS
-
-### Docker Deployment
-
-1. Build and run with Docker Compose:
-   ```bash
-   docker-compose up -d
-   ```
-
-2. Access the application:
-   - Frontend: http://localhost:80
-   - Backend API: http://localhost:5000
+# Deploy to Vercel
+npm run deploy
+```
 
 ## Contributing
 
@@ -113,8 +102,16 @@ Key backend environment variables include:
 
 This project is licensed under the MIT License - see the LICENSE file for details.
 
-## Acknowledgments
+## Company Information
 
-- Malaysian employment law resources
-- React and Node.js communities
-- All contributors to this project
+HRPBloom Sdn Bhd
+Company Registration No: JM1014230-X
+
+A-5-15, Perdana View,
+Jalan PJU 8/1,
+Damansara Perdana,
+47820 Petaling Jaya,
+Selangor
+
+Phone: +60-123143082
+Email: info@hrpbloom.com
