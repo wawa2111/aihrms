@@ -11,6 +11,7 @@ const AuthLayout = lazy(() => import("./layouts/AuthLayout.jsx"));
 const Login = lazy(() => import("./auth/Login.jsx"));
 const Register = lazy(() => import("./auth/Register.jsx"));
 const ForgotPassword = lazy(() => import("./auth/ForgotPassword.jsx"));
+const BiometricAuthPage = lazy(() => import("./pages/BiometricAuthPage.jsx"));
 
 // Main pages
 const Dashboard = lazy(() => import("./pages/Dashboard.jsx"));
@@ -74,6 +75,7 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/forgot-password" element={<ForgotPassword />} />
+          <Route path="/biometric-auth" element={<BiometricAuthPage />} />
         </Route>
         
         {/* Protected routes */}

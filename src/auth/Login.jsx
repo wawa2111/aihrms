@@ -192,7 +192,7 @@ const Login = () => {
 
       <form className="space-y-6" onSubmit={handleSubmit}>
         <div>
-          <label htmlFor="email" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+          <label htmlFor="email" className="label">
             Email address
           </label>
           <input
@@ -203,12 +203,12 @@ const Login = () => {
             required
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            className="mt-1 block w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:text-white"
+            className="input"
           />
         </div>
 
         <div>
-          <label htmlFor="password" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+          <label htmlFor="password" className="label">
             Password
           </label>
           <div className="mt-1 relative">
@@ -220,7 +220,7 @@ const Login = () => {
               required
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="block w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:text-white"
+              className="input"
             />
             <button
               type="button"
@@ -259,7 +259,7 @@ const Login = () => {
           <button
             type="submit"
             disabled={loading}
-            className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-primary-600 hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 disabled:opacity-50"
+            className="btn-primary w-full flex justify-center"
           >
             {loading ? <ButtonLoader /> : "Sign in"}
           </button>
@@ -300,6 +300,16 @@ const Login = () => {
           >
             <i className="fab fa-facebook text-blue-600"></i>
           </button>
+        </div>
+        
+        <div className="mt-6 text-center">
+          <Link
+            to="/biometric-auth"
+            className="inline-flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-gradient-to-r from-primary-500 to-purple-600 hover:from-primary-600 hover:to-purple-700"
+          >
+            <i className="fas fa-fingerprint mr-2"></i>
+            Sign in with Biometrics
+          </Link>
         </div>
       </div>
     </div>
