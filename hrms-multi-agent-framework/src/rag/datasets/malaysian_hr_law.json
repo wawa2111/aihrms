@@ -1,0 +1,52 @@
+{
+  "malaysian_hr_law": [
+    {
+      "law_name": "Employment Act 1955",
+      "description": "The primary legislation governing employment practices in Malaysia.",
+      "key_sections": [
+        {
+          "section": "Section 12",
+          "title": "Contracts of Service",
+          "summary": "Details the requirements for contracts of service between employers and employees."
+        },
+        {
+          "section": "Section 14",
+          "title": "Termination of Contract",
+          "summary": "Outlines the conditions under which a contract of service may be terminated."
+        }
+      ]
+    },
+    {
+      "law_name": "Industrial Relations Act 1967",
+      "description": "Regulates the relationship between employers and employees, including trade unions.",
+      "key_sections": [
+        {
+          "section": "Section 9",
+          "title": "Recognition of Trade Unions",
+          "summary": "Describes the process for employers to recognize trade unions."
+        },
+        {
+          "section": "Section 13",
+          "title": "Collective Bargaining",
+          "summary": "Details the rights and responsibilities of parties in collective bargaining."
+        }
+      ]
+    },
+    {
+      "law_name": "Occupational Safety and Health Act 1994",
+      "description": "Ensures the safety, health, and welfare of employees at work.",
+      "key_sections": [
+        {
+          "section": "Section 15",
+          "title": "General Duties of Employers",
+          "summary": "Mandates employers to ensure the safety and health of their employees."
+        },
+        {
+          "section": "Section 19",
+          "title": "Safety and Health Policy",
+          "summary": "Requires employers to formulate a safety and health policy."
+        }
+      ]
+    }
+  ]
+}
