@@ -2,6 +2,7 @@ import Leave from '../models/leave.model.js';
 import User from '../models/user.model.js';
 import { AppError } from '../utils/errorHandler.js';
 import logger from '../utils/logger.js';
+import mongoose from 'mongoose';
 
 const leaveController = {
   // Get all leave requests
@@ -699,6 +700,188 @@ const leaveController = {
         success: true,
         count: availableSubstitutes.length,
         data: availableSubstitutes
+      });
+    } catch (error) {
+      next(error);
+    }
+  },
+  
+  // Bulk approve leave requests
+  bulkApproveLeaveRequests: async (req, res, next) => {
+    try {
+      const { leaveIds } = req.body;
+      
+      if (!leaveIds || !Array.isArray(leaveIds) || leaveIds.length === 0) {
+        return next(new AppError('Please provide an array of leave request IDs', 400));
+      }
+      
+      // Check if user is authorized to approve leave requests
+      if (req.user.role !== 'hr' && req.user.role !== 'admin' && req.user.role !== 'manager') {
+        return next(new AppError('You are not authorized to approve leave requests', 403));
+      }
+      
+      // Validate all IDs are valid MongoDB ObjectIds
+      const validIds = leaveIds.filter(id => mongoose.Types.ObjectId.isValid(id));
+      
+      if (validIds.length !== leaveIds.length) {
+        return next(new AppError('One or more invalid leave request IDs provided', 400));
+      }
+      
+      // Find all leave requests
+      const leaveRequests = await Leave.find({
+        _id: { $in: validIds },
+        status: 'pending'
+      }).populate('employee', 'name email manager department');
+      
+      if (leaveRequests.length === 0) {
+        return next(new AppError('No pending leave requests found with the provided IDs', 404));
+      }
+      
+      // Check authorization for each leave request if user is a manager
+      if (req.user.role === 'manager') {
+        const unauthorizedRequests = leaveRequests.filter(request => 
+          !request.employee.manager || request.employee.manager.toString() !== req.user.id
+        );
+        
+        if (unauthorizedRequests.length > 0) {
+          return next(new AppError('You are not authorized to approve one or more of these leave requests', 403));
+        }
+      }
+      
+      // Update all leave requests
+      const now = new Date();
+      const bulkOps = leaveRequests.map(request => ({
+        updateOne: {
+          filter: { _id: request._id },
+          update: {
+            $set: {
+              status: 'approved',
+              approver: req.user.id,
+              approvedAt: now
+            }
+          }
+        }
+      }));
+      
+      const result = await Leave.bulkWrite(bulkOps);
+      
+      // Emit real-time updates via Socket.IO
+      if (req.app.get('io')) {
+        leaveRequests.forEach(request => {
+          req.app.get('io').emit('leave:update', {
+            type: 'approved',
+            request: {
+              ...request.toObject(),
+              status: 'approved',
+              approver: req.user.id,
+              approvedAt: now
+            }
+          });
+        });
+      }
+      
+      // Log the bulk approval
+      logger.info(`User ${req.user.id} bulk approved ${result.modifiedCount} leave requests`);
+      
+      res.status(200).json({
+        success: true,
+        message: `Successfully approved ${result.modifiedCount} leave requests`,
+        count: result.modifiedCount,
+        data: leaveRequests.map(request => request._id)
+      });
+    } catch (error) {
+      next(error);
+    }
+  },
+  
+  // Bulk reject leave requests
+  bulkRejectLeaveRequests: async (req, res, next) => {
+    try {
+      const { leaveIds, rejectionReason } = req.body;
+      
+      if (!leaveIds || !Array.isArray(leaveIds) || leaveIds.length === 0) {
+        return next(new AppError('Please provide an array of leave request IDs', 400));
+      }
+      
+      if (!rejectionReason) {
+        return next(new AppError('Rejection reason is required', 400));
+      }
+      
+      // Check if user is authorized to reject leave requests
+      if (req.user.role !== 'hr' && req.user.role !== 'admin' && req.user.role !== 'manager') {
+        return next(new AppError('You are not authorized to reject leave requests', 403));
+      }
+      
+      // Validate all IDs are valid MongoDB ObjectIds
+      const validIds = leaveIds.filter(id => mongoose.Types.ObjectId.isValid(id));
+      
+      if (validIds.length !== leaveIds.length) {
+        return next(new AppError('One or more invalid leave request IDs provided', 400));
+      }
+      
+      // Find all leave requests
+      const leaveRequests = await Leave.find({
+        _id: { $in: validIds },
+        status: 'pending'
+      }).populate('employee', 'name email manager department');
+      
+      if (leaveRequests.length === 0) {
+        return next(new AppError('No pending leave requests found with the provided IDs', 404));
+      }
+      
+      // Check authorization for each leave request if user is a manager
+      if (req.user.role === 'manager') {
+        const unauthorizedRequests = leaveRequests.filter(request => 
+          !request.employee.manager || request.employee.manager.toString() !== req.user.id
+        );
+        
+        if (unauthorizedRequests.length > 0) {
+          return next(new AppError('You are not authorized to reject one or more of these leave requests', 403));
+        }
+      }
+      
+      // Update all leave requests
+      const now = new Date();
+      const bulkOps = leaveRequests.map(request => ({
+        updateOne: {
+          filter: { _id: request._id },
+          update: {
+            $set: {
+              status: 'rejected',
+              approver: req.user.id,
+              rejectedAt: now,
+              rejectionReason
+            }
+          }
+        }
+      }));
+      
+      const result = await Leave.bulkWrite(bulkOps);
+      
+      // Emit real-time updates via Socket.IO
+      if (req.app.get('io')) {
+        leaveRequests.forEach(request => {
+          req.app.get('io').emit('leave:update', {
+            type: 'rejected',
+            request: {
+              ...request.toObject(),
+              status: 'rejected',
+              approver: req.user.id,
+              rejectedAt: now,
+              rejectionReason
+            }
+          });
+        });
+      }
+      
+      // Log the bulk rejection
+      logger.info(`User ${req.user.id} bulk rejected ${result.modifiedCount} leave requests`);
+      
+      res.status(200).json({
+        success: true,
+        message: `Successfully rejected ${result.modifiedCount} leave requests`,
+        count: result.modifiedCount,
+        data: leaveRequests.map(request => request._id)
       });
     } catch (error) {
       next(error);

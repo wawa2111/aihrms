@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { loginUser, logoutUser, getCurrentUser } from "../services/authentication.service";
-import { googleLogin, microsoftLogin, facebookLogin } from "../services/oauth.service";
+import { googleLogin, microsoftLogin, facebookLogin, linkedinLogin } from "../services/oauth.service";
 
 // Login user
 export const login = createAsyncThunk(
@@ -57,6 +57,21 @@ export const loginWithFacebook = createAsyncThunk(
     } catch (error) {
       return rejectWithValue(
         error.response?.data?.message || "Failed to login with Facebook"
+      );
+    }
+  }
+);
+
+// LinkedIn login
+export const loginWithLinkedIn = createAsyncThunk(
+  "authentication/loginWithLinkedIn",
+  async (code, { rejectWithValue }) => {
+    try {
+      const response = await linkedinLogin(code);
+      return response;
+    } catch (error) {
+      return rejectWithValue(
+        error.response?.data?.message || "Failed to login with LinkedIn"
       );
     }
   }
@@ -180,6 +195,23 @@ const authenticationSlice = createSlice({
         localStorage.setItem("user", JSON.stringify(action.payload.user));
       })
       .addCase(loginWithFacebook.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      })
+      
+      // LinkedIn login
+      .addCase(loginWithLinkedIn.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(loginWithLinkedIn.fulfilled, (state, action) => {
+        state.loading = false;
+        state.user = action.payload.user;
+        state.isAuthenticated = true;
+        localStorage.setItem("token", action.payload.token);
+        localStorage.setItem("user", JSON.stringify(action.payload.user));
+      })
+      .addCase(loginWithLinkedIn.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
       })

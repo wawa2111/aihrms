@@ -76,6 +76,14 @@ function Landing() {
                       Schedule Demo
                     </Link>
                   </motion.div>
+                  <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+                    <Link
+                      to="/accessible-demo"
+                      className="px-6 py-3 border border-green-600 text-green-600 dark:text-green-400 font-medium rounded-md hover:bg-green-50 dark:hover:bg-green-900 text-center block"
+                    >
+                      Accessible Demo
+                    </Link>
+                  </motion.div>
                 </motion.div>
               </motion.div>
               <motion.div 

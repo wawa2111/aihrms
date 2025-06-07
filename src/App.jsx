@@ -12,6 +12,10 @@ import Landing from './pages/Landing';
 import Features from './pages/Features';
 import Pricing from './pages/Pricing';
 import Demo from './pages/Demo';
+import AccessibleDemo from './pages/AccessibleDemo';
+import AccessibleDemoRequest from './pages/AccessibleDemoRequest';
+import HRAccessibleDemo from './pages/HRAccessibleDemo';
+import AccessibleHRDashboard from './pages/AccessibleHRDashboard';
 import Contact from './pages/Contact';
 import About from './pages/About';
 import Terms from './pages/Terms';
@@ -31,6 +35,10 @@ function App() {
         <Route path="/features/:featureId" element={<Features />} />
         <Route path="/pricing" element={<Pricing />} />
         <Route path="/demo" element={<Demo />} />
+        <Route path="/accessible-demo" element={<AccessibleDemo />} />
+        <Route path="/accessible-demo-request" element={<AccessibleDemoRequest />} />
+        <Route path="/hr-accessible-demo" element={<HRAccessibleDemo />} />
+        <Route path="/hr-accessible-dashboard" element={<AccessibleHRDashboard />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/about" element={<Contact />} />
         <Route path="/contact-sales" element={<Contact />} />

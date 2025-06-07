@@ -1,8 +1,10 @@
+import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { login, loginWithGoogle, loginWithMicrosoft, loginWithFacebook } from "../reducers/authentication.reducer";
+import { login, loginWithGoogle, loginWithMicrosoft, loginWithFacebook, loginWithLinkedIn } from "../reducers/authentication.reducer";
 import { toast } from "react-hot-toast";
-import ButtonLoader from "../components/shared/loaders/ButtonLoader";
+import CTAButton from "../components/shared/CTAButton";
+import ButtonBase from "../components/shared/buttons/ButtonBase";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -177,6 +179,24 @@ const Login = () => {
     }
   };
 
+  const handleLinkedInLogin = async () => {
+    try {
+      const clientId = import.meta.env.VITE_LINKEDIN_CLIENT_ID;
+      const redirectUri = import.meta.env.VITE_OAUTH_CALLBACK_URL;
+      const scope = 'r_emailaddress r_liteprofile';
+      const state = Math.random().toString(36).substring(7);
+      
+      // Store state in localStorage to verify when LinkedIn redirects back
+      localStorage.setItem('linkedinState', state);
+      
+      const linkedInAuthUrl = `https://www.linkedin.com/oauth/v2/authorization?response_type=code&client_id=${clientId}&redirect_uri=${redirectUri}&state=${state}&scope=${scope}`;
+      
+      window.location.href = linkedInAuthUrl;
+    } catch (error) {
+      toast.error("LinkedIn login failed. Please try again.");
+    }
+  };
+
   return (
     <div className="bg-white dark:bg-gray-800 shadow-md rounded-lg px-8 py-10 sm:mx-auto sm:w-full sm:max-w-md">
       <div className="text-center mb-6">
@@ -255,13 +275,16 @@ const Login = () => {
         </div>
 
         <div>
-          <button
+          <CTAButton
+            text="Sign in"
             type="submit"
+            variant="primary"
+            loading={loading}
             disabled={loading}
-            className="btn-primary w-full flex justify-center"
-          >
-            {loading ? <ButtonLoader /> : "Sign in"}
-          </button>
+            fullWidth
+            icon="fas fa-sign-in-alt"
+            ariaLabel="Sign in to your account"
+          />
         </div>
       </form>
 
@@ -277,38 +300,49 @@ const Login = () => {
           </div>
         </div>
 
-        <div className="mt-6 grid grid-cols-3 gap-3">
-          <button
-            type="button"
+        <div className="mt-6 grid grid-cols-4 gap-3">
+          <ButtonBase
             onClick={handleGoogleLogin}
-            className="w-full inline-flex justify-center py-2 px-4 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm bg-white dark:bg-gray-700 text-sm font-medium text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-600"
-          >
-            <i className="fab fa-google text-red-500"></i>
-          </button>
-          <button
-            type="button"
+            variant="secondary"
+            size="md"
+            icon="fab fa-google"
+            ariaLabel="Sign in with Google"
+            className="w-full bg-white dark:bg-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 text-red-500"
+          />
+          <ButtonBase
             onClick={handleMicrosoftLogin}
-            className="w-full inline-flex justify-center py-2 px-4 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm bg-white dark:bg-gray-700 text-sm font-medium text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-600"
-          >
-            <i className="fab fa-microsoft text-blue-500"></i>
-          </button>
-          <button
-            type="button"
+            variant="secondary"
+            size="md"
+            icon="fab fa-microsoft"
+            ariaLabel="Sign in with Microsoft"
+            className="w-full bg-white dark:bg-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 text-blue-500"
+          />
+          <ButtonBase
             onClick={handleFacebookLogin}
-            className="w-full inline-flex justify-center py-2 px-4 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm bg-white dark:bg-gray-700 text-sm font-medium text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-600"
-          >
-            <i className="fab fa-facebook text-blue-600"></i>
-          </button>
+            variant="secondary"
+            size="md"
+            icon="fab fa-facebook"
+            ariaLabel="Sign in with Facebook"
+            className="w-full bg-white dark:bg-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 text-blue-600"
+          />
+          <ButtonBase
+            onClick={handleLinkedInLogin}
+            variant="secondary"
+            size="md"
+            icon="fab fa-linkedin"
+            ariaLabel="Sign in with LinkedIn"
+            className="w-full bg-white dark:bg-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 text-blue-700"
+          />
         </div>
         
         <div className="mt-6 text-center">
-          <Link
-            to="/biometric-auth"
-            className="inline-flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-gradient-to-r from-primary-500 to-purple-600 hover:from-primary-600 hover:to-purple-700"
-          >
-            <i className="fas fa-fingerprint mr-2"></i>
-            Sign in with Biometrics
-          </Link>
+          <CTAButton
+            text="Sign in with Biometrics"
+            link="/biometric-auth"
+            variant="premium"
+            icon="fas fa-fingerprint"
+            ariaLabel="Sign in with biometric authentication"
+          />
         </div>
       </div>
     </div>

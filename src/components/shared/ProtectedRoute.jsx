@@ -1,5 +1,6 @@
-import { Navigate } from 'react-router-dom';
+import { Navigate, useLocation } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import { saveRedirectPath } from '../../utils/authRedirect';
 
 /**
  * Protected route component that redirects to login if not authenticated
@@ -9,10 +10,18 @@ import { useSelector } from 'react-redux';
  */
 function ProtectedRoute({ children, allowedRoles }) {
   const { isAuthenticated, user } = useSelector((state) => state.auth);
+  const location = useLocation();
 
   // Check if user is authenticated
   if (!isAuthenticated) {
-    return <Navigate to="/login" replace />;
+    // Save the current path for redirect after login
+    saveRedirectPath(location.pathname + location.search);
+    
+    // Redirect to login with the current location in the redirect parameter
+    return <Navigate 
+      to={`/login?redirect=${encodeURIComponent(location.pathname + location.search)}`} 
+      replace 
+    />;
   }
 
   // Check if user has required role (if specified)

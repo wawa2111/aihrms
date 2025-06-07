@@ -1,6 +1,7 @@
 import { downloadXls } from "../../utils.js";
 import { useEffect, useState, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 import Error from "../../components/shared/error/Error.js";
 import Modal from "../../components/shared/modals/Modal.js";
 import Loader from "../../components/shared/loaders/Loader.js";
@@ -13,6 +14,8 @@ import {
 import NoDataMessage from "../../components/shared/error/NoDataMessage.js";
 import ImportExcelModal from "../../components/shared/modals/ImportExcelModal.js";
 import FetchError from "../../components/shared/error/FetchError.js";
+import CTAButton from "../../components/shared/CTAButton.js";
+import ButtonBase from "../../components/shared/buttons/ButtonBase.js";
 
 function Employee() {
   const dispatch = useDispatch();
@@ -134,15 +137,17 @@ function Employee() {
             filters.role ||
             filters.name
           ) && (
-            <button
+            <CTAButton
+              text="Apply Filters"
               onClick={() =>
                 setUiState((prev) => ({ ...prev, toggleFilterBar: true }))
               }
-              className="hidden sm:flex flex-grow sm:flex-grow-0 justify-center items-center gap-2 text-[0.81rem] sm:text-[0.9rem] border py-1 px-5 rounded-3xl font-semibold border-gray-300 hover:border-blue-500 hover:bg-blue-100 text-gray-700 dark:text-gray-300 hover:text-blue-600 
-   dark:hover:border-blue-500 dark:hover:bg-transparent dark:hover:text-blue-500  transition-all  ease-in-out duration-300"
-            >
-              <i className="fa-solid fa-filter text-xs"></i> Apply Filters
-            </button>
+              variant="outline"
+              size="sm"
+              icon="fa-solid fa-filter"
+              ariaLabel="Open filter options"
+              className="hidden sm:flex"
+            />
           )}
 
           <div className="flex flex-wrap items-center gap-2">
@@ -150,27 +155,28 @@ function Employee() {
           </div>
 
           <div className="flex items-center gap-3">
-            <button
+            <CTAButton
+              text={uiState.exportLoading ? "Exporting..." : "Export to Excel"}
               onClick={handleExportToExcel}
-              className="hidden sm:flex justify-center items-center gap-2 text-[0.81rem] sm:text-[0.9rem] border border-gray-300 py-1 px-5 rounded-3xl font-semibold text-gray-700 dark:text-gray-300 hover:border-blue-500 hover:bg-blue-100 hover:text-blue-600 
-   dark:hover:border-blue-500 dark:hover:bg-transparent dark:hover:text-blue-500  transition-all  ease-in-out duration-300"
-            >
-              {uiState.exportLoading ? (
-                <i className="fas fa-spinner fa-spin"></i>
-              ) : (
-                <i className="fas fa-file-excel text-xs"></i>
-              )}
-              {uiState.exportLoading ? " Exporting..." : "Export to Excel"}
-            </button>
-            <button
+              variant="outline"
+              size="sm"
+              icon={uiState.exportLoading ? "fas fa-spinner fa-spin" : "fas fa-file-excel"}
+              loading={uiState.exportLoading}
+              disabled={uiState.exportLoading}
+              ariaLabel="Export employee data to Excel"
+              className="hidden sm:flex"
+            />
+            <CTAButton
+              text="Import from Excel"
               onClick={() =>
                 setUiState((prev) => ({ ...prev, toggleExcelModal: true }))
               }
-              className="hidden sm:flex justify-center items-center gap-2 text-[0.81rem] sm:text-[0.9rem] border border-gray-300 py-1 px-5 rounded-3xl font-semibold text-gray-700 dark:text-gray-300  hover:border-blue-500 hover:bg-blue-100 hover:text-blue-600 
-   dark:hover:border-blue-500 dark:hover:bg-transparent dark:hover:text-blue-500  transition-all  ease-in-out duration-300"
-            >
-              <i className="fas fa-file-excel  text-xs"></i> Import from Excel
-            </button>
+              variant="outline"
+              size="sm"
+              icon="fas fa-file-excel"
+              ariaLabel="Import employee data from Excel"
+              className="hidden sm:flex"
+            />
           </div>
         </div>
 
@@ -224,38 +230,39 @@ function Employee() {
                     <td className="py-3 px-4 border-b border-secondary">
                       {employee.phoneNumber}
                     </td>
-                    <td className="py-3 px-4 border-b border-secondary flex items-center space-x-2">
-                      <Link to={`/employee/${employee._id}`}>
-                        <button
+                    <td className="py-3 px-4 border-b border-secondary">
+                      <div className="flex items-center space-x-2">
+                        <ButtonBase
+                          link={`/employee/${employee._id}`}
+                          variant="ghost"
+                          size="xs"
+                          icon="fa-solid fa-eye"
+                          ariaLabel={`View ${employee.name}'s details`}
                           className="text-blue-500 hover:text-blue-400"
-                          title="View"
-                        >
-                          <i className="fa-solid fa-eye"></i>
-                        </button>
-                      </Link>
-
-                      <Link to={`/employee/update/${employee._id}`}>
-                        <button
+                        />
+                        <ButtonBase
+                          link={`/employee/update/${employee._id}`}
+                          variant="ghost"
+                          size="xs"
+                          icon="fa-solid fa-edit"
+                          ariaLabel={`Edit ${employee.name}'s information`}
                           className="text-green-500 hover:text-green-400"
-                          title="Edit"
-                        >
-                          <i className="fa-solid fa-edit"></i>
-                        </button>
-                      </Link>
-
-                      <button
-                        onClick={() =>
-                          setUiState((prev) => ({
-                            ...prev,
-                            deletedEmployee: employee,
-                            toggleModal: true,
-                          }))
-                        }
-                        className="text-red-500 hover:text-red-400"
-                        title="Delete"
-                      >
-                        <i className="fa-solid fa-trash"></i>
-                      </button>
+                        />
+                        <ButtonBase
+                          onClick={() =>
+                            setUiState((prev) => ({
+                              ...prev,
+                              deletedEmployee: employee,
+                              toggleModal: true,
+                            }))
+                          }
+                          variant="ghost"
+                          size="xs"
+                          icon="fa-solid fa-trash"
+                          ariaLabel={`Delete ${employee.name}`}
+                          className="text-red-500 hover:text-red-400"
+                        />
+                      </div>
                     </td>
                   </tr>
                 ))}

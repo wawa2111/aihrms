@@ -29,8 +29,8 @@ export default function useAuth() {
       // dispatch(login(response.data));
       
       // For demo purposes, we'll use the mock login
-      await dispatch(login(credentials));
-      return { success: true };
+      const result = await dispatch(login(credentials)).unwrap();
+      return { success: true, user: result.user };
     } catch (err) {
       setLocalError(err.response?.data?.message || 'Login failed');
       throw err;
@@ -49,8 +49,8 @@ export default function useAuth() {
       // dispatch(register(response.data));
       
       // For demo purposes, we'll use the mock register
-      await dispatch(register(userData));
-      return { success: true };
+      const result = await dispatch(register(userData)).unwrap();
+      return { success: true, user: result.user };
     } catch (err) {
       setLocalError(err.response?.data?.message || 'Registration failed');
       throw err;
@@ -65,8 +65,8 @@ export default function useAuth() {
   const loginWithOAuth = async (provider, token) => {
     try {
       setLocalError(null);
-      await dispatch(oauthLogin(provider, token));
-      return { success: true };
+      const result = await dispatch(oauthLogin({ provider, token })).unwrap();
+      return { success: true, user: result.user };
     } catch (err) {
       setLocalError(err.response?.data?.message || `${provider} login failed`);
       throw err;

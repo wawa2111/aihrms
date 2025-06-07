@@ -6,6 +6,7 @@ import App from './App.jsx';
 import store from './store';
 import DarkModeStyles from './components/ui/DarkModeStyles';
 import './index.css';
+import './styles/accessibility.css';
 import '@fortawesome/fontawesome-free/css/all.min.css';
 
 ReactDOM.createRoot(document.getElementById('root')).render(

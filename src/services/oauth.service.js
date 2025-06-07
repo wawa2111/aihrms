@@ -29,3 +29,13 @@ export const facebookLogin = async (accessToken) => {
     throw error;
   }
 };
+
+// LinkedIn OAuth login
+export const linkedinLogin = async (code) => {
+  try {
+    const response = await api.post('/auth/linkedin', { code });
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};

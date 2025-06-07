@@ -1,8 +1,9 @@
-import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import useAuth from '../hooks/useAuth';
 import { toast } from 'react-hot-toast';
 import LandingHeader from '../components/ui/LandingHeader';
+import { getRedirectPath, getRedirectFromQuery, saveRedirectPath, handleAuthRedirect } from '../utils/authRedirect';
 
 function Register() {
   const [formData, setFormData] = useState({
@@ -15,6 +16,32 @@ function Register() {
   const [isLoading, setIsLoading] = useState(false);
   
   const { registerUser } = useAuth();
+  const location = useLocation();
+  const navigate = useNavigate();
+  
+  // Extract redirect data from URL query parameters
+  const redirectData = getRedirectFromQuery(location.search);
+  const redirectPath = redirectData?.path || getRedirectPath('/dashboard');
+  
+  // Check for plan selection from URL
+  const searchParams = new URLSearchParams(location.search);
+  const selectedPlan = searchParams.get('plan');
+  
+  // Check if user is already logged in
+  useEffect(() => {
+    const checkAuthStatus = async () => {
+      try {
+        const isAuthenticated = localStorage.getItem('isAuthenticated') === 'true';
+        if (isAuthenticated) {
+          handleAuthRedirect(navigate, '/dashboard', location);
+        }
+      } catch (error) {
+        console.error('Auth check failed:', error);
+      }
+    };
+    
+    checkAuthStatus();
+  }, [navigate, location]);
   
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -33,8 +60,15 @@ function Register() {
     
     try {
       const { confirmPassword, ...registerData } = formData;
+      // Add selected plan if available
+      if (selectedPlan) {
+        registerData.plan = selectedPlan;
+      }
+      
       await registerUser(registerData);
       toast.success('Registration successful');
+      // Use the enhanced redirect handler
+      handleAuthRedirect(navigate, '/dashboard', location);
     } catch (error) {
       toast.error(error.response?.data?.message || 'Registration failed');
     } finally {
@@ -44,7 +78,15 @@ function Register() {
 
   const handleOAuthRegister = (provider) => {
     toast.loading(`Redirecting to ${provider} registration...`);
+    // Save the redirect path with options for when OAuth registration completes
+    saveRedirectPath(redirectPath, { 
+      preserveQuery: true,
+      registrationData: { plan: selectedPlan } // Pass any registration data that should be preserved
+    });
+    
     // In a real implementation, this would redirect to the OAuth provider
+    // For example: window.location.href = `/api/auth/${provider.toLowerCase()}?plan=${selectedPlan}`;
+    
     setTimeout(() => {
       toast.dismiss();
       toast.error(`${provider} registration is currently under development`);

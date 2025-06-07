@@ -1,8 +1,9 @@
-import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import useAuth from '../hooks/useAuth';
 import { toast } from 'react-hot-toast';
 import LandingHeader from '../components/ui/LandingHeader';
+import { getRedirectPath, getRedirectFromQuery, saveRedirectPath, handleAuthRedirect } from '../utils/authRedirect';
 
 function Login() {
   const [email, setEmail] = useState('');
@@ -10,6 +11,28 @@ function Login() {
   const [isLoading, setIsLoading] = useState(false);
   
   const { loginUser } = useAuth();
+  const location = useLocation();
+  const navigate = useNavigate();
+  
+  // Extract redirect data from URL query parameters
+  const redirectData = getRedirectFromQuery(location.search);
+  const redirectPath = redirectData?.path || getRedirectPath('/dashboard');
+  
+  // Check if user is already logged in
+  useEffect(() => {
+    const checkAuthStatus = async () => {
+      try {
+        const isAuthenticated = localStorage.getItem('isAuthenticated') === 'true';
+        if (isAuthenticated) {
+          handleAuthRedirect(navigate, '/dashboard', location);
+        }
+      } catch (error) {
+        console.error('Auth check failed:', error);
+      }
+    };
+    
+    checkAuthStatus();
+  }, [navigate, location]);
   
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -18,6 +41,8 @@ function Login() {
     try {
       await loginUser({ email, password });
       toast.success('Login successful');
+      // Use the enhanced redirect handler
+      handleAuthRedirect(navigate, '/dashboard', location);
     } catch (error) {
       toast.error(error.response?.data?.message || 'Login failed');
     } finally {
@@ -26,18 +51,24 @@ function Login() {
   };
 
   const handleOAuthLogin = (provider) => {
+    const providerUrl = {
+      Google: '/api/auth/google',
+      LinkedIn: '/api/auth/linkedin',
+      Facebook: '/api/auth/facebook'
+    };
+
     toast.loading(`Redirecting to ${provider} login...`);
-    // In a real implementation, this would redirect to the OAuth provider
-    setTimeout(() => {
-      toast.dismiss();
-      toast.error(`${provider} login is currently under development`);
-    }, 1500);
+    // Save the redirect path with options for when OAuth login completes
+    saveRedirectPath(redirectPath, { preserveQuery: true });
+
+    // Redirect to OAuth provider endpoint
+    window.location.href = providerUrl[provider];
   };
-  
+
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
       <LandingHeader />
-      
+
       <div className="flex items-center justify-center min-h-screen py-12 px-4 sm:px-6 lg:px-8">
         <div className="max-w-md w-full space-y-8 bg-white dark:bg-gray-800 p-8 rounded-lg shadow-md">
           <div className="text-center">
@@ -51,7 +82,7 @@ function Login() {
               </Link>
             </p>
           </div>
-          
+
           <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
             <div className="rounded-md shadow-sm -space-y-px">
               <div>
@@ -118,7 +149,7 @@ function Login() {
               </button>
             </div>
           </form>
-          
+
           <div className="mt-6">
             <div className="relative">
               <div className="absolute inset-0 flex items-center">
@@ -131,7 +162,7 @@ function Login() {
               </div>
             </div>
 
-            <div className="mt-6 grid grid-cols-3 gap-3">
+            <div className="mt-6 grid grid-cols-4 gap-3">
               <button
                 onClick={() => handleOAuthLogin('Google')}
                 className="w-full inline-flex justify-center py-2 px-4 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm bg-white dark:bg-gray-700 text-sm font-medium text-gray-500 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-600"
@@ -139,10 +170,10 @@ function Login() {
                 <i className="fab fa-google text-lg"></i>
               </button>
               <button
-                onClick={() => handleOAuthLogin('Microsoft')}
+                onClick={() => handleOAuthLogin('LinkedIn')}
                 className="w-full inline-flex justify-center py-2 px-4 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm bg-white dark:bg-gray-700 text-sm font-medium text-gray-500 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-600"
               >
-                <i className="fab fa-microsoft text-lg"></i>
+                <i className="fab fa-linkedin-in text-lg"></i>
               </button>
               <button
                 onClick={() => handleOAuthLogin('Facebook')}

@@ -60,6 +60,9 @@ app.use(compression());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+// Enable trust proxy if we're behind a reverse proxy
+app.set('trust proxy', 1);
+
 // Apply rate limiting
 const limiter = rateLimit({
   windowMs: config.security.rateLimit.windowMs,
@@ -76,7 +79,10 @@ mongoose.connect(config.mongodb.uri, config.mongodb.options)
   })
   .catch((error) => {
     logger.error('MongoDB connection error:', error);
-    process.exit(1);
+    // Don't exit process during tests
+    if (process.env.NODE_ENV !== 'test') {
+      process.exit(1);
+    }
   });
 
 // Socket.IO connection handler
@@ -131,7 +137,11 @@ app.get('/api/health', (req, res) => {
 // Error handling middleware
 app.use(errorHandler);
 
-// Start server
-httpServer.listen(PORT, () => {
-  logger.info(`Server running in ${config.env} mode on port ${PORT}`);
-});
+// Start server if not in test mode
+if (process.env.NODE_ENV !== 'test') {
+  httpServer.listen(PORT, () => {
+    logger.info(`Server running in ${config.env} mode on port ${PORT}`);
+  });
+}
+
+export default app;

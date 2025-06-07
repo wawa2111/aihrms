@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 
 const initialState = {
   user: null,
@@ -102,81 +102,103 @@ export const {
 } = authSlice.actions;
 
 // Thunk actions
-export const login = (userData) => async (dispatch) => {
-  try {
-    dispatch(loginStart());
-    // In a real app, this would be an API call
-    // const response = await api.post('/auth/login', userData);
-    // For demo purposes, we'll simulate a successful login
-    const mockResponse = {
-      user: {
-        id: '1',
-        name: 'Demo User',
-        email: userData.email,
-        role: 'admin'
-      },
-      token: 'mock_token_' + Math.random().toString(36).substring(2)
-    };
-    
-    setTimeout(() => {
+export const login = createAsyncThunk(
+  'auth/login',
+  async (userData, { dispatch }) => {
+    try {
+      dispatch(loginStart());
+      // In a real app, this would be an API call
+      // const response = await api.post('/auth/login', userData);
+      
+      // For demo purposes, we'll simulate a successful login
+      const mockResponse = {
+        user: {
+          id: '1',
+          name: 'Demo User',
+          email: userData.email,
+          role: 'admin'
+        },
+        token: 'mock_token_' + Math.random().toString(36).substring(2)
+      };
+      
+      // Simulate API delay
+      await new Promise(resolve => setTimeout(resolve, 1000));
+      
       dispatch(loginSuccess(mockResponse));
-    }, 1000);
-  } catch (error) {
-    dispatch(loginFailure(error.message));
+      return mockResponse;
+    } catch (error) {
+      dispatch(loginFailure(error.message));
+      throw error;
+    }
   }
-};
+);
 
-export const register = (userData) => async (dispatch) => {
-  try {
-    dispatch(registerStart());
-    // In a real app, this would be an API call
-    // const response = await api.post('/auth/register', userData);
-    // For demo purposes, we'll simulate a successful registration
-    const mockResponse = {
-      user: {
-        id: '1',
-        name: userData.name,
-        email: userData.email,
-        company: userData.companyName,
-        role: 'admin'
-      },
-      token: 'mock_token_' + Math.random().toString(36).substring(2)
-    };
-    
-    setTimeout(() => {
+export const register = createAsyncThunk(
+  'auth/register',
+  async (userData, { dispatch }) => {
+    try {
+      dispatch(registerStart());
+      // In a real app, this would be an API call
+      // const response = await api.post('/auth/register', userData);
+      
+      // For demo purposes, we'll simulate a successful registration
+      const mockResponse = {
+        user: {
+          id: '1',
+          name: userData.name,
+          email: userData.email,
+          company: userData.companyName,
+          role: 'admin',
+          plan: userData.plan || 'free'
+        },
+        token: 'mock_token_' + Math.random().toString(36).substring(2)
+      };
+      
+      // Simulate API delay
+      await new Promise(resolve => setTimeout(resolve, 1000));
+      
       dispatch(registerSuccess(mockResponse));
-    }, 1000);
-  } catch (error) {
-    dispatch(registerFailure(error.message));
+      return mockResponse;
+    } catch (error) {
+      dispatch(registerFailure(error.message));
+      throw error;
+    }
   }
-};
+);
 
 export const logout = () => (dispatch) => {
   dispatch(logoutSuccess());
 };
 
-export const oauthLogin = (provider, token) => async (dispatch) => {
-  try {
-    dispatch(oauthLoginStart());
-    // In a real app, this would be an API call to verify the token
-    // const response = await api.post('/auth/oauth', { provider, token });
-    // For demo purposes, we'll simulate a successful login
-    const mockResponse = {
-      user: {
-        id: '1',
-        name: 'OAuth User',
-        email: `user@${provider.toLowerCase()}.com`,
-        role: 'admin'
-      },
-      token: 'mock_token_' + Math.random().toString(36).substring(2)
-    };
-    
-    setTimeout(() => {
+export const oauthLogin = createAsyncThunk(
+  'auth/oauthLogin',
+  async ({ provider, token }, { dispatch }) => {
+    try {
+      dispatch(oauthLoginStart());
+      // In a real app, this would be an API call to verify the token
+      // const response = await api.post('/auth/oauth', { provider, token });
+      
+      // For demo purposes, we'll simulate a successful login
+      const mockResponse = {
+        user: {
+          id: '1',
+          name: 'OAuth User',
+          email: `user@${provider.toLowerCase()}.com`,
+          role: 'admin'
+        },
+        token: 'mock_token_' + Math.random().toString(36).substring(2)
+      };
+      
+      // Simulate API delay
+      await new Promise(resolve => setTimeout(resolve, 1000));
+      
       dispatch(oauthLoginSuccess(mockResponse));
-    }, 1000);
-  } catch (error) {
-    dispatch(oauthLoginFailure(error.message));
+      return mockResponse;
+    } catch (error) {
+      dispatch(oauthLoginFailure(error.message));
+      throw error;
+    }
   }
-};
+);
 
 export default authSlice.reducer;

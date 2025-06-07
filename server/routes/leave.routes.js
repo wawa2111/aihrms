@@ -44,4 +44,10 @@ router.post('/recommend', leaveController.getLeaveRecommendation);
 // Get substitute recommendations for leave request
 router.post('/substitutes', leaveController.getSubstituteRecommendations);
 
+// Bulk approve leave requests - HR, Admin, or Manager
+router.post('/bulk/approve', authorize(['hr', 'admin', 'manager']), leaveController.bulkApproveLeaveRequests);
+
+// Bulk reject leave requests - HR, Admin, or Manager
+router.post('/bulk/reject', authorize(['hr', 'admin', 'manager']), leaveController.bulkRejectLeaveRequests);
+
 export default router;

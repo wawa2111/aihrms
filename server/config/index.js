@@ -25,6 +25,17 @@ const config = {
     }
   },
   
+  // SQL database connection
+  sql: {
+    dialect: process.env.SQL_DIALECT || 'mysql',
+    host: process.env.SQL_HOST || 'localhost',
+    port: parseInt(process.env.SQL_PORT, 10) || 3306,
+    username: process.env.SQL_USERNAME || 'root',
+    password: process.env.SQL_PASSWORD || '',
+    database: process.env.SQL_DATABASE || 'hrpbloom_sql',
+    sync: process.env.SQL_SYNC === 'true'
+  },
+  
   // JWT configuration
   jwt: {
     secret: process.env.JWTSECRET || 'hrpbloom_default_jwt_secret',

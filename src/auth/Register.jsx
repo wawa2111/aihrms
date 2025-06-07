@@ -1,8 +1,10 @@
+import { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-hot-toast';
-import { loginWithGoogle, loginWithMicrosoft, loginWithFacebook } from '../reducers/authentication.reducer';
-import ButtonLoader from '../components/shared/loaders/ButtonLoader';
+import { loginWithGoogle, loginWithMicrosoft, loginWithFacebook, loginWithLinkedIn } from '../reducers/authentication.reducer';
+import CTAButton from '../components/shared/CTAButton';
+import ButtonBase from '../components/shared/buttons/ButtonBase';
 
 const Register = () => {
   const [formData, setFormData] = useState({
@@ -206,6 +208,24 @@ const Register = () => {
     }
   };
 
+  const handleLinkedInSignup = async () => {
+    try {
+      const clientId = import.meta.env.VITE_LINKEDIN_CLIENT_ID;
+      const redirectUri = import.meta.env.VITE_OAUTH_CALLBACK_URL;
+      const scope = 'r_emailaddress r_liteprofile';
+      const state = Math.random().toString(36).substring(7);
+      
+      // Store state in localStorage to verify when LinkedIn redirects back
+      localStorage.setItem('linkedinState', state);
+      
+      const linkedInAuthUrl = `https://www.linkedin.com/oauth/v2/authorization?response_type=code&client_id=${clientId}&redirect_uri=${redirectUri}&state=${state}&scope=${scope}`;
+      
+      window.location.href = linkedInAuthUrl;
+    } catch (error) {
+      toast.error("LinkedIn signup failed. Please try again.");
+    }
+  };
+
   return (
     <div className="bg-white dark:bg-gray-800 shadow-md rounded-lg px-8 py-10 sm:mx-auto sm:w-full sm:max-w-md">
       <div className="text-center mb-6">
@@ -346,13 +366,16 @@ const Register = () => {
         </div>
         
         <div>
-          <button
+          <CTAButton
+            text="Create account"
             type="submit"
+            variant="primary"
+            loading={isSubmitting}
             disabled={isSubmitting}
-            className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-primary-600 hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 disabled:opacity-50"
-          >
-            {isSubmitting ? <ButtonLoader /> : 'Create account'}
-          </button>
+            fullWidth
+            icon="fas fa-user-plus"
+            ariaLabel="Create your account"
+          />
         </div>
       </form>
       
@@ -368,28 +391,39 @@ const Register = () => {
           </div>
         </div>
         
-        <div className="mt-6 grid grid-cols-3 gap-3">
-          <button
-            type="button"
+        <div className="mt-6 grid grid-cols-4 gap-3">
+          <ButtonBase
             onClick={handleGoogleSignup}
-            className="w-full inline-flex justify-center py-2 px-4 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm bg-white dark:bg-gray-700 text-sm font-medium text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-600"
-          >
-            <i className="fab fa-google text-red-500"></i>
-          </button>
-          <button
-            type="button"
+            variant="secondary"
+            size="md"
+            icon="fab fa-google"
+            ariaLabel="Sign up with Google"
+            className="w-full bg-white dark:bg-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 text-red-500"
+          />
+          <ButtonBase
             onClick={handleMicrosoftSignup}
-            className="w-full inline-flex justify-center py-2 px-4 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm bg-white dark:bg-gray-700 text-sm font-medium text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-600"
-          >
-            <i className="fab fa-microsoft text-blue-500"></i>
-          </button>
-          <button
-            type="button"
+            variant="secondary"
+            size="md"
+            icon="fab fa-microsoft"
+            ariaLabel="Sign up with Microsoft"
+            className="w-full bg-white dark:bg-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 text-blue-500"
+          />
+          <ButtonBase
             onClick={handleFacebookSignup}
-            className="w-full inline-flex justify-center py-2 px-4 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm bg-white dark:bg-gray-700 text-sm font-medium text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-600"
-          >
-            <i className="fab fa-facebook text-blue-600"></i>
-          </button>
+            variant="secondary"
+            size="md"
+            icon="fab fa-facebook"
+            ariaLabel="Sign up with Facebook"
+            className="w-full bg-white dark:bg-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 text-blue-600"
+          />
+          <ButtonBase
+            onClick={handleLinkedInSignup}
+            variant="secondary"
+            size="md"
+            icon="fab fa-linkedin"
+            ariaLabel="Sign up with LinkedIn"
+            className="w-full bg-white dark:bg-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 text-blue-700"
+          />
         </div>
       </div>
     </div>

@@ -9,6 +9,13 @@ import logger from '../utils/logger.js';
 // Initialize OAuth clients
 const googleClient = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
 
+// LinkedIn OAuth config
+const linkedinConfig = {
+  clientId: process.env.LINKEDIN_CLIENT_ID,
+  clientSecret: process.env.LINKEDIN_CLIENT_SECRET,
+  redirectUri: process.env.LINKEDIN_REDIRECT_URI
+};
+
 // Generate JWT token
 const generateToken = (id, role) => {
   return jwt.sign(
@@ -327,6 +334,99 @@ const authController = {
       
       createSendToken(user, 200, res);
     } catch (error) {
+      next(error);
+    }
+  },
+
+  // LinkedIn OAuth
+  linkedinAuth: async (req, res, next) => {
+    try {
+      const { code } = req.body;
+
+      if (!code) {
+        return next(new AppError('Authorization code is required', 400));
+      }
+
+      // Exchange authorization code for access token
+      const tokenResponse = await fetch('https://www.linkedin.com/oauth/v2/accessToken', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        body: new URLSearchParams({
+          grant_type: 'authorization_code',
+          code,
+          redirect_uri: linkedinConfig.redirectUri,
+          client_id: linkedinConfig.clientId,
+          client_secret: linkedinConfig.clientSecret
+        })
+      });
+
+      if (!tokenResponse.ok) {
+        logger.error(`LinkedIn access token error: ${await tokenResponse.text()}`);
+        return next(new AppError('Failed to get access token from LinkedIn', 400));
+      }
+
+      const tokenData = await tokenResponse.json();
+      const accessToken = tokenData.access_token;
+
+      // Fetch user profile from LinkedIn
+      const profileResponse = await fetch('https://api.linkedin.com/v2/me', {
+        headers: {
+          Authorization: `Bearer ${accessToken}`
+        }
+      });
+
+      if (!profileResponse.ok) {
+        logger.error(`LinkedIn profile fetch error: ${await profileResponse.text()}`);
+        return next(new AppError('Failed to fetch user profile from LinkedIn', 400));
+      }
+
+      const profileData = await profileResponse.json();
+
+      // Fetch user email from LinkedIn
+      const emailResponse = await fetch('https://api.linkedin.com/v2/emailAddress?q=members&projection=(elements*(handle~))', {
+        headers: {
+          Authorization: `Bearer ${accessToken}`
+        }
+      });
+
+      if (!emailResponse.ok) {
+        logger.error(`LinkedIn email fetch error: ${await emailResponse.text()}`);
+        return next(new AppError('Failed to fetch user email from LinkedIn', 400));
+      }
+
+      const emailData = await emailResponse.json();
+      const email = emailData.elements[0]['handle~'].emailAddress;
+
+      const { localizedFirstName: firstName, localizedLastName: lastName, id: linkedinId } = profileData;
+      const name = `${firstName} ${lastName}`;
+
+      // Check if user exists
+      let user = await User.findOne({ email });
+
+      // If user doesn't exist, create a new one
+      if (!user) {
+        user = await User.create({
+          name,
+          email,
+          linkedinId,
+          password: Math.random().toString(36).slice(-8) + Math.random().toString(36).slice(-8),
+          authProvider: 'linkedin',
+          emailVerified: true,
+          companyName: req.body.companyName || 'Unknown'
+        });
+      } else if (!user.linkedinId) {
+        // If user exists but doesn't have linkedinId, update it
+        user.linkedinId = linkedinId;
+        user.authProvider = 'linkedin';
+        user.emailVerified = true;
+        await user.save({ validateBeforeSave: false });
+      }
+
+      createSendToken(user, 200, res);
+    } catch (error) {
+      logger.error('LinkedIn OAuth error:', error);
       next(error);
     }
   },
